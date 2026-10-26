@@ -1,10 +1,9 @@
 ---
 import Base from './Base.astro';
-import Mock from '../components/Mock.astro';
 import { SITE, svc, CASES, usd } from '../data/site';
 interface Props {
   slug: string; title: string; description: string; h1: string; answer: string;
-  mock: 'placement' | 'dmarc' | 'mailboxes' | 'flow' | 'funnel'; cases: string[]; serviceType: string; faq?: [string, string][];
+  mock?: string; cases: string[]; serviceType: string; faq?: [string, string][];
 }
 const { slug, title, description, h1, answer, mock, cases, serviceType, faq = [] } = Astro.props;
 const s = svc(slug);
@@ -18,21 +17,21 @@ const schema: object[] = [{
 if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
 ---
 <Base title={title} description={description} path={path} pageType="service" crumbs={[{ name: s.nav, path }]} schema={schema}>
-  <section class="hero" style="padding-top:20px">
-    <div class="wrap">
+  <section class="phero">
+    <div class="wrap grid">
       <div>
-        <span class="eyebrow">{s.from ? `From ${usd(s.from)}` : 'Scoped per account'}</span>
-        <h1 style="max-width:18ch">{h1}</h1>
-        <p class="lead">{answer}</p>
-        <div class="btns">
-          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a>
+        <span class="eyebrow">{s.from ? `From ${usd(s.from)}` : 'Scoped to your account'}</span>
+        <h1 data-split>{h1}</h1>
+        <p class="lead reveal">{answer}</p>
+        <div class="btns reveal">
+          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a>
           {s.tiers.length > 0 && <a class="btn ghost" href="#pricing">See prices</a>}
         </div>
       </div>
-      <Mock kind={mock} />
+      <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D illustration representing ${s.nav.toLowerCase()}`} width="480" height="480" fetchpriority="high" data-parallax="0.08" />
     </div>
   </section>
-  <section class="section" style="padding-top:0">
+  <section class="section">
     <div class="narrow prose">
       <slot />
       {s.tiers.length > 0 && (
@@ -64,7 +63,7 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
         <h2 class="center">Results from this kind of work</h2>
         <div class="grid2" style="margin-top:28px">
           {related.map((c) => (
-            <article class="card case">
+            <article class="card case reveal">
               <span class="tag">{c.client} &middot; {c.industry}</span>
               <h3><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h3>
               <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
@@ -74,11 +73,14 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
       </div>
     </section>
   )}
-  <section class="band section">
-    <div class="wrap center">
-      <h2>Tell us what is happening</h2>
-      <p class="lead">You get a reply within one working day with a first read of your DNS records, before any call.</p>
-      <div class="btns" style="justify-content:center"><a class="btn" href="/contact/" style="background:#00D47E;border-color:#00D47E;color:#034F46;box-shadow:none"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a></div>
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Tell us what is happening. <em>We reply in a day.</em></h2>
+        <p>You get a reply within one working day with a first read of your setup, before any call.</p>
+        <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a></div>
+        <img class="ico" src={`/img/3d/${s.icon}.webp`} alt="" width="480" height="480" loading="lazy" data-parallax="0.1" />
+      </div>
     </div>
   </section>
 </Base>

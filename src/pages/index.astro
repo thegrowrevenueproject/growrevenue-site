@@ -1,75 +1,175 @@
 ---
 import Base from '../layouts/Base.astro';
-import Mock from '../components/Mock.astro';
-import { SITE, PROOF, SERVICES, CASES, usd } from '../data/site';
-const mocks = { 'email-deliverability': 'dmarc', 'cold-email-infrastructure': 'mailboxes', 'lifecycle-email-marketing': 'flow', 'funnel-audit': 'funnel' } as const;
+import Ribbon from '../components/Ribbon.astro';
+import { SERVICES, CASES, usd } from '../data/site';
 const faq = [
   ['Why are my emails going to spam?', 'Usually one of four causes: SPF, DKIM or DMARC records that are missing or failing; a domain or sending IP on a blacklist; a sender reputation damaged by bounces and spam complaints; or sending patterns and content that trip filters. A deliverability audit tells you which one it is, in priority order, and what to change.'],
   ['How much does an email deliverability audit cost?', 'From $350 for one domain, with an inbox placement test and a written fix list. Having us fix everything and re-test costs $900. Up to three domains with 30 days of monitoring costs $1,800.'],
   ['Do you send cold email for us?', 'We build the sending infrastructure, write the sequence and launch it in your account. You own every domain, mailbox and contact, so nothing is locked to us.'],
-  ['Which platforms do you work in?', 'Klaviyo, HubSpot, ActiveCampaign, Mailchimp, GoHighLevel, SendGrid, Google Workspace, Microsoft 365, Instantly and Smartlead.'],
+  ['Do you also run social media and AI automation?', 'Yes. We plan and produce social content and connect it to your email list, and we build AI agents and workflows in n8n, Make and Zapier that handle research, inbox sorting, CRM updates and reporting.'],
   ['Where are you based?', 'London, United Kingdom. We work with clients in the US, UK, Canada and Europe, mostly in their own time zones.'],
 ];
 const schema = [{ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+const nodes = [
+  { slug: 'email-deliverability', icon: 'shield', label: 'Deliverability', sub: 'reach the inbox', x: 50, y: 11 },
+  { slug: 'cold-email-infrastructure', icon: 'plane', label: 'Cold email', sub: 'start conversations', x: 86, y: 31 },
+  { slug: 'lifecycle-email-marketing', icon: 'loop', label: 'Lifecycle email', sub: 'turn leads into buyers', x: 86, y: 72 },
+  { slug: 'funnel-audit', icon: 'funnel', label: 'Funnels', sub: 'stop the leaks', x: 50, y: 91 },
+  { slug: 'social-media-marketing', icon: 'social', label: 'Social media', sub: 'earn attention', x: 14, y: 72 },
+  { slug: 'ai-automation', icon: 'ai', label: 'AI automation', sub: 'run it without manual work', x: 14, y: 31 },
+];
 ---
 <Base title="Email Deliverability Services and Cold Email | Grow Revenue"
-  description="Email deliverability services that get your email into the inbox, cold email infrastructure that gets replies, and funnels that stop leaking leads."
-  path="/" pageType="home" schema={schema} ogImage="/og/home.png">
-  <section class="hero">
-    <div class="wrap">
+  description="Email deliverability services that get you into the inbox, plus cold email, lifecycle email, funnels, social media and AI automation that turn it into revenue."
+  path="/" pageType="home" schema={schema} ogImage="/og/home.png" darkHero>
+
+  <section class="hero on-dark">
+    <img class="poster" src="/video/hero-poster.webp" alt="" width="1280" height="720" fetchpriority="high" />
+    <video autoplay muted loop playsinline preload="none" poster="/video/hero-poster.webp" data-lazy aria-hidden="true">
+      <source data-src="/video/hero.webm" type="video/webm" />
+      <source data-src="/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="wrap grid">
       <div>
-        <h1>Email deliverability services that get you out of spam</h1>
-        <p class="lead">We are an email deliverability and cold email agency. We find why your email goes to spam, fix it at the DNS and sending level, then build the outbound and lifecycle systems that turn the inbox into revenue.</p>
-        <div class="btns">
-          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a>
-          <a class="btn ghost" href="/email-deliverability/">Deliverability audit from {usd(350)}</a>
+        <span class="eyebrow">Email deliverability services &middot; London</span>
+        <h1 data-split>Email deliverability services that land you in the <em class="rotator"><span>inbox.</span><span>replies.</span><span>revenue.</span></em></h1>
+        <p class="lead reveal d1">We find why your email goes to spam, fix it at the DNS and sending level, then build the cold email, lifecycle, social and AI systems that turn attention into revenue.</p>
+        <div class="btns reveal d2">
+          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a>
+          <a class="btn ghost" href="/email-deliverability/">Audit from {usd(350)}</a>
         </div>
-        <ul class="proof" aria-label="Public Upwork record">
-          {PROOF.map((p) => <li><strong>{p.value}</strong> {p.label}</li>)}
-          <li><strong>Top Rated Plus</strong> on Upwork</li>
+        <ul class="proof reveal d3" aria-label="Public Upwork record">
+          <li><strong>123</strong> Upwork jobs</li><li><strong>$300K+</strong> earned</li><li><strong>100%</strong> Job Success</li><li><strong>Top Rated Plus</strong></li>
         </ul>
       </div>
-      <Mock kind="placement" />
+      <div class="hero-art" aria-hidden="true">
+        <img class="a1" src="/img/3d/shield.webp" alt="" width="480" height="480" data-parallax="0.12" />
+        <img class="a2" src="/img/3d/plane.webp" alt="" width="480" height="480" data-parallax="0.28" />
+        <img class="a3" src="/img/3d/ai.webp" alt="" width="480" height="480" data-parallax="0.2" />
+        <img class="a4" src="/img/3d/calendar.webp" alt="" width="480" height="480" data-parallax="0.34" />
+      </div>
     </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
   </section>
 
-  <section class="clients" aria-label="Clients">
-    <p>Clients we have worked with</p>
-    <ul>{CASES.map((c) => <li>{c.client}</li>)}<li>The Argonauts</li></ul>
+  <Ribbon />
+
+  <section class="section dark">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Marketing in the AI era</span>
+        <h2 data-split>AI made sending free. <em>Reaching people</em> did not.</h2>
+        <p class="lead reveal">Anyone can now write a thousand emails and posts in a minute, so inboxes and feeds are flooded and filters are stricter than ever. The businesses that win connect six things into one engine. We build all six.</p>
+      </div>
+      <div class="engine reveal" style="margin-top:40px" role="img" aria-label="Diagram: AI and your data at the center, connected to deliverability, cold email, lifecycle email, funnels, social media and AI automation">
+        <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {nodes.map((n) => <path class="wire" d={`M50 50 Q ${(50 + n.x) / 2 + (n.y - 50) * 0.15} ${(50 + n.y) / 2 - (n.x - 50) * 0.15} ${n.x} ${n.y}`} vector-effect="non-scaling-stroke" />)}
+        </svg>
+        <a class="node hub" href="/ai-automation/" style="left:50%;top:50%"><img src="/img/3d/diagnose.webp" alt="" width="480" height="480" loading="lazy" /><span>Your data + AI</span><small>the brain of the engine</small></a>
+        {nodes.map((n) => (
+          <a class="node" href={'/' + n.slug + '/'} style={`left:${n.x}%;top:${n.y}%;text-decoration:none`}>
+            <img src={`/img/3d/${n.icon}.webp`} alt="" width="480" height="480" loading="lazy" />
+            <span>{n.label}</span><small>{n.sub}</small>
+          </a>
+        ))}
+      </div>
+      <div class="era">
+        <div class="reveal">
+          <h3>How it used to work</h3>
+          <ul>
+            <li>One email platform and a few campaigns a month</li>
+            <li>Spam filters mostly checked for an SPF record</li>
+            <li>Social, email and sales run by different people</li>
+            <li>Reports pulled together by hand at month end</li>
+          </ul>
+        </div>
+        <div class="now reveal d1">
+          <h3>How it works now</h3>
+          <ul>
+            <li>Google, Yahoo and Microsoft enforce authentication and spam-rate limits on bulk senders</li>
+            <li>AI-written mail floods every inbox, so relevance and reputation decide who gets read</li>
+            <li>Followers, subscribers and leads have to move through one connected system</li>
+            <li>AI agents research, sort, reply and update the CRM around the clock</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="section">
     <div class="wrap">
       <div class="center">
         <span class="eyebrow">What we do</span>
-        <h2>Four services, one lane: email that earns</h2>
-        <p class="lead">Each one starts with a measured diagnosis and ends with a re-test, so you see the before and after in numbers.</p>
+        <h2 data-split>Six services. <em>One</em> revenue engine.</h2>
+        <p class="lead reveal">Each one starts with a measured diagnosis and ends with a re-test, so you see the before and after in numbers.</p>
       </div>
-      <div class="stack" style="margin-top:40px">
-        {SERVICES.map((s) => (
-          <a class="svc-card" href={'/' + s.slug + '/'}>
-            <div>
-              <h3>{s.card}</h3>
-              <p>{s.blurb}</p>
-              <p class="from">{s.from ? `From ${usd(s.from)}` : 'Scoped per account'} &rarr;</p>
-            </div>
-            <Mock kind={mocks[s.slug as keyof typeof mocks]} />
+      <div class="grid3" style="margin-top:46px">
+        {SERVICES.map((s, i) => (
+          <a class={'svc reveal' + (s.isNew ? ' new' : '') + ' d' + (i % 3)} href={'/' + s.slug + '/'} data-tilt>
+            <span class="num">0{i + 1}</span>
+            <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D illustration representing ${s.card.toLowerCase()} services`} width="480" height="480" loading="lazy" />
+            <h3>{s.card}</h3>
+            <p>{s.blurb}</p>
+            <span class="from">{s.from ? `From ${usd(s.from)}` : 'Scoped to your account'}</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
+  <section class="section" style="background:var(--paper)">
+    <div class="wrap hook">
+      <div class="frame reveal" data-tilt>
+        <span class="tag">Deliverability</span>
+        <video muted loop playsinline preload="none" poster="/video/inbox-hook-poster.webp" data-lazy aria-label="Animation of an email avoiding the spam tray and landing in the inbox">
+          <source data-src="/video/inbox-hook.webm" type="video/webm" /><source data-src="/video/inbox-hook.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div>
+        <span class="eyebrow">Inbox or spam?</span>
+        <h2 data-split>It is decided <em>before</em> anyone reads a word.</h2>
+        <p class="lead reveal">Mailbox providers judge your authentication, reputation and complaint rate before your subject line is ever seen. Get those wrong and the best copy in the world lands in spam. We test every one of them and fix what fails.</p>
+        <div class="btns reveal"><a class="btn dark" href="/email-deliverability/"><span class="arr" aria-hidden="true">&#8599;</span>See the deliverability audit</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap hook flip">
+      <div class="frame reveal" data-tilt>
+        <span class="tag">AI automation</span>
+        <video muted loop playsinline preload="none" poster="/video/ai-engine-poster.webp" data-lazy aria-label="Animation of an AI chip sending signals to email, social, calendar and funnel">
+          <source data-src="/video/ai-engine.webm" type="video/webm" /><source data-src="/video/ai-engine.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div>
+        <span class="eyebrow">One engine, every channel</span>
+        <h2 data-split>Let AI do the <em>busywork.</em> Keep the judgment human.</h2>
+        <p class="lead reveal">We build agents and workflows that research leads, sort replies, draft follow-ups, post content and update your CRM, with a person approving anything that leaves the building.</p>
+        <div class="btns reveal"><a class="btn dark" href="/ai-automation/"><span class="arr" aria-hidden="true">&#8599;</span>Explore AI automation</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Public Upwork record">
+    <ul class="strip wrap">
+      <li><strong data-count="123">123</strong>Upwork jobs completed</li>
+      <li><strong data-count="300" data-pre="$" data-suf="K+">$300K+</strong>earned on Upwork</li>
+      <li><strong data-count="8700" data-suf="+">8,700+</strong>hours of client work</li>
+      <li><strong data-count="100" data-suf="%">100%</strong>Job Success score</li>
+    </ul>
+  </section>
+
+  <section class="section">
     <div class="wrap">
       <div class="center">
         <span class="eyebrow">Case studies</span>
-        <h2>Real work, measured results</h2>
-        <p class="lead">Six client projects. Every number below links to the full story with the baseline and the period it was measured over.</p>
+        <h2 data-split>Real work. <em>Measured</em> results.</h2>
+        <p class="lead reveal">Every number links to the full story with the baseline and the period it was measured over.</p>
       </div>
-      <div class="grid3" style="margin-top:40px">
-        {CASES.map((c) => (
-          <article class="card case">
+      <div class="grid3" style="margin-top:44px">
+        {CASES.map((c, i) => (
+          <article class={'card case reveal d' + (i % 3)}>
             <span class="tag">{c.client} &middot; {c.industry}</span>
             <h3><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h3>
             <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
@@ -79,44 +179,26 @@ const schema = [{ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type'
     </div>
   </section>
 
-  <section class="band section" style="border-radius:28px 28px 0 0">
-    <div class="wrap">
-      <span class="eyebrow" style="color:#CFE3DA">How it works</span>
-      <h2>From diagnosis to measured result in four steps</h2>
-      <ol class="steps" style="margin-top:36px">
-        <li><h3>Diagnose</h3><p>We test your domains, DNS records and inbox placement, and read your funnel numbers. You get a written fault list in priority order.</p></li>
-        <li><h3>Fix</h3><p>We change the records, sending setup, flows and pages ourselves, with access you grant and can revoke at any time.</p></li>
-        <li><h3>Launch</h3><p>Outbound sequences and lifecycle flows go live on infrastructure we have already tested.</p></li>
-        <li><h3>Measure</h3><p>We re-test placement and report replies, meetings and revenue against the baseline from step one.</p></li>
+  <section class="section" style="background:var(--paper)">
+    <div class="wrap process">
+      <div class="sticky">
+        <span class="eyebrow">How it works</span>
+        <h2 data-split>From diagnosis to <em>measured</em> result.</h2>
+        <p class="lead reveal">Four steps on every project, whether it is one domain or your whole revenue engine.</p>
+        <div class="btns reveal"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Start with a fit call</a></div>
+      </div>
+      <ol class="steps">
+        <li class="reveal"><img src="/img/3d/diagnose.webp" alt="3D magnifying glass over a chart for the diagnosis step" width="480" height="480" loading="lazy" /><div><h3>Diagnose</h3><p>We test your domains, DNS records, inbox placement, funnel numbers and channels. You get a written fault list in priority order.</p></div></li>
+        <li class="reveal"><img src="/img/3d/shield.webp" alt="3D shield and envelope for the fix step" width="480" height="480" loading="lazy" /><div><h3>Fix</h3><p>We change the records, sending setup, flows, pages and automations ourselves, with access you grant and can revoke.</p></div></li>
+        <li class="reveal"><img src="/img/3d/plane.webp" alt="3D paper plane taking off for the launch step" width="480" height="480" loading="lazy" /><div><h3>Launch</h3><p>Outbound, lifecycle flows, content and agents go live on infrastructure we have already tested.</p></div></li>
+        <li class="reveal"><img src="/img/3d/calendar.webp" alt="3D calendar with a booked meeting for the measure step" width="480" height="480" loading="lazy" /><div><h3>Measure</h3><p>We re-test and report replies, meetings and revenue against the baseline from step one.</p></div></li>
       </ol>
     </div>
   </section>
-  <section class="dark" style="border-radius:0">
-    <ul class="strip wrap" aria-label="Public Upwork record">
-      {PROOF.map((p) => <li><strong>{p.value}</strong>{p.label}</li>)}
-    </ul>
-  </section>
 
   <section class="section">
-    <div class="wrap grid2" style="align-items:start">
-      <div>
-        <span class="eyebrow">Why us</span>
-        <h2>One lane, done by the person you talk to</h2>
-      </div>
-      <div class="prose">
-        <h3>Eleven years on email</h3>
-        <p>Email marketing, deliverability, cold email and the funnels around them. We do not run social media accounts or build brands, so the work stays deep.</p>
-        <h3>You work with the person who does the work</h3>
-        <p>Kunal Arora runs every audit and every setup himself. No hand-off to a junior after the sales call.</p>
-        <h3>Proof you can check</h3>
-        <p>Our Upwork record is public: 123 jobs, $300K+ earned, 100% Job Success. Our own domain passes the checks we sell: SPF, 2048-bit DKIM and DMARC at reject.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top:0">
-    <div class="narrow">
-      <blockquote class="card" style="margin:0">
+    <div class="narrow center">
+      <blockquote style="margin:0" class="reveal">
         <p class="quote">"We knew marketing was powerful, but we struggled to find a partner who could address our unique pain points and help us scale sustainably. Both Barbara and Kunal simply nailed it."</p>
         <p>Debra Becker, Founder and CEO, Dimov Associates</p>
       </blockquote>
@@ -131,13 +213,13 @@ const schema = [{ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type'
     </div>
   </section>
 
-  <section class="band section">
-    <div class="wrap center">
-      <h2>Find out why your email is not landing. Then fix it.</h2>
-      <p class="lead">Tell us what is happening and we reply with a first read of your DNS records, before any call.</p>
-      <div class="btns" style="justify-content:center">
-        <a class="btn" href="/contact/" style="background:#00D47E;border-color:#00D47E;color:#034F46;box-shadow:none"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a>
-        <a class="btn ghost" href="/case-studies/" style="color:#fff">See case studies</a>
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Find out why your email is not landing. <em>Then fix it.</em></h2>
+        <p>Tell us what is happening and we reply within one working day with a first read of your DNS records, before any call.</p>
+        <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a><a class="btn ghost" href="/case-studies/" style="--fg:#fff">See case studies</a></div>
+        <img class="ico" src="/img/3d/plane.webp" alt="" width="480" height="480" loading="lazy" data-parallax="0.1" />
       </div>
     </div>
   </section>

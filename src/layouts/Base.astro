@@ -7,9 +7,9 @@ import { SITE } from '../data/site';
 interface Crumb { name: string; path: string }
 interface Props {
   title: string; description: string; path: string; pageType: string;
-  crumbs?: Crumb[]; schema?: object[]; noindex?: boolean; ogImage?: string;
+  crumbs?: Crumb[]; schema?: object[]; noindex?: boolean; ogImage?: string; darkHero?: boolean;
 }
-const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png' } = Astro.props;
+const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png', darkHero = false } = Astro.props;
 const url = SITE.url + path;
 const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
 const org = {
@@ -37,14 +37,16 @@ const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
   <link rel="canonical" href={url} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="page_type" content={pageType} />
-  <link rel="preload" href="/fonts/goudy-400.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/instrument-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <script is:inline>document.documentElement.classList.add('js')</script>
+  <script defer src="/js/motion.js"></script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="alternate" type="application/rss+xml" title="The Grow Revenue Company blog" href="/rss.xml" />
-  <meta name="theme-color" content="#034F46" />
+  <meta name="theme-color" content="#0B3D2E" />
   <meta property="og:type" content={pageType === 'article' ? 'article' : 'website'} />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:title" content={title} />
@@ -62,10 +64,10 @@ const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <Header />
+  <Header dark={darkHero} />
   <main id="main">
     {crumbs.length > 0 && (
-      <nav class="wrap crumbs" aria-label="Breadcrumb" style="padding-top:22px">
+      <nav class="wrap crumbs" aria-label="Breadcrumb" style="padding-top:100px;margin-bottom:-120px;position:relative;z-index:2">
         <a href="/">Home</a>{crumbs.map((c, i) => <> / {i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}</>)}
       </nav>
     )}

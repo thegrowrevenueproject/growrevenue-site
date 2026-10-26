@@ -23,13 +23,13 @@ export const PROOF = [
 
 export type Tier = { name: string; price: number; days: number; items: string };
 export type Service = {
-  slug: string; nav: string; card: string; blurb: string; from: number | null; tiers: Tier[];
+  slug: string; nav: string; card: string; blurb: string; from: number | null; tiers: Tier[]; icon: string; isNew?: boolean;
 };
 
 // Prices match the Upwork project catalog (checklist C-02).
 export const SERVICES: Service[] = [
   {
-    slug: 'email-deliverability', nav: 'Email deliverability', card: 'Email deliverability',
+    slug: 'email-deliverability', icon: 'shield', nav: 'Email deliverability', card: 'Email deliverability',
     blurb: 'Your email goes to spam or Promotions and you do not know why. We test SPF, DKIM, DMARC, BIMI, blacklists, reputation and the Google and Yahoo sender rules, fix what fails, and re-test inbox placement.',
     from: 350,
     tiers: [
@@ -39,7 +39,7 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    slug: 'cold-email-infrastructure', nav: 'Cold email infrastructure', card: 'Cold email infrastructure',
+    slug: 'cold-email-infrastructure', icon: 'plane', nav: 'Cold email infrastructure', card: 'Cold email infrastructure',
     blurb: 'Separate sending domains, Google Workspace or Microsoft 365 mailboxes, authentication, warmup and safe daily limits in Instantly or Smartlead. Then a sequence written and launched.',
     from: 600,
     tiers: [
@@ -49,12 +49,12 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    slug: 'lifecycle-email-marketing', nav: 'Lifecycle email marketing', card: 'Lifecycle email',
+    slug: 'lifecycle-email-marketing', icon: 'loop', nav: 'Lifecycle email marketing', card: 'Lifecycle email',
     blurb: 'Welcome, abandoned cart, post-purchase and win-back flows in Klaviyo, HubSpot or ActiveCampaign, segmented by behavior and measured by revenue, not opens.',
     from: null, tiers: [],
   },
   {
-    slug: 'funnel-audit', nav: 'Funnel audit and automation', card: 'Funnel audit and automation',
+    slug: 'funnel-audit', icon: 'funnel', nav: 'Funnel audit and automation', card: 'Funnel audit and automation',
     blurb: 'We measure drop-off at every step from first click to purchase and fix the biggest leaks in pages, forms, CRM routing and follow-up automation.',
     from: 500,
     tiers: [
@@ -62,6 +62,16 @@ export const SERVICES: Service[] = [
       { name: 'Audit and fix', price: 1500, days: 10, items: 'Audit plus the top 5 fixes built: pages, forms, sequences, automation' },
       { name: 'Rebuild', price: 3500, days: 21, items: 'The weakest stages rebuilt, a new nurture sequence, 2 weeks of post-launch tuning' },
     ],
+  },
+  {
+    slug: 'social-media-marketing', icon: 'social', isNew: true, nav: 'Social media marketing', card: 'Social media marketing',
+    blurb: 'Content strategy, short-form video, scheduled posting and paid social for Instagram, TikTok, LinkedIn, Facebook and YouTube, connected to email so followers become subscribers and buyers.',
+    from: null, tiers: [],
+  },
+  {
+    slug: 'ai-automation', icon: 'ai', isNew: true, nav: 'AI automation', card: 'AI automation',
+    blurb: 'AI agents and workflows in n8n, Make and Zapier with OpenAI and Claude: lead research, inbox triage, content pipelines, CRM updates and reporting that run without manual work.',
+    from: null, tiers: [],
   },
 ];
 

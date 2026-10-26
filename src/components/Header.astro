@@ -1,31 +1,30 @@
 ---
 import Logo from './Logo.astro';
-import { SITE } from '../data/site';
+const { dark = false } = Astro.props;
 const links = [
   ['/email-deliverability/', 'Deliverability'],
   ['/cold-email-infrastructure/', 'Cold email'],
-  ['/lifecycle-email-marketing/', 'Lifecycle email'],
+  ['/lifecycle-email-marketing/', 'Lifecycle'],
   ['/funnel-audit/', 'Funnels'],
-  ['/case-studies/', 'Case studies'],
-  ['/about/', 'About'],
+  ['/social-media-marketing/', 'Social'],
+  ['/ai-automation/', 'AI automation'],
+  ['/case-studies/', 'Results'],
 ];
 ---
-<header class="top">
+<header class={'top' + (dark ? ' over-dark' : '')}>
   <div class="wrap">
-    <a class="brand" href="/" aria-label={SITE.name + ' home'}><Logo size={30} /> Grow Revenue</a>
+    <a class="brand" href="/" aria-label="The Grow Revenue Company home"><Logo size={34} /><span class="bt">The Grow Revenue <em>Company</em></span></a>
     <nav class="nav" aria-label="Main">
       {links.map(([href, label]) => <a href={href}>{label}</a>)}
     </nav>
-    <a class="btn nav-cta" href="/contact/" style="min-height:44px"><span class="arr" aria-hidden="true">&raquo;</span>Book a fit call</a>
+    <a class="btn nav-cta" href="/contact/" style="min-height:46px;padding:5px 18px 5px 5px;font-size:.92rem"><span class="arr" aria-hidden="true" style="width:34px;height:34px">&#8599;</span>Book a call</a>
     <details class="menu">
       <summary>Menu</summary>
       <div class="menu-panel">
         {links.map(([href, label]) => <a href={href}>{label}</a>)}
+        <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
       </div>
     </details>
   </div>
 </header>
-<style>
-  @media (max-width: 920px) { .nav-cta { display: none; } }
-</style>

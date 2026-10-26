@@ -1,40 +1,22 @@
 ---
 import Logo from './Logo.astro';
 import { SITE, SERVICES } from '../data/site';
-const year = 2026;
 ---
 <footer class="foot">
   <div class="wrap">
+    <p class="big">Let's grow your <em>revenue.</em></p>
     <div class="cols">
       <div>
-        <a class="brand" href="/" style="color:#fff"><Logo size={30} /> Grow Revenue</a>
-        <p style="margin-top:14px;max-width:34ch">Email deliverability, cold email infrastructure, lifecycle email and funnel audits for businesses in the US, UK, Canada and Europe.</p>
+        <a class="brand" href="/" style="color:#fff"><Logo size={32} /><span class="bt">The Grow Revenue <em>Company</em></span></a>
+        <p style="margin-top:16px;max-width:36ch">Email deliverability, cold email, lifecycle email, funnels, social media and AI automation for businesses in the US, UK, Canada and Europe.</p>
         <p><a href={'mailto:' + SITE.email}>{SITE.email}</a></p>
       </div>
-      <div>
-        <h2>Services</h2>
-        <ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a></li>)}</ul>
-      </div>
-      <div>
-        <h2>Company</h2>
-        <ul>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/kunal-arora/">Kunal Arora</a></li>
-          <li><a href="/case-studies/">Case studies</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Policies</h2>
-        <ul>
-          <li><a href="/privacy/">Privacy policy</a></li>
-          <li><a href="/terms/">Terms of service</a></li>
-          <li><a href="/editorial-policy/">Editorial policy</a></li>
-        </ul>
-      </div>
+      <div><h2>Services</h2><ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a></li>)}</ul></div>
+      <div><h2>Company</h2><ul><li><a href="/about/">About</a></li><li><a href="/kunal-arora/">Kunal Arora</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+      <div><h2>Policies</h2><ul><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of service</a></li><li><a href="/editorial-policy/">Editorial policy</a></li></ul></div>
     </div>
     <div class="legal">
-      <span>&copy; {year} {SITE.legalName}{SITE.companyNumber ? `, registered in England and Wales, company number ${SITE.companyNumber}` : ''}. {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom.</span>
+      <span>&copy; 2026 {SITE.legalName}{SITE.companyNumber ? `, registered in England and Wales, company number ${SITE.companyNumber}` : ''}. {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom.</span>
       <span>Published by {SITE.name}</span>
     </div>
   </div>

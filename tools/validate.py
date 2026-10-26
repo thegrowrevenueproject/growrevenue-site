@@ -49,6 +49,7 @@ for path, s in pages.items():
     if og: chk(path, "I-08", "BLOCK", og["content"].replace(SITE, "") in static, og["content"])
     for img in main.find_all("img"):
         alt = img.get("alt", ""); n = len(alt.split())
+        if img.has_attr("alt") and alt == "": continue  # decorative image, allowed (I-09 decorative exclusion)
         chk(path, "O-12", "BLOCK", 5 <= n <= 14 and img.get("width") and img.get("height"), f"img {img.get('src')} alt {n} words")
     # links
     for a in s.find_all("a", href=True):

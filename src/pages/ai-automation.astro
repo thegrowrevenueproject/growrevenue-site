@@ -1,0 +1,58 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['Which tools do you build with?', 'n8n, Make and Zapier for workflows; OpenAI and Claude models for reading, writing and classifying; Airtable, Google Sheets or your CRM as the record; and Telegram or Slack for approvals and alerts.'],
+  ['Will AI send things to my customers on its own?', 'Only if you want it to. By default anything that leaves your business, such as an email, a post or a quote, waits for a person to approve it. Internal work like tagging, routing and reporting runs on its own.'],
+  ['Is my data safe?', 'We use business API accounts that do not train models on your data, keep credentials in your own accounts, log every action the automation takes, and give you a switch to pause any workflow.'],
+  ['How is AI automation priced?', 'Each automation is scoped and priced as a fixed project after a free call where we map the process. Running costs, such as the AI model and workflow tool, are billed to your own accounts so you see them directly.'],
+];
+---
+<Service slug="ai-automation"
+  title="AI Automation Agency for Marketing and Sales | Grow Revenue"
+  description="AI automation agency building agents and workflows in n8n, Make and Zapier with OpenAI and Claude: lead research, inbox triage, content, CRM and reports."
+  h1="AI automation agency: agents and workflows that do the busywork in your marketing and sales"
+  answer="An AI automation agency builds software agents and workflows that do repetitive work for you. We connect tools like n8n, Make and Zapier to AI models from OpenAI and Anthropic to research leads, sort and draft replies, produce content, update your CRM and report results, with a person approving anything that reaches a customer."
+  cases={[]} serviceType="AI automation" faq={faq}>
+
+  <h2>What can AI automation do in marketing and sales?</h2>
+  <p>AI automation can handle most work that follows a pattern but needs a little reading or writing. These are the jobs we automate most often:</p>
+  <div class="table-wrap"><table>
+    <caption>Common AI automations and what they replace</caption>
+    <thead><tr><th>Automation</th><th>What it does</th><th>What it replaces</th></tr></thead>
+    <tbody>
+      <tr><td>Lead research agent</td><td>Finds companies that match your criteria, reads their site, and writes a one-line reason to contact each</td><td>Hours of manual prospect research</td></tr>
+      <tr><td>Inbox triage</td><td>Reads every reply, labels it (interested, not now, unsubscribe, out of office) and drafts the next step</td><td>Sorting replies by hand</td></tr>
+      <tr><td>Speed-to-lead responder</td><td>Answers a new form lead within a minute and alerts the owner</td><td>Leads waiting hours for a first reply</td></tr>
+      <tr><td>Content pipeline</td><td>Drafts articles or posts from a brief, checks them against your rules, and queues them for approval</td><td>Starting every piece from a blank page</td></tr>
+      <tr><td>CRM hygiene</td><td>Fills missing fields, merges duplicates and moves deals when emails show progress</td><td>Messy pipelines nobody trusts</td></tr>
+      <tr><td>Reporting</td><td>Pulls numbers from every tool into one daily or weekly summary in Slack or Telegram</td><td>Spreadsheets built by hand</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How do we keep AI from making mistakes in front of customers?</h2>
+  <p>We keep AI from making mistakes in front of customers with three rules built into every workflow. First, a person approves anything that leaves the business until the automation has earned trust. Second, every output is checked against hard rules, such as word limits, banned claims and required links, before it reaches the approval step. Third, every action is logged, so you can see what ran, when and why.</p>
+
+  <h2>We run our own business on these systems</h2>
+  <p>Our own blog publishing runs on an AI pipeline that drafts each article, checks it against more than 150 written rules, and sends it to Telegram where a person approves or rejects it. We build for clients the same way we build for ourselves.</p>
+
+  <h2>How does an AI automation project run?</h2>
+  <ol>
+    <li><strong>Map the process.</strong> On a call we walk through the work as it happens today, step by step, and pick the steps worth automating.</li>
+    <li><strong>Build a pilot.</strong> We build the automation on a small slice of real work, with approvals switched on.</li>
+    <li><strong>Measure.</strong> We compare time spent and error rate against the manual baseline for two to four weeks.</li>
+    <li><strong>Hand over.</strong> You get the workflow in your own accounts, written documentation and a short video walkthrough.</li>
+  </ol>
+
+  <h2>Which tool should you use: n8n, Make or Zapier?</h2>
+  <p>The right workflow tool depends on volume, budget and who maintains it. Zapier is the easiest for non-technical teams. Make handles more complex branching at a lower price. n8n can be self-hosted, which keeps data on your own server and keeps costs flat as volume grows. We build in whichever you already use, and recommend one only when you are starting fresh.</p>
+
+  <h2>Which processes should you automate first?</h2>
+  <p>Automate first the processes that happen often, follow the same steps each time, and hurt when they are slow. A useful test is to count how many times a week a task happens and how many minutes it takes; multiply the two, and start with the biggest number. Tasks that need judgment about money, legal terms or a sensitive customer conversation stay with people, with AI preparing the material for them.</p>
+  <p>For most marketing and sales teams the first three are the same: answering new leads fast, sorting replies from outbound campaigns, and building the weekly report. Each saves hours every week and carries little risk, because the output is checked before it matters.</p>
+
+  <h2>What happens after launch?</h2>
+  <p>After launch we watch every automation for two weeks, fix the edge cases real data exposes, and then switch on any steps you want to run without approval. Workflow tools and AI models change often, so we offer an optional monthly plan that keeps each automation tested and up to date. Without it, you still own and can run everything we built.</p>
+
+  <h2>What do you need from me?</h2>
+  <p>Access to the tools involved, one person who knows the current process, a business account with an AI model provider, and a channel such as Slack or Telegram for approvals and alerts.</p>
+</Service>

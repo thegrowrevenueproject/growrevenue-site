@@ -16,3 +16,9 @@ https://:project.pages.dev/*
 
 https://:version.:project.pages.dev/*
   X-Robots-Tag: noindex
+
+/video/*
+  Cache-Control: public, max-age=2592000
+
+/js/*
+  Cache-Control: public, max-age=86400

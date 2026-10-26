@@ -1,0 +1,23 @@
+---
+// Platforms we work in. Icons from Simple Icons (CC0) where the brand is in the set; otherwise the name in text.
+import * as si from 'simple-icons';
+type I = { title: string; path?: string };
+const pick = (k: string, title: string): I => ({ title, path: (si as any)[k]?.path });
+const row1: I[] = [pick('siHubspot', 'HubSpot'), { title: 'Klaviyo' }, pick('siMailchimp', 'Mailchimp'), { title: 'ActiveCampaign' }, { title: 'GoHighLevel' }, pick('siShopify', 'Shopify'), pick('siWoocommerce', 'WooCommerce'), pick('siGmail', 'Google Workspace'), { title: 'Microsoft 365' }, { title: 'Instantly' }, { title: 'Smartlead' }, pick('siBrevo', 'Brevo')];
+const row2: I[] = [pick('siN8n', 'n8n'), pick('siMake', 'Make'), pick('siZapier', 'Zapier'), { title: 'OpenAI' }, pick('siClaude', 'Claude'), pick('siAirtable', 'Airtable'), pick('siNotion', 'Notion'), pick('siMeta', 'Meta'), pick('siInstagram', 'Instagram'), pick('siTiktok', 'TikTok'), pick('siYoutube', 'YouTube'), { title: 'LinkedIn' }, pick('siGoogleads', 'Google Ads'), pick('siGoogleanalytics', 'Google Analytics'), pick('siCalendly', 'Calendly'), pick('siWordpress', 'WordPress')];
+const chip = (i: I) => i;
+---
+<section class="ribbon" aria-label="Platforms we work in">
+  <p>Platforms we build in every week</p>
+  {[row1, row2].map((row, r) => (
+    <div class={'marquee' + (r ? ' rev' : '')}>
+      {[0, 1].map((dup) => (
+        <div class="track" aria-hidden={dup ? 'true' : undefined}>
+          {row.map(chip).map((i) => i.path
+            ? <span class="logo-chip"><svg viewBox="0 0 24 24" role="img" aria-label={i.title}><path d={i.path} /></svg>{i.title}</span>
+            : <span class="logo-chip txt">{i.title}</span>)}
+        </div>
+      ))}
+    </div>
+  ))}
+</section>
