@@ -1,0 +1,8 @@
+name = "growrevenue-v2"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "growrevenue-leads"
+database_id = "7b2eefd0-dfae-452b-a0d3-fd3bee1671fa"

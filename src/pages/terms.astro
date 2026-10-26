@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="Terms of Service for Our Fixed Price Packages | Grow Revenue"
+  description="Terms for The Grow Revenue Company's fixed-price packages: scope, access, payment, revisions, refunds and what we can and cannot promise about inbox placement."
+  path="/terms/" pageType="trust" crumbs={[{ name: 'Terms of service', path: '/terms/' }]}>
+  <section class="section" style="padding-top:20px"><div class="narrow prose">
+    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem)">Terms of service</h1>
+    <p>Last updated October 26, 2026. These terms apply when you buy a package from {SITE.legalName} directly. Work bought through Upwork follows Upwork's terms instead.</p>
+    <h2>What is included in a package?</h2>
+    <p>Exactly what the package lists on its service page at the time you buy, delivered within the stated number of working days after we receive the access and information listed under "What do you need from me". Anything else is quoted separately before we start.</p>
+    <h2>How does payment work?</h2>
+    <p>Fixed-price packages are paid in full before work starts, in US dollars, by bank transfer or card through an invoice link. Scoped projects follow the payment schedule in their written quote.</p>
+    <h2>Revisions</h2>
+    <p>Written deliverables such as audit reports and email copy include one round of revisions within 14 days of delivery.</p>
+    <h2>Refunds</h2>
+    <p>If we have not started work, you get a full refund. Once work has started, we refund the share of the package not yet delivered. If we miss a delivery date by more than five working days for reasons on our side, you may cancel and receive a full refund.</p>
+    <h2>What can we promise?</h2>
+    <p>We promise that every fault we list in a report is real and that every fix in a fix package is made and re-tested. We cannot promise inbox placement, open rates, replies or revenue, because those depend on mailbox providers, your list and your offer, which neither of us controls.</p>
+    <h2>Access and confidentiality</h2>
+    <p>We use the access you grant only for the agreed work, keep your data confidential, and you can revoke access at any time. You own everything we build for you: domains, mailboxes, flows, copy and reports.</p>
+    <h2>Governing law</h2>
+    <p>These terms are governed by the laws of England and Wales. Questions: <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
+  </div></section>
+</Base>

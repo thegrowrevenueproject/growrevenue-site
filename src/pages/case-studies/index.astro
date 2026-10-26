@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CASES } from '../../data/site';
+---
+<Base title="Email Marketing Case Studies With the Numbers | Grow Revenue"
+  description="Six email marketing, cold email and funnel case studies with the baseline, what we changed and the measured result, across ecommerce, B2B, legal and coaching."
+  path="/case-studies/" pageType="hub" crumbs={[{ name: 'Case studies', path: '/case-studies/' }]}>
+  <section class="hero" style="padding-top:20px">
+    <div class="wrap" style="display:block">
+      <h1 style="max-width:20ch">Email marketing case studies with the numbers behind them</h1>
+      <p class="lead">Six client projects across ecommerce, B2B services, a creator platform, coaching, legal and an agency. Each page shows the starting point, what we changed and the measured result, with the period it was measured over.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="wrap grid3">
+      {CASES.map((c) => (
+        <article class="card case">
+          <span class="tag">{c.client} &middot; {c.industry}</span>
+          <h2 style="font-size:1.45rem"><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h2>
+          <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

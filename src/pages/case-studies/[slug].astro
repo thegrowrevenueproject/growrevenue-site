@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE, CASES, svc } from '../../data/site';
+import { CASE_BODY } from '../../data/cases';
+export function getStaticPaths() { return CASES.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const b = CASE_BODY[c.slug];
+const s = svc(c.service);
+const path = '/case-studies/' + c.slug + '/';
+const title = `${c.client} Case Study: ${c.headline}`;
+const fit = (t: string, max: number) => (t.length <= max ? t : t.slice(0, t.lastIndexOf(' ', max - 1)));
+const metaTitle = c.seoTitle + ' | Grow Revenue';
+const desc = fit(`${c.client} case study: ${c.headline.charAt(0).toLowerCase() + c.headline.slice(1)} (${c.period}). The starting point, what we changed and every measured result, with the period.`, 160);
+const schema = [{ '@type': 'Article', '@id': SITE.url + path + '#article', headline: title, description: desc, author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' }, about: { '@type': 'Organization', name: c.client }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true }];
+---
+<Base title={metaTitle} description={desc} path={path} pageType="case" schema={schema}
+  crumbs={[{ name: 'Case studies', path: '/case-studies/' }, { name: c.client, path }]}>
+  <article class="section" style="padding-top:20px">
+    <div class="narrow prose">
+      <span class="eyebrow">{c.industry} &middot; {s.nav}</span>
+      <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">{c.client}: {c.headline}</h1>
+      <p class="lead">{b.summary}</p>
+      <h2>Where did {c.client} start?</h2>
+      <ul>{b.before.map((x) => <li>{x}</li>)}</ul>
+      <h2>What did we change?</h2>
+      {b.changes.map((x) => <><h3>{x.h}</h3><p>{x.p}</p></>)}
+      <h2>What were the results?</h2>
+      <div class="table-wrap"><table>
+        <caption>{c.client} results, measured over the {c.period}</caption>
+        <thead><tr><th>Metric</th><th>Result</th></tr></thead>
+        <tbody>{b.details.map(([m, v]) => <tr><td>{m}</td><td><strong>{v}</strong></td></tr>)}</tbody>
+      </table></div>
+      {c.quote && (<blockquote class="card" style="margin:28px 0"><p class="quote">"{c.quote.text}"</p><p>{c.quote.who}</p></blockquote>)}
+      <h2>Which service produced this result?</h2>
+      <p>This project used our <a href={'/' + s.slug + '/'}>{s.nav.toLowerCase()}</a> work. {s.blurb}</p>
+      <p class="note">Results are as reported for this client over the period shown. Results for your business depend on your offer, list and market.</p>
+      <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a><a class="btn ghost" href="/case-studies/">All case studies</a></div>
+    </div>
+  </article>
+</Base>

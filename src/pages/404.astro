@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { SERVICES } from '../data/site';
+---
+<Base title="Page Not Found on growrevenue.co | The Grow Revenue Company" description="This page does not exist or has moved. Find our email deliverability, cold email, lifecycle email and funnel audit services or contact us directly." path="/404/" pageType="utility" noindex>
+  <section class="section"><div class="narrow prose">
+    <h1>That page is not here</h1>
+    <p>It may have moved when we rebuilt the site. These are the pages most people look for:</p>
+    <ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a></li>)}<li><a href="/case-studies/">Case studies</a></li><li><a href="/contact/">Contact</a></li></ul>
+  </div></section>
+</Base>

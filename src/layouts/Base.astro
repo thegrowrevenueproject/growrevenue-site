@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site';
+
+interface Crumb { name: string; path: string }
+interface Props {
+  title: string; description: string; path: string; pageType: string;
+  crumbs?: Crumb[]; schema?: object[]; noindex?: boolean; ogImage?: string;
+}
+const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png' } = Astro.props;
+const url = SITE.url + path;
+const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
+const org = {
+  '@type': 'Organization', '@id': SITE.url + '/#org', name: SITE.name, legalName: SITE.legalName, url: SITE.url,
+  logo: SITE.url + '/logo.png', email: SITE.email,
+  address: { '@type': 'PostalAddress', streetAddress: SITE.address.street, addressLocality: SITE.address.city, postalCode: SITE.address.postcode, addressCountry: SITE.address.country },
+  founder: { '@id': SITE.url + '/kunal-arora/#person' },
+  ...(sameAs.length ? { sameAs } : {}),
+};
+const website = { '@type': 'WebSite', '@id': SITE.url + '/#website', name: SITE.name, url: SITE.url, publisher: { '@id': SITE.url + '/#org' }, inLanguage: 'en-US' };
+const webpage = { '@type': 'WebPage', '@id': url + '#webpage', url, name: title, description, isPartOf: { '@id': SITE.url + '/#website' }, inLanguage: 'en-US' };
+const graph: object[] = [org, website, webpage, ...schema];
+if (crumbs.length) {
+  graph.push({ '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [{ name: 'Home', path: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: SITE.url + c.path })) });
+}
+const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
+  {noindex && <meta name="robots" content="noindex, follow" />}
+  <meta name="page_type" content={pageType} />
+  <link rel="preload" href="/fonts/goudy-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="application/rss+xml" title="The Grow Revenue Company blog" href="/rss.xml" />
+  <meta name="theme-color" content="#034F46" />
+  <meta property="og:type" content={pageType === 'article' ? 'article' : 'website'} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:image" content={SITE.url + ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={SITE.url + ogImage} />
+  <script type="application/ld+json" set:html={ld} />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header />
+  <main id="main">
+    {crumbs.length > 0 && (
+      <nav class="wrap crumbs" aria-label="Breadcrumb" style="padding-top:22px">
+        <a href="/">Home</a>{crumbs.map((c, i) => <> / {i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}</>)}
+      </nav>
+    )}
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

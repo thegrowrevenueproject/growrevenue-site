@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
+const schema = [{ '@type': 'Person', '@id': SITE.url + '/kunal-arora/#person', name: 'Kunal Arora', url: SITE.url + '/kunal-arora/', image: SITE.url + '/img/kunal-arora.webp', jobTitle: 'Founder, email deliverability and cold email specialist', worksFor: { '@id': SITE.url + '/#org' }, knowsAbout: ['Email deliverability', 'DMARC', 'Cold email infrastructure', 'Lifecycle email marketing', 'Marketing automation', 'Sales funnels'], ...(sameAs.length ? { sameAs } : {}) }];
+---
+<Base title="Kunal Arora, Email Deliverability Specialist | Grow Revenue"
+  description="Kunal Arora founded The Grow Revenue Company and has completed 123 Upwork jobs with 100% Job Success across email deliverability, cold email and funnels."
+  path="/kunal-arora/" pageType="author" schema={schema} crumbs={[{ name: 'About', path: '/about/' }, { name: 'Kunal Arora', path: '/kunal-arora/' }]}>
+  <section class="section" style="padding-top:20px">
+    <div class="narrow prose">
+      <img src="/img/kunal-arora.webp" alt="Portrait photo of Kunal Arora, founder of The Grow Revenue Company" width="160" height="160" style="border-radius:50%;width:160px;height:160px;margin-bottom:20px" />
+      <h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Kunal Arora, email deliverability and cold email specialist</h1>
+      <p class="lead">Kunal Arora founded The Grow Revenue Company and has completed 123 jobs on Upwork with 100% Job Success and Top Rated Plus status, across more than 8,700 hours. He writes every article on this site.</p>
+      <h2>What does Kunal work on?</h2>
+      <p>Email deliverability audits and fixes, cold email infrastructure, lifecycle flows in Klaviyo, HubSpot and ActiveCampaign, and funnel audits with the automation behind them. He has worked in email marketing for over eleven years.</p>
+      <h2>Products he builds</h2>
+      <p>OutPumper, an Outlook add-in for sending outreach from your own Microsoft 365 mailboxes.</p>
+      <h2>Where to find him</h2>
+      <ul>
+        {SITE.linkedin && <li><a href={SITE.linkedin} rel="me noopener">LinkedIn</a></li>}
+        {SITE.upwork && <li><a href={SITE.upwork} rel="me noopener">Upwork profile and reviews</a></li>}
+        <li><a href={'mailto:' + SITE.email}>{SITE.email}</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>

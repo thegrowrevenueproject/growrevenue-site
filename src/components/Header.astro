@@ -1,0 +1,31 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../data/site';
+const links = [
+  ['/email-deliverability/', 'Deliverability'],
+  ['/cold-email-infrastructure/', 'Cold email'],
+  ['/lifecycle-email-marketing/', 'Lifecycle email'],
+  ['/funnel-audit/', 'Funnels'],
+  ['/case-studies/', 'Case studies'],
+  ['/about/', 'About'],
+];
+---
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label={SITE.name + ' home'}><Logo size={30} /> Grow Revenue</a>
+    <nav class="nav" aria-label="Main">
+      {links.map(([href, label]) => <a href={href}>{label}</a>)}
+    </nav>
+    <a class="btn nav-cta" href="/contact/" style="min-height:44px"><span class="arr" aria-hidden="true">&raquo;</span>Book a fit call</a>
+    <details class="menu">
+      <summary>Menu</summary>
+      <div class="menu-panel">
+        {links.map(([href, label]) => <a href={href}>{label}</a>)}
+        <a href="/contact/">Contact</a>
+      </div>
+    </details>
+  </div>
+</header>
+<style>
+  @media (max-width: 920px) { .nav-cta { display: none; } }
+</style>

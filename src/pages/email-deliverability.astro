@@ -1,0 +1,68 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['How long does it take to get out of spam?', 'DNS and authentication fixes take effect within hours. Reputation takes longer: after a fix, mailbox providers usually need two to six weeks of clean, consistent sending before placement fully recovers. We re-test placement at the end of each package so you see where you stand.'],
+  ['Do you need access to my DNS?', 'Yes, or to the person who manages it. On the Audit package we only read your records, which are public. On the fix packages we either make the changes ourselves with access you grant, or hand your DNS manager the exact records to paste.'],
+  ['Can you guarantee inbox placement?', 'No one can, and anyone who promises it is guessing. Filtering is decided by Gmail, Microsoft and Yahoo. What we guarantee is that every technical fault we find is fixed and re-tested, and that you get the before and after placement results in writing.'],
+  ['Do you work with my email platform?', 'Yes for Klaviyo, HubSpot, ActiveCampaign, Mailchimp, SendGrid, Google Workspace, Microsoft 365, Instantly, Smartlead and most others. Authentication works the same way on all of them; only the screens differ.'],
+];
+---
+<Service slug="email-deliverability"
+  title="Email Deliverability Consultant, Audit to Fix | Grow Revenue"
+  description="Email deliverability consultant for teams whose email lands in spam. SPF, DKIM, DMARC, reputation and inbox placement fixed and tested. Audit from $350."
+  h1="Email deliverability consultant: find out why your email lands in spam, then fix it"
+  answer="An email deliverability consultant tests why your messages miss the inbox and fixes the cause. We check SPF, DKIM, DMARC and BIMI, blacklists, domain and IP reputation, list hygiene and the Google, Yahoo and Microsoft sender rules, run an inbox placement test, and fix what fails."
+  mock="dmarc" cases={['synaps-dx', 'scalability']} serviceType="Email deliverability consulting" faq={faq}>
+
+  <h2>What does an email deliverability audit check?</h2>
+  <p>An email deliverability audit checks every layer between your send button and the recipient's inbox. We run the same twelve checks on every domain, so nothing depends on guesswork.</p>
+  <div class="table-wrap"><table>
+    <caption>The twelve checks in every audit</caption>
+    <thead><tr><th>Check</th><th>What we test</th><th>What failure looks like</th></tr></thead>
+    <tbody>
+      <tr><td>SPF</td><td>One record, every sender included, under 10 DNS lookups</td><td>Two SPF records, or a missing sending service</td></tr>
+      <tr><td>DKIM</td><td>2048-bit key, signing with your own domain</td><td>Mail signed only by the ESP's domain</td></tr>
+      <tr><td>DMARC</td><td>Policy, alignment, report address</td><td>No record, or p=none left for years with nobody reading reports</td></tr>
+      <tr><td>Alignment</td><td>From domain matches the SPF or DKIM domain</td><td>DMARC fails even though SPF and DKIM pass</td></tr>
+      <tr><td>BIMI</td><td>Logo record and certificate, if you want the logo shown</td><td>Record present but no enforced DMARC</td></tr>
+      <tr><td>Blacklists</td><td>Domain and IP against the major lists</td><td>Listing on Spamhaus or similar</td></tr>
+      <tr><td>Domain reputation</td><td>Google Postmaster Tools and Microsoft SNDS data</td><td>Reputation marked Low or Bad</td></tr>
+      <tr><td>Spam rate</td><td>User-reported complaints</td><td>Above 0.1% at Gmail</td></tr>
+      <tr><td>Unsubscribe</td><td>One-click List-Unsubscribe header and visible link</td><td>Header missing on marketing mail</td></tr>
+      <tr><td>DNS hygiene</td><td>Forward and reverse DNS, TLS</td><td>No PTR record on a dedicated IP</td></tr>
+      <tr><td>List quality</td><td>Bounce rate, role and catch-all addresses, list age</td><td>Hard bounces above 2%</td></tr>
+      <tr><td>Placement</td><td>Seed test across Gmail, Outlook and Yahoo</td><td>Promotions or spam on any provider</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Why do emails go to spam even with SPF and DKIM set up?</h2>
+  <p>SPF and DKIM passing is not the same as being trusted. The most common reasons we find on domains that look correctly set up are:</p>
+  <ul>
+    <li><strong>No alignment.</strong> SPF and DKIM pass for your email platform's domain, not yours, so DMARC still fails.</li>
+    <li><strong>A spam rate above the limit.</strong> Google asks bulk senders to keep user-reported spam under 0.1% and stops offering mitigation help at 0.3% (<a href="https://support.google.com/a/answer/81126" rel="noopener">Google email sender guidelines</a>).</li>
+    <li><strong>Old or bought lists.</strong> Addresses that bounce or never engage drag reputation down for everyone on your domain.</li>
+    <li><strong>Shared IP neighbors.</strong> On a shared sending IP, another sender's behavior affects you.</li>
+    <li><strong>Sudden volume jumps.</strong> Going from a few hundred to tens of thousands of sends in a day looks like a compromised account.</li>
+    <li><strong>Blocklisted link domains.</strong> A tracking or shortener domain in your links can be listed even when your own domain is clean.</li>
+  </ul>
+
+  <h2>What are the Google, Yahoo and Microsoft sender requirements?</h2>
+  <p>As of October 26, 2026, all three large mailbox providers require bulk senders to authenticate and to make unsubscribing easy. A bulk sender is anyone sending about 5,000 or more messages a day to that provider's users.</p>
+  <div class="table-wrap"><table>
+    <caption>Bulk sender requirements by provider, as of October 26, 2026</caption>
+    <thead><tr><th>Requirement</th><th>Google (Gmail)</th><th>Yahoo</th><th>Microsoft (Outlook.com)</th></tr></thead>
+    <tbody>
+      <tr><td>SPF and DKIM</td><td>Both</td><td>Both</td><td>Both</td></tr>
+      <tr><td>DMARC</td><td>At least p=none, aligned</td><td>At least p=none, must pass</td><td>At least p=none, aligned</td></tr>
+      <tr><td>One-click unsubscribe</td><td>Required on marketing mail</td><td>Required, processed within 2 days</td><td>Recommended</td></tr>
+      <tr><td>Spam rate</td><td>Under 0.1%, never 0.3%</td><td>Under 0.3%</td><td>Not published</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Sources: <a href="https://support.google.com/a/answer/81126" rel="noopener">Google email sender guidelines</a>, <a href="https://senders.yahooinc.com/best-practices" rel="noopener">Yahoo sender best practices</a>, <a href="https://techcommunity.microsoft.com/blog/outlook/strengthening-email-security-outlook-new-requirements-for-high-volume-senders/4399730" rel="noopener">Microsoft Outlook high-volume sender requirements</a>.</p>
+
+  <h2>What do you need from me?</h2>
+  <p>Four things: your sending domains, the name of your email platform, DNS access or the contact of the person who manages DNS, and one recent campaign report so we can see bounce and complaint numbers.</p>
+
+  <h2>Our own domain passes the same audit</h2>
+  <p>growrevenue.co publishes one SPF record, a 2048-bit DKIM key and a DMARC policy at p=reject with daily aggregate reports. You can check it yourself with any public DNS lookup tool before you hire us.</p>
+</Service>

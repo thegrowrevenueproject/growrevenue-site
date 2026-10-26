@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="Contact Kunal and Book a 20 Minute Fit Call | Grow Revenue"
+  description="Tell us what is happening with your email, outbound or funnel. Kunal replies within one working day with a first read of your DNS records, before any call."
+  path="/contact/" pageType="trust" crumbs={[{ name: 'Contact', path: '/contact/' }]}>
+  <section class="section" style="padding-top:20px">
+    <div class="wrap grid2" style="align-items:start">
+      <div class="prose">
+        <h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Contact us: tell us what is broken</h1>
+        <p class="lead">Kunal reads every message and replies within one working day.</p>
+        <h2>What happens next?</h2>
+        <ol>
+          <li>Kunal reads your message the same day.</li>
+          <li>You get a reply with a first read of your domain's DNS records, checked before we reply.</li>
+          <li>If it looks like a fit, you book a 20 minute call from the link in that reply.</li>
+        </ol>
+        <h2>Other ways to reach us</h2>
+        <p>Email: <a href={'mailto:' + SITE.email}>{SITE.email}</a><br />Address: {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom</p>
+      </div>
+      <form class="card" method="post" action="/api/lead" id="lead">
+        <div class="row"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" /></div>
+        <div class="row"><label for="email">Business email</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
+        <div class="row"><label for="website">Website</label><input id="website" name="website" type="url" placeholder="https://" autocomplete="url" /></div>
+        <div class="row"><label for="topic">What is happening?</label>
+          <select id="topic" name="topic" required>
+            <option value="">Choose one</option>
+            <option>Emails go to spam</option>
+            <option>Cold email gets no replies</option>
+            <option>Email flows are not making money</option>
+            <option>Funnel is leaking leads</option>
+            <option>Something else</option>
+          </select></div>
+        <div class="row"><label for="message">Tell us more</label><textarea id="message" name="message" rows="5"></textarea></div>
+        <div class="row"><label for="volume">Monthly email volume (optional)</label><input id="volume" name="volume" /></div>
+        <div class="hp" aria-hidden="true"><label for="company_url">Leave empty</label><input id="company_url" name="company_url" tabindex="-1" autocomplete="off" /></div>
+        <div class="row"><label class="check"><input type="checkbox" name="consent" required /> <span>I agree that The Grow Revenue Company may use these details to reply to me, as described in the <a href="/privacy/">privacy policy</a>.</span></label></div>
+        <button class="btn" type="submit"><span class="arr" aria-hidden="true">&raquo;</span>Send</button>
+        <p class="note" id="lead-status" role="status" style="margin-top:12px"></p>
+      </form>
+    </div>
+  </section>
+  <script>
+    const f = document.getElementById('lead') as HTMLFormElement;
+    const st = document.getElementById('lead-status')!;
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault(); st.textContent = 'Sending...';
+      try {
+        const r = await fetch('/api/lead', { method: 'POST', body: new FormData(f) });
+        if (r.ok) { f.reset(); st.textContent = 'Thank you. Kunal will reply within one working day.'; }
+        else { st.textContent = 'That did not go through. Please email kunal@growrevenue.co directly.'; }
+      } catch { st.textContent = 'That did not go through. Please email kunal@growrevenue.co directly.'; }
+    });
+  </script>
+</Base>

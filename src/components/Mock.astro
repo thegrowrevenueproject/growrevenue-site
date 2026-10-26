@@ -1,0 +1,81 @@
+---
+// Product-style illustrations built in SVG. Labelled "Example" so no number reads as a client claim.
+interface Props { kind: 'placement' | 'dmarc' | 'mailboxes' | 'flow' | 'funnel' }
+const { kind } = Astro.props;
+const F = "font-family:Inter,system-ui,sans-serif";
+---
+{kind === 'placement' && (
+<svg viewBox="0 0 460 380" role="img" aria-label="Example inbox placement test showing Gmail, Outlook and Yahoo results after a fix">
+  <rect x="0" y="0" width="460" height="380" rx="26" fill="#034F46"/>
+  <rect x="22" y="22" width="416" height="236" rx="18" fill="#fff"/>
+  <text x="44" y="56" style={F} font-size="15" font-weight="700" fill="#1A1A1A">Inbox placement test</text>
+  <text x="44" y="76" style={F} font-size="12" fill="#5B625C">Example report, after the fix</text>
+  <rect x="356" y="40" width="64" height="24" rx="12" fill="#E8F5F1"/><text x="388" y="56" style={F} font-size="11" font-weight="700" fill="#034F46" text-anchor="middle">Example</text>
+  <g style={F} font-size="13" fill="#1A1A1A">
+    <text x="44" y="112">Provider</text><text x="200" y="112">Inbox</text><text x="276" y="112">Promotions</text><text x="376" y="112">Spam</text>
+    <line x1="44" x2="416" y1="122" y2="122" stroke="#E3EAE5"/>
+    <text x="44" y="150" font-weight="600">Gmail</text><circle cx="214" cy="146" r="9" fill="#00D47E"/><circle cx="300" cy="146" r="9" fill="#E3EAE5"/><circle cx="390" cy="146" r="9" fill="#E3EAE5"/>
+    <text x="44" y="186" font-weight="600">Outlook</text><circle cx="214" cy="182" r="9" fill="#00D47E"/><circle cx="300" cy="182" r="9" fill="#E3EAE5"/><circle cx="390" cy="182" r="9" fill="#E3EAE5"/>
+    <text x="44" y="222" font-weight="600">Yahoo</text><circle cx="214" cy="218" r="9" fill="#00D47E"/><circle cx="300" cy="218" r="9" fill="#E3EAE5"/><circle cx="390" cy="218" r="9" fill="#E3EAE5"/>
+  </g>
+  <rect x="22" y="274" width="200" height="84" rx="18" fill="#fff"/>
+  <text x="42" y="304" style={F} font-size="12" fill="#5B625C">DMARC</text>
+  <text x="42" y="336" style={F} font-size="22" font-weight="700" fill="#034F46">p=reject</text>
+  <rect x="238" y="274" width="200" height="84" rx="18" fill="#fff"/>
+  <text x="258" y="304" style={F} font-size="12" fill="#5B625C">SPF and DKIM</text>
+  <text x="258" y="336" style={F} font-size="22" font-weight="700" fill="#034F46">aligned</text>
+</svg>)}
+{kind === 'dmarc' && (
+<svg viewBox="0 0 420 300" role="img" aria-label="Example DMARC report moving from failing to passing">
+  <rect width="420" height="300" rx="22" fill="#fff"/>
+  <text x="24" y="40" style={F} font-size="15" font-weight="700" fill="#1A1A1A">DMARC report</text>
+  <text x="24" y="60" style={F} font-size="12" fill="#5B625C">Example: before and after the fix</text>
+  <g style={F} font-size="12" fill="#5B625C"><text x="24" y="96">Before</text><text x="24" y="196">After</text></g>
+  <rect x="24" y="106" width="372" height="22" rx="11" fill="#F3E3E1"/><rect x="24" y="106" width="150" height="22" rx="11" fill="#E26D5C"/>
+  <text x="24" y="150" style={F} font-size="12" fill="#1A1A1A">SPF fail, DKIM not aligned, policy none</text>
+  <rect x="24" y="206" width="372" height="22" rx="11" fill="#E8F5F1"/><rect x="24" y="206" width="372" height="22" rx="11" fill="#00D47E"/>
+  <text x="24" y="250" style={F} font-size="12" fill="#1A1A1A">SPF pass, DKIM aligned, policy reject</text>
+</svg>)}
+{kind === 'mailboxes' && (
+<svg viewBox="0 0 420 300" role="img" aria-label="Example grid of sending mailboxes with warmup status">
+  <rect width="420" height="300" rx="22" fill="#fff"/>
+  <text x="24" y="40" style={F} font-size="15" font-weight="700" fill="#1A1A1A">Sending mailboxes</text>
+  <text x="24" y="60" style={F} font-size="12" fill="#5B625C">Example setup: 4 domains, 8 mailboxes</text>
+  {[0,1,2,3].map((r) => [0,1].map((c) => (
+    <g>
+      <rect x={24 + c * 190} y={80 + r * 52} width="178" height="42" rx="12" fill="#F5F8F6" stroke="#DCE7DF"/>
+      <circle cx={44 + c * 190} cy={101 + r * 52} r="6" fill={r === 3 && c === 1 ? '#F2B84B' : '#00D47E'}/>
+      <text x={58 + c * 190} y={98 + r * 52} style={F} font-size="12" font-weight="600" fill="#1A1A1A">{`sales${c + 1}@domain${r + 1}`}</text>
+      <text x={58 + c * 190} y={113 + r * 52} style={F} font-size="10.5" fill="#5B625C">{r === 3 && c === 1 ? 'warming up' : 'ready'}</text>
+    </g>
+  )))}
+</svg>)}
+{kind === 'flow' && (
+<svg viewBox="0 0 420 300" role="img" aria-label="Example lifecycle email flow from sign-up to win-back">
+  <rect width="420" height="300" rx="22" fill="#fff"/>
+  <text x="24" y="40" style={F} font-size="15" font-weight="700" fill="#1A1A1A">Lifecycle flows</text>
+  <text x="24" y="60" style={F} font-size="12" fill="#5B625C">Example structure</text>
+  <g style={F} font-size="12" font-weight="600" fill="#034F46">
+    <rect x="24" y="84" width="170" height="44" rx="12" fill="#E8F5F1"/><text x="40" y="111">Welcome series</text>
+    <rect x="226" y="84" width="170" height="44" rx="12" fill="#E8F5F1"/><text x="242" y="111">Abandoned cart</text>
+    <rect x="24" y="150" width="170" height="44" rx="12" fill="#E8F5F1"/><text x="40" y="177">Post-purchase</text>
+    <rect x="226" y="150" width="170" height="44" rx="12" fill="#E8F5F1"/><text x="242" y="177">Win-back</text>
+  </g>
+  <rect x="24" y="220" width="372" height="56" rx="14" fill="#034F46"/>
+  <text x="44" y="245" style={F} font-size="12" fill="#CFE3DA">Measured by</text>
+  <text x="44" y="265" style={F} font-size="15" font-weight="700" fill="#fff">email share of revenue</text>
+</svg>)}
+{kind === 'funnel' && (
+<svg viewBox="0 0 420 300" role="img" aria-label="Example funnel with the biggest drop-off highlighted">
+  <rect width="420" height="300" rx="22" fill="#fff"/>
+  <text x="24" y="40" style={F} font-size="15" font-weight="700" fill="#1A1A1A">Funnel drop-off</text>
+  <text x="24" y="60" style={F} font-size="12" fill="#5B625C">Example: where the leak is</text>
+  <g style={F} font-size="12" fill="#1A1A1A">
+    <rect x="24" y="80" width="372" height="34" rx="10" fill="#E8F5F1"/><text x="36" y="102">Visit</text>
+    <rect x="24" y="124" width="300" height="34" rx="10" fill="#E8F5F1"/><text x="36" y="146">Opt-in</text>
+    <rect x="24" y="168" width="110" height="34" rx="10" fill="#E26D5C"/><text x="36" y="190" fill="#fff" font-weight="700">Booked</text>
+    <text x="146" y="190" fill="#C0473A" font-weight="700">biggest leak</text>
+    <rect x="24" y="212" width="80" height="34" rx="10" fill="#E8F5F1"/><text x="36" y="234">Sale</text>
+  </g>
+  <text x="24" y="278" style={F} font-size="11.5" fill="#5B625C">Fixes ranked by revenue impact</text>
+</svg>)}

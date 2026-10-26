@@ -1,0 +1,67 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['How much does lifecycle email cost?', 'It depends on your platform, list size and how many flows already exist, so we scope it after a free review of your account. You get a fixed price before any work starts.'],
+  ['Do I need a big list?', 'No. Flows earn from every new subscriber and every order, so they pay off on lists of a few thousand. A small, engaged list beats a large, cold one.'],
+  ['Will you write the emails?', 'Yes. Copy, design in your brand template, segmentation, testing and reporting are all included.'],
+  ['Can you fix deliverability at the same time?', 'Yes, and we usually should. A flow that lands in Promotions or spam earns little. Every lifecycle project starts with an authentication check.'],
+];
+---
+<Service slug="lifecycle-email-marketing"
+  title="Email Marketing Consultant for Klaviyo Flows | Grow Revenue"
+  description="Email marketing consultant for welcome, cart, post-purchase and win-back flows in Klaviyo, HubSpot and ActiveCampaign. Built, tested and measured by revenue."
+  h1="Email marketing consultant: lifecycle flows that make email a top revenue channel"
+  answer="As an email marketing consultant we build the four flows that earn while you sleep: welcome, abandoned cart, post-purchase and win-back. We segment your list by behavior, test subject lines and offers, and measure success as email's share of revenue, not open rate. Most accounts send campaigns and skip these flows."
+  mock="flow" cases={['synaps-dx', 'soulful-evolution']} serviceType="Lifecycle email marketing" faq={faq}>
+
+  <h2>Which email flows make the most money?</h2>
+  <p>The flows that make the most money are the ones triggered by what a person just did, because they arrive when interest is highest. These four are where we start on every account.</p>
+  <div class="table-wrap"><table>
+    <caption>The four core lifecycle flows</caption>
+    <thead><tr><th>Flow</th><th>Trigger</th><th>Emails</th><th>Job</th></tr></thead>
+    <tbody>
+      <tr><td>Welcome</td><td>New subscriber</td><td>3 to 5 over about 10 days</td><td>Introduce the brand, earn the first purchase</td></tr>
+      <tr><td>Abandoned cart</td><td>Cart or checkout started, no order</td><td>2 to 3 over 72 hours</td><td>Recover the order, answer the objection</td></tr>
+      <tr><td>Post-purchase</td><td>Order placed</td><td>3 to 4 over 30 days</td><td>Reviews, how-to content, second purchase</td></tr>
+      <tr><td>Win-back</td><td>No order or engagement for 60 to 120 days</td><td>2 to 3</td><td>Bring them back or let them go cleanly</td></tr>
+    </tbody>
+  </table></div>
+  <p>At Synaps Dx, these flows plus segmented campaigns took email from under 5% to over 38% of online revenue within a quarter.</p>
+
+  <h2>What should a welcome series say?</h2>
+  <p>A welcome series should earn trust first and ask for the sale second. This is the outline we start from and then adapt to your product and audience.</p>
+  <div class="table-wrap"><table>
+    <caption>A five-email welcome series outline</caption>
+    <thead><tr><th>Email</th><th>Sent</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Immediately</td><td>Deliver what they signed up for and say what emails to expect</td></tr>
+      <tr><td>2</td><td>Day 2</td><td>The story behind the brand and the problem it solves</td></tr>
+      <tr><td>3</td><td>Day 4</td><td>Proof: reviews, results or a customer story</td></tr>
+      <tr><td>4</td><td>Day 7</td><td>The best product or offer for a first purchase</td></tr>
+      <tr><td>5</td><td>Day 10</td><td>Answers to the objections that stop people buying</td></tr>
+    </tbody>
+  </table></div>
+  <p>Anyone who buys during the series leaves it and moves into the post-purchase flow, so nobody is sold a product they already own.</p>
+
+  <h2>Klaviyo, HubSpot or ActiveCampaign: which fits your business?</h2>
+  <p>The right platform depends on what you sell more than on features. All three can run every flow above.</p>
+  <div class="table-wrap"><table>
+    <caption>Platform fit by business type</caption>
+    <thead><tr><th>Platform</th><th>Best fit</th><th>Watch out for</th></tr></thead>
+    <tbody>
+      <tr><td>Klaviyo</td><td>Ecommerce on Shopify, WooCommerce or BigCommerce</td><td>Price grows quickly with list size, so clean the list</td></tr>
+      <tr><td>HubSpot</td><td>B2B with a sales team that lives in the CRM</td><td>Marketing contacts are billed separately from CRM contacts</td></tr>
+      <tr><td>ActiveCampaign</td><td>Service businesses, coaches, course creators</td><td>Automations get tangled without a naming system</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Pricing changes often. Check <a href="https://www.klaviyo.com/pricing" rel="noopener">Klaviyo</a>, <a href="https://www.hubspot.com/pricing/marketing" rel="noopener">HubSpot</a> and <a href="https://www.activecampaign.com/pricing" rel="noopener">ActiveCampaign</a> pricing pages before you choose.</p>
+
+  <h2>How do you re-engage a dormant list without hurting deliverability?</h2>
+  <p>You re-engage a dormant list slowly, starting with the most recently active people, and you remove anyone who does not respond. Sending a full blast to subscribers who have ignored you for a year produces complaints and bounces that damage your domain. Our order is: verify the addresses, send a short re-permission sequence in small daily batches, suppress non-responders after the last email, and keep a sunset rule running so the list stays clean. At Synaps Dx this re-engaged 25,000 dormant subscribers.</p>
+
+  <h2>Which numbers do we report?</h2>
+  <p>We report the numbers that show money, not activity. Every month you get email's share of total revenue, revenue per recipient for each flow and campaign, list growth after unsubscribes and bounces, and spam complaint rate. Open rates are reported too, but treated with care: Apple Mail Privacy Protection inflates them, so they are no longer a reliable measure on their own. Clicks, orders and revenue per recipient are what we optimize.</p>
+
+  <h2>How is the work priced?</h2>
+  <p>Lifecycle work is scoped per account after a free review, because a store with no flows and a store with ten broken ones need different amounts of work. The review takes about 20 minutes on a call with screen share, and the quote is fixed.</p>
+</Service>

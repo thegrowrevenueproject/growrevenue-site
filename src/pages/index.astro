@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import Mock from '../components/Mock.astro';
+import { SITE, PROOF, SERVICES, CASES, usd } from '../data/site';
+const mocks = { 'email-deliverability': 'dmarc', 'cold-email-infrastructure': 'mailboxes', 'lifecycle-email-marketing': 'flow', 'funnel-audit': 'funnel' } as const;
+const faq = [
+  ['Why are my emails going to spam?', 'Usually one of four causes: SPF, DKIM or DMARC records that are missing or failing; a domain or sending IP on a blacklist; a sender reputation damaged by bounces and spam complaints; or sending patterns and content that trip filters. A deliverability audit tells you which one it is, in priority order, and what to change.'],
+  ['How much does an email deliverability audit cost?', 'From $350 for one domain, with an inbox placement test and a written fix list. Having us fix everything and re-test costs $900. Up to three domains with 30 days of monitoring costs $1,800.'],
+  ['Do you send cold email for us?', 'We build the sending infrastructure, write the sequence and launch it in your account. You own every domain, mailbox and contact, so nothing is locked to us.'],
+  ['Which platforms do you work in?', 'Klaviyo, HubSpot, ActiveCampaign, Mailchimp, GoHighLevel, SendGrid, Google Workspace, Microsoft 365, Instantly and Smartlead.'],
+  ['Where are you based?', 'London, United Kingdom. We work with clients in the US, UK, Canada and Europe, mostly in their own time zones.'],
+];
+const schema = [{ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+---
+<Base title="Email Deliverability Services and Cold Email | Grow Revenue"
+  description="Email deliverability services that get your email into the inbox, cold email infrastructure that gets replies, and funnels that stop leaking leads."
+  path="/" pageType="home" schema={schema} ogImage="/og/home.png">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Email deliverability services that get you out of spam</h1>
+        <p class="lead">We are an email deliverability and cold email agency. We find why your email goes to spam, fix it at the DNS and sending level, then build the outbound and lifecycle systems that turn the inbox into revenue.</p>
+        <div class="btns">
+          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a>
+          <a class="btn ghost" href="/email-deliverability/">Deliverability audit from {usd(350)}</a>
+        </div>
+        <ul class="proof" aria-label="Public Upwork record">
+          {PROOF.map((p) => <li><strong>{p.value}</strong> {p.label}</li>)}
+          <li><strong>Top Rated Plus</strong> on Upwork</li>
+        </ul>
+      </div>
+      <Mock kind="placement" />
+    </div>
+  </section>
+
+  <section class="clients" aria-label="Clients">
+    <p>Clients we have worked with</p>
+    <ul>{CASES.map((c) => <li>{c.client}</li>)}<li>The Argonauts</li></ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">What we do</span>
+        <h2>Four services, one lane: email that earns</h2>
+        <p class="lead">Each one starts with a measured diagnosis and ends with a re-test, so you see the before and after in numbers.</p>
+      </div>
+      <div class="stack" style="margin-top:40px">
+        {SERVICES.map((s) => (
+          <a class="svc-card" href={'/' + s.slug + '/'}>
+            <div>
+              <h3>{s.card}</h3>
+              <p>{s.blurb}</p>
+              <p class="from">{s.from ? `From ${usd(s.from)}` : 'Scoped per account'} &rarr;</p>
+            </div>
+            <Mock kind={mocks[s.slug as keyof typeof mocks]} />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Case studies</span>
+        <h2>Real work, measured results</h2>
+        <p class="lead">Six client projects. Every number below links to the full story with the baseline and the period it was measured over.</p>
+      </div>
+      <div class="grid3" style="margin-top:40px">
+        {CASES.map((c) => (
+          <article class="card case">
+            <span class="tag">{c.client} &middot; {c.industry}</span>
+            <h3><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h3>
+            <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band section" style="border-radius:28px 28px 0 0">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#CFE3DA">How it works</span>
+      <h2>From diagnosis to measured result in four steps</h2>
+      <ol class="steps" style="margin-top:36px">
+        <li><h3>Diagnose</h3><p>We test your domains, DNS records and inbox placement, and read your funnel numbers. You get a written fault list in priority order.</p></li>
+        <li><h3>Fix</h3><p>We change the records, sending setup, flows and pages ourselves, with access you grant and can revoke at any time.</p></li>
+        <li><h3>Launch</h3><p>Outbound sequences and lifecycle flows go live on infrastructure we have already tested.</p></li>
+        <li><h3>Measure</h3><p>We re-test placement and report replies, meetings and revenue against the baseline from step one.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="dark" style="border-radius:0">
+    <ul class="strip wrap" aria-label="Public Upwork record">
+      {PROOF.map((p) => <li><strong>{p.value}</strong>{p.label}</li>)}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid2" style="align-items:start">
+      <div>
+        <span class="eyebrow">Why us</span>
+        <h2>One lane, done by the person you talk to</h2>
+      </div>
+      <div class="prose">
+        <h3>Eleven years on email</h3>
+        <p>Email marketing, deliverability, cold email and the funnels around them. We do not run social media accounts or build brands, so the work stays deep.</p>
+        <h3>You work with the person who does the work</h3>
+        <p>Kunal Arora runs every audit and every setup himself. No hand-off to a junior after the sales call.</p>
+        <h3>Proof you can check</h3>
+        <p>Our Upwork record is public: 123 jobs, $300K+ earned, 100% Job Success. Our own domain passes the checks we sell: SPF, 2048-bit DKIM and DMARC at reject.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="narrow">
+      <blockquote class="card" style="margin:0">
+        <p class="quote">"We knew marketing was powerful, but we struggled to find a partner who could address our unique pain points and help us scale sustainably. Both Barbara and Kunal simply nailed it."</p>
+        <p>Debra Becker, Founder and CEO, Dimov Associates</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="narrow">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions people ask before they hire us</h2>
+      <dl class="faq">{faq.map(([q, a]) => <><dt>{q}</dt><dd>{a}</dd></>)}</dl>
+    </div>
+  </section>
+
+  <section class="band section">
+    <div class="wrap center">
+      <h2>Find out why your email is not landing. Then fix it.</h2>
+      <p class="lead">Tell us what is happening and we reply with a first read of your DNS records, before any call.</p>
+      <div class="btns" style="justify-content:center">
+        <a class="btn" href="/contact/" style="background:#00D47E;border-color:#00D47E;color:#034F46;box-shadow:none"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a>
+        <a class="btn ghost" href="/case-studies/" style="color:#fff">See case studies</a>
+      </div>
+    </div>
+  </section>
+</Base>

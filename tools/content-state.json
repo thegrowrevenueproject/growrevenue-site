@@ -1,0 +1,119 @@
+{
+ "/": {
+  "hash": "4e5be3d4006ff32a92e3628c0543eb4ddc6e56d93dd545227ac16c7e1de762e2",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 1011
+ },
+ "/about/": {
+  "hash": "b006329aeaef85cf39ee62a3c640a316ff8372987374e3d7146a6017703af334",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 256
+ },
+ "/case-studies/": {
+  "hash": "edb54888a86bb8980b05a3383bdebff67c6a16eab1e12b45f72db1956aa8f5c0",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 209
+ },
+ "/case-studies/austere/": {
+  "hash": "9f91d86a6509add2bdd9337526eea5809ba9770e516d4483ea72b28e23aef580",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 274
+ },
+ "/case-studies/dimov-associates/": {
+  "hash": "5c7557992fe71119102bfcda9d51671f9317048c1046a930a5e8486bb2401b9a",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 282
+ },
+ "/case-studies/maestro/": {
+  "hash": "d272f4dff5c3f7d2a710ecf2e8d337740de0186a31461abbce5f8d934134b7fc",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 275
+ },
+ "/case-studies/scalability/": {
+  "hash": "75f588d37213721567414578c0ee14bd4ed5c63686bf0a044ccf927e533186a9",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 330
+ },
+ "/case-studies/soulful-evolution/": {
+  "hash": "b48640376e05c6dea13524cccdef663bc8fb546ecda1a44c77bd89560d9ebbf1",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 284
+ },
+ "/case-studies/synaps-dx/": {
+  "hash": "0c95e1d3edd2cf8bc43bdf37d6b1a9e641c23d25cb3dd9b22ad592c80d244c58",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 377
+ },
+ "/cold-email-infrastructure/": {
+  "hash": "58f4c017ab25db321ff018c91349a79ef4e13063ddcc985a83d39553f4addddb",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 986
+ },
+ "/contact/": {
+  "hash": "fb987f09a3e62cc93d9d60859a62166794de5630db0b0bb7964e01e6f3c08dff",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 145
+ },
+ "/editorial-policy/": {
+  "hash": "41062df168d520be36dae3af0ac68bb1fb59609598651226fdb5ee20e40a89a3",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 228
+ },
+ "/email-deliverability/": {
+  "hash": "4ee43a81b5e616b61ebfcf492d77ede31ed505329bc15091b0461972a7a77b43",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 1055
+ },
+ "/funnel-audit/": {
+  "hash": "dc477dc2456774f59182f9726c4c2ab5f0a23781a4da6d1807ac0f292bd24983",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 903
+ },
+ "/kunal-arora/": {
+  "hash": "20c572a620c03b1dc36a5dfc00e68a7277616f8626b82d0d327a9706e3047084",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 108
+ },
+ "/lifecycle-email-marketing/": {
+  "hash": "e1bbb9fc52fee1f7a29cae89b5899daa6d31709b84fd20fb0f85b41b74561855",
+  "material": "2026-10-26",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 903
+ },
+ "/privacy/": {
+  "hash": "76f83ece99bf50f8c871a190defcd81799a776c0ef147c6e22726476166de869",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 336
+ },
+ "/terms/": {
+  "hash": "72390e324f27be08cb458b426c9647347f5cc5c54d8be81159085653aac5e192",
+  "modified": "2026-10-26",
+  "published": "2026-10-26",
+  "words": 302
+ }
+}

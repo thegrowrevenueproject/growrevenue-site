@@ -1,0 +1,46 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['Which platforms can you audit?', 'GoHighLevel, HubSpot, ClickFunnels, Klaviyo, ActiveCampaign, WordPress and most landing page builders, plus the CRM behind them.'],
+  ['What do you need to start?', 'Access to your funnel pages, CRM and email tool, read access to analytics, and your current numbers: traffic, leads, booked calls and sales for the last 90 days.'],
+  ['Do you run ads?', 'We do not manage ad accounts. We audit and fix what happens after the click: pages, forms, follow-up, routing and nurture. If your ads bring traffic that does not convert, that is exactly where we look.'],
+  ['What if the audit finds nothing big?', 'Then you know your funnel is not the problem, and the report says where to look instead, usually offer, traffic quality or sales follow-up.'],
+];
+---
+<Service slug="funnel-audit"
+  title="Funnel Audit and Marketing Automation Agency | Grow Revenue"
+  description="A funnel audit that measures drop-off at every step from first click to purchase, then fixes the biggest leaks in your pages, CRM and automation. From $500."
+  h1="Funnel audit: find where your leads leak, then automate the follow-up"
+  answer="A funnel audit maps every step from first click to purchase and measures how many people drop out at each one. We review landing pages, forms, CRM routing, follow-up email and automation in GoHighLevel, HubSpot, ClickFunnels, Klaviyo or ActiveCampaign, then rank every fix by its revenue impact."
+  mock="funnel" cases={['dimov-associates', 'soulful-evolution']} serviceType="Sales funnel audit and marketing automation" faq={faq}>
+
+  <h2>How do you find the leak in a sales funnel?</h2>
+  <p>You find the leak by measuring one number per stage and comparing each stage with the one before it. The stage with the steepest drop relative to what is normal for your model is where the money is.</p>
+  <ol>
+    <li><strong>Map the stages</strong> exactly as a lead experiences them: ad or email, landing page, form, thank-you page, first follow-up, call booked, call held, sale.</li>
+    <li><strong>Pull 90 days of numbers</strong> for each stage from analytics and the CRM.</li>
+    <li><strong>Compute stage-to-stage conversion</strong> and mark every stage that falls well below the others.</li>
+    <li><strong>Walk the funnel as a buyer</strong> on mobile and desktop, recording every point of friction.</li>
+    <li><strong>Rank fixes by revenue impact</strong>: the lift if that stage improved, times the value of a sale.</li>
+  </ol>
+
+  <h2>What should happen in the first five minutes after a lead comes in?</h2>
+  <p>In the first five minutes a new lead should get an automatic reply, be routed to an owner, and that owner should be alerted. Response speed is one of the most studied factors in lead conversion: an often-cited <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" rel="noopener">Harvard Business Review analysis</a> found firms that responded within an hour were far more likely to qualify a lead than those that waited longer. We check this on every audit by submitting a test lead and timing what happens.</p>
+
+  <h2>Which leaks do we find most often?</h2>
+  <p>The leaks we find most often are small, cheap to fix and invisible from inside the business. These six come up again and again:</p>
+  <ul>
+    <li><strong>Forms that ask too much too early.</strong> Phone number, budget and company size on the first step, before the visitor trusts you.</li>
+    <li><strong>A thank-you page that is a dead end.</strong> No next step, no calendar, no reason to stay engaged at the moment interest is highest.</li>
+    <li><strong>Leads routed to a shared inbox.</strong> Everyone sees them, so nobody owns them, and the first reply comes a day later.</li>
+    <li><strong>No reminders before booked calls.</strong> No-shows are treated as bad luck instead of a missing email and text.</li>
+    <li><strong>No nurture for people who do not book.</strong> Most leads are not ready on day one, and without a sequence they are simply forgotten.</li>
+    <li><strong>A broken mobile experience.</strong> Pages and forms tested only on a desktop screen, while most paid traffic arrives on a phone.</li>
+  </ul>
+
+  <h2>What does the leak report contain?</h2>
+  <p>The leak report is a written document with a stage-by-stage table of your numbers, screenshots of every friction point, and a ranked list of fixes. Each fix says what to change, who should change it and the expected effect, so your team can act on it even if you never hire us for the build. We walk you through it on a 30 minute call and answer every question about it in writing afterward.</p>
+
+  <h2>What automation do you build?</h2>
+  <p>The automation we build covers lead routing, instant replies, owner alerts, nurture sequences for leads who do not book, reminders that cut no-shows, and CRM stages that update themselves. At Dimov Associates, a law firm, this system tripled lead volume and cut cost per acquisition by 40% within 90 days.</p>
+</Service>

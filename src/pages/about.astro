@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, PROOF } from '../data/site';
+const team = [
+  { name: 'Kunal Arora', role: 'Founder. Runs every deliverability audit, cold email setup and funnel audit.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
+  { name: 'Barbara Arora', role: 'Co-founder. Client strategy and campaign planning.', img: '/img/barbara-arora.webp' },
+  { name: 'Rahul Arora', role: 'Creative director. Email design, landing pages and creative.', img: '/img/rahul-arora.webp' },
+];
+---
+<Base title="About Us: Email Deliverability Specialists | Grow Revenue"
+  description="The Grow Revenue Company is a London email deliverability, cold email and lifecycle marketing firm founded by Kunal Arora: 123 Upwork jobs, 100% Job Success."
+  path="/about/" pageType="trust" crumbs={[{ name: 'About', path: '/about/' }]}>
+  <section class="section" style="padding-top:20px">
+    <div class="narrow prose">
+      <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">About us: we fix email that misses the inbox, and build what happens after it lands</h1>
+      <p class="lead">The Grow Revenue Company is a London-based email marketing and deliverability firm founded by Kunal Arora. For over eleven years we have worked in one lane: deliverability, cold email infrastructure, lifecycle email and the funnels around them.</p>
+      <h2>Who does the work?</h2>
+      <p>A small team, on purpose. Kunal does the technical work himself, so the person who diagnoses your problem is the person who fixes it.</p>
+    </div>
+    <div class="wrap grid3" style="margin-top:20px">
+      {team.map((t) => (
+        <div class="card" style="display:flex;gap:18px;align-items:center">
+          <img src={t.img} alt={`Portrait photo of ${t.name} of The Grow Revenue Company`} width="96" height="96" loading="lazy" style="border-radius:50%;width:96px;height:96px;object-fit:cover" />
+          <div><h3 style="font-size:1.3rem;margin:0">{t.href ? <a href={t.href}>{t.name}</a> : t.name}</h3><p style="margin:4px 0 0;font-size:.95rem">{t.role}</p></div>
+        </div>
+      ))}
+    </div>
+    <div class="narrow prose">
+      <h2>What is our track record?</h2>
+      <p>Our public record is on Upwork, where anyone can read every review: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}, with Top Rated Plus status. Client results are on the <a href="/case-studies/">case studies</a> page, each with its baseline and period.</p>
+      <h2>How do we work?</h2>
+      <ol>
+        <li><strong>Diagnose</strong> with tests and numbers, not opinions.</li>
+        <li><strong>Fix</strong> the cause ourselves, with access you grant and can revoke.</li>
+        <li><strong>Launch</strong> only on infrastructure we have tested.</li>
+        <li><strong>Measure</strong> against the baseline and report in writing.</li>
+      </ol>
+      <h2>What do we not do?</h2>
+      <p>We do not manage social media accounts, build brands, run SEO for clients or manage ad accounts on their own. Saying no to those keeps our email work deep.</p>
+      <h2>Company details</h2>
+      <p>{SITE.legalName}{SITE.companyNumber ? `, registered in England and Wales, company number ${SITE.companyNumber}` : ''}. Registered address: {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom. Email: <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
+    </div>
+  </section>
+</Base>
