@@ -52,8 +52,8 @@ import { SITE } from '../data/site';
       try {
         const r = await fetch('/api/lead', { method: 'POST', body: new FormData(f) });
         if (r.ok) { f.reset(); st.textContent = 'Thank you. Kunal will reply within one working day.'; }
-        else { st.textContent = 'That did not go through. Please email kunal@growrevenue.co directly.'; }
-      } catch { st.textContent = 'That did not go through. Please email kunal@growrevenue.co directly.'; }
+        else { st.textContent = 'That did not go through. Please email info@growrevenue.co directly.'; }
+      } catch { st.textContent = 'That did not go through. Please email info@growrevenue.co directly.'; }
     });
   </script>
 </Base>

@@ -46,7 +46,7 @@ const team = [
     </div>
     <div class="narrow prose">
       <h2>What is our track record?</h2>
-      <p>Beyond our case studies, our public record is on Upwork, where anyone can read every review: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}, with Top Rated Plus status.</p>
+      <p>Beyond the published case studies: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}. Every project is scoped in writing and measured against the number agreed at the start.</p>
       <h2>What do we work on?</h2>
       <ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a>: {s.blurb}</li>)}</ul>
       <h2>How do we work?</h2>

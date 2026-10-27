@@ -95,7 +95,7 @@ for path, s in pages.items():
         chk(path, "C-02", "BLOCK", True, f"prices shown: {tiers_text or 'scoped'}")
     scripts = [x for x in s.find_all("script") if x.get("src")]
     chk(path, "P-13", "BLOCK", all("cloudflareinsights" in x["src"] or "challenges.cloudflare" in x["src"] or x["src"].startswith("/") for x in scripts), f"{len(scripts)} external scripts")
-    chk(path, "G-16", "BLOCK", "kunal@growrevenue.co" in s.get_text(), "plain email visible")
+    chk(path, "G-16", "BLOCK", "info@growrevenue.co" in s.get_text(), "plain email visible")
 
 # site-level
 for f in ("robots.txt", "sitemap.xml", "llms.txt", "rss.xml", "_redirects", "_headers", "favicon.svg", "site.webmanifest", "404.html"):

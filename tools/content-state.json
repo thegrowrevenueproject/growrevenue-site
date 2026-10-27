@@ -1,17 +1,17 @@
 {
  "/": {
-  "hash": "17df3366a7cbe00a487aec04fbe0ebadd721bfed5f5726938a34ddf05d245112",
+  "hash": "09410659b0b6fd9f5915046d18390a79afaab8ad4075a6c75f6232d6f3901125",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 2617
+  "words": 2634
  },
  "/about/": {
-  "hash": "1354dd61d81d3d0c03874953fe816ff63fcf1dfb90c956f61ab80ad87ef790dc",
+  "hash": "08718e481f38b71080615be8733abeafa011a596542ec098cbd6a00a6ba1bd58",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 577
+  "words": 574
  },
  "/ai-automation/": {
   "hash": "773bfd7da493393216ea4bb41763bada382274d7f745df73cebba9938cd671a2",
@@ -70,14 +70,14 @@
   "words": 376
  },
  "/cold-email-infrastructure/": {
-  "hash": "4677b8d541bc4ba362099d49cc593b9f1e4828512932c6eed9bd1f212de9e3b1",
+  "hash": "e9ec46d1db447b24a0721d2216d6644f4f4cb17c55c71309ee4bafd015a2e41f",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
   "words": 1103
  },
  "/contact/": {
-  "hash": "a399b9bc6f8fdf1bdb23129103e8806079554a9b648e6b037c87fe91fa776c92",
+  "hash": "c66e228e68e71b913f1789489815901aa93ffef06a4ee0c9923fce77eb7d6241",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
@@ -91,13 +91,14 @@
   "words": 1034
  },
  "/editorial-policy/": {
-  "hash": "41062df168d520be36dae3af0ac68bb1fb59609598651226fdb5ee20e40a89a3",
-  "modified": "2026-10-26",
+  "hash": "15e78cb0aeadae218548af15359ae42f6b5d6ff002deb29174f0c4bacf1fedf4",
+  "material": "2026-10-26",
+  "modified": "2026-10-27",
   "published": "2026-10-26",
   "words": 228
  },
  "/email-deliverability/": {
-  "hash": "03f56cf8e8886ec4287bfd614f17814e2916c5fe4f6d273c5c58cf3d05ce8aa7",
+  "hash": "f5be28c0fbb19dfefdbcdccbfe225f187378702d336a2c98c4d7750eba4ad4dd",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
@@ -111,18 +112,18 @@
   "words": 1101
  },
  "/funnel-audit/": {
-  "hash": "2410accef99152a9a8d6b4b421b0e574680cab358b41eb92ad7ffedd7c70c793",
+  "hash": "9d161016cab1b77e65cd4c1f6761e2cb37cdfae66b3470908d4d11b4d65ca0cc",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
   "words": 1039
  },
  "/kunal-arora/": {
-  "hash": "0a5d930af7541e6cf3a452f7f674ecf09501d7d6c60561f2f80669d06cc5aaca",
-  "material": "2026-10-26",
+  "hash": "2ce190f3c4e02e41ae980b1ee8a43668125438970e789592717cfaca9a6c26ae",
+  "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 106
+  "words": 99
  },
  "/lead-generation/": {
   "hash": "0585c98b016e7d20959659c9ba80dc5894461fbdc84623138f4b320afa38ec5b",
@@ -146,8 +147,9 @@
   "words": 1058
  },
  "/privacy/": {
-  "hash": "76f83ece99bf50f8c871a190defcd81799a776c0ef147c6e22726476166de869",
-  "modified": "2026-10-26",
+  "hash": "f9e9b0ee6613cb55baa0fbeee02b1903b6827a1451bee4696a8c8af9cd5e3696",
+  "material": "2026-10-26",
+  "modified": "2026-10-27",
   "published": "2026-10-26",
   "words": 336
  },
@@ -159,9 +161,10 @@
   "words": 1010
  },
  "/terms/": {
-  "hash": "72390e324f27be08cb458b426c9647347f5cc5c54d8be81159085653aac5e192",
-  "modified": "2026-10-26",
+  "hash": "836c3c3754cf23659387ff647cde43b396a5cdeaf2447466470c9a1003d3bef2",
+  "material": "2026-10-26",
+  "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 302
+  "words": 305
  }
 }

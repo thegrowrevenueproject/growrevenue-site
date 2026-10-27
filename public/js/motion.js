@@ -130,7 +130,7 @@
   $$('form[data-quick]').forEach((f) => f.addEventListener('submit', async (e) => {
     e.preventDefault(); const msg = f.closest('.gb').querySelector('.msg');
     try { const r = await fetch(f.action, { method: 'POST', body: new FormData(f) }); const j = await r.json(); msg.textContent = j.ok ? 'Thanks. We will reply within one working day.' : 'Please check your email address and tick the consent box.'; }
-    catch { msg.textContent = 'Something went wrong. Email kunal@growrevenue.co instead.'; }
+    catch { msg.textContent = 'Something went wrong. Email info@growrevenue.co instead.'; }
   }));
 
   // ---------- hero flywheel (pinned) ----------

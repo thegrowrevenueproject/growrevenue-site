@@ -16,7 +16,7 @@ interface Props {
 }
 const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png', darkHero = false, query = '' } = Astro.props;
 const url = SITE.url + path;
-const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
+const sameAs = [SITE.linkedin].filter(Boolean);
 const org = {
   '@type': 'Organization', '@id': SITE.url + '/#org', name: SITE.name, legalName: SITE.legalName, url: SITE.url,
   logo: SITE.url + '/logo.png', email: SITE.email,

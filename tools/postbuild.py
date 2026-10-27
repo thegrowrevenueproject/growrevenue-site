@@ -70,7 +70,7 @@ xml.append("</urlset>")
 order = ["/", "/paid-advertising/", "/social-media-marketing/", "/content-creation/", "/lead-generation/", "/cold-email-infrastructure/", "/funnel-audit/", "/email-marketing/", "/ai-automation/", "/email-deliverability/", "/case-studies/", "/about/", "/kunal-arora/", "/contact/"]
 by = {p: m for p, m, _ in entries}
 llms = ["# The Grow Revenue Company", "",
-        "> Revenue-driven marketing company in London that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 Upwork jobs, 100% Job Success, Top Rated Plus). London, UK; clients in the US, UK, Canada and Europe.", "",
+        "> Revenue-driven marketing company in London that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 projects delivered, 8,700+ hours of client work). London, UK; clients in the US, UK, Canada and Europe.", "",
         "## Services and company"]
 for p in order:
     if p in by: llms.append(f"- [{html.unescape(by[p].title.split(' | ')[0])}]({SITE}{p}): {html.unescape(by[p].meta.get('description', ''))}")
@@ -81,7 +81,7 @@ for p, m, _ in entries:
 arts = [(p, m, s) for p, m, s in entries if m.meta.get("page_type") == "article"]
 if arts:
     llms += ["", "## Articles"] + [f"- [{html.unescape(m.title.split(' | ')[0])}]({SITE}{p}): {html.unescape(m.meta.get('description', ''))}" for p, m, _ in arts[:25]]
-llms += ["", "## Contact", "- kunal@growrevenue.co", f"- {SITE}/contact/"]
+llms += ["", "## Contact", "- info@growrevenue.co", f"- {SITE}/contact/"]
 (DIST / "llms.txt").write_text("\n".join(llms) + "\n")
 
 rss = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', "<title>The Grow Revenue Company blog</title>", f"<link>{SITE}/</link>",

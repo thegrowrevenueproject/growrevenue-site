@@ -5,20 +5,18 @@ export const SITE = {
   short: 'Grow Revenue',
   legalName: 'The Grow Revenue Company Limited',
   companyNumber: '', // TODO decision 6: UK company number
-  email: 'kunal@growrevenue.co',
+  email: 'info@growrevenue.co',
   address: { street: '128 City Road', city: 'London', postcode: 'EC1V 2NX', country: 'GB' },
   founder: 'Kunal Arora',
-  upwork: '', // TODO: Kunal's public Upwork profile URL
   linkedin: '', // TODO: Kunal's LinkedIn URL
   bookingUrl: '/contact/', // TODO decision 7: Google Calendar appointment page
 };
 
-// Public record (Upwork profile). Checklist P-08: only these headline numbers.
+// Track record. Checklist P-08: only these headline numbers. No marketplace names on the site.
 export const PROOF = [
-  { value: '123', label: 'Upwork jobs completed' },
-  { value: '$300K+', label: 'earned on Upwork' },
-  { value: '8,700+', label: 'hours billed' },
-  { value: '100%', label: 'Job Success' },
+  { value: '123', label: 'projects delivered' },
+  { value: '8,700+', label: 'hours of client work' },
+  { value: '11+', label: 'years in marketing' },
 ];
 
 export type Tier = { name: string; price: number; days: number; items: string };
@@ -33,7 +31,7 @@ export const GROUPS = [
   { name: 'Scale', line: 'Keep it growing without more headcount' },
 ] as const;
 
-// Prices match the Upwork project catalog (checklist C-02). Order = the revenue engine, left to right.
+// Fixed package prices (checklist C-02). Order = the revenue engine, left to right.
 export const SERVICES: Service[] = [
   {
     slug: 'paid-advertising', icon: 'ads', group: 'Attract', query: 'ppc management services', isNew: true, nav: 'Paid advertising', card: 'Paid ads on Google and Meta',
