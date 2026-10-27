@@ -1,10 +1,16 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['Who owns the ad accounts?', 'You do. Campaigns run in your own Google and Meta ad accounts, billed to your card, so you see every cent of spend and keep all the data if we stop working together.'],
   ['What budget do I need?', 'Enough to get a clear signal within a month. For most service businesses that means enough spend to generate at least 30 to 50 leads a month on one platform. We size the budget from your cost per lead and sale value on the first call.'],
   ['How soon will I see results?', 'Search campaigns usually produce leads in the first week. Meta and YouTube campaigns need two to four weeks of testing before the winning audiences and creatives are clear.'],
   ['Do you make the ad creative?', 'Yes. Static ads, short videos, motion graphics and landing pages are produced in-house, so creative testing never waits on another supplier.'],
+  ['What is the difference between PPC and paid social?', 'PPC usually means search ads, where you pay when someone who searched for your service clicks. Paid social means ads on Meta, TikTok or LinkedIn, shown to people based on who they are rather than what they searched. Most accounts need both: search to catch demand, social to create it.'],
+  ['Can you take over an account that is already running?', 'Yes. We start with an audit of the existing account, tracking and landing pages, keep whatever is profitable, and change the rest in stages so results do not drop while we rebuild.'],
 ];
 ---
 <Service slug="paid-advertising"
@@ -36,6 +42,91 @@ const faq: [string, string][] = [
       <tr><td>LinkedIn</td><td>At work, in role</td><td>B2B offers sold to a specific job title or industry</td></tr>
     </tbody>
   </table></div>
+
+  <Info eyebrow="How a campaign runs" title="From ad budget to booked revenue in five steps" sub="Each step feeds the next. Skip one and the spend leaks somewhere you cannot see." theme="dark">
+    <Flow steps={[
+      { tag: 'Numbers', t: 'Set the target cost per customer', p: 'Work back from your margin and customer value to the most you can pay for a sale.' },
+      { tag: 'Tracking', t: 'Send real sales back to the platforms', p: 'CRM outcomes go to Google and Meta, so their bidding learns who buys, not who clicks.' },
+      { tag: 'Creative', t: 'Test hooks and angles every month', p: 'New ads in every cycle, judged on cost per customer, not likes.' },
+      { tag: 'Page', t: 'Match the landing page to the ad', p: 'One page per offer, same promise as the ad, one clear next step.' },
+      { tag: 'Scale', t: 'Move budget to what earns', p: 'Winners get more spend, losers are paused after a fair test.' },
+    ]} />
+  </Info>
+
+  <h2>How does Facebook ads management work?</h2>
+  <p>Facebook ads management means running campaigns in Meta Ads Manager, which places ads across Facebook, Instagram, Messenger and Meta's partner apps. Every account has three layers: the campaign sets the goal, such as leads or purchases; the ad set decides the audience, budget and placements; and the ad is the creative people see.</p>
+  <p>Meta's targeting has become broad and largely automated, so the creative now does most of the targeting. A video that speaks to new homeowners finds new homeowners. That is why our Meta work spends most of its effort on creative: different hooks, angles, formats and offers, tested against each other every month.</p>
+  <p>The other half is data. We connect the Meta pixel and the Conversions API, which sends events from your server or CRM, so Meta sees which leads became customers. Without that signal the platform optimises for cheap form fills, and cheap form fills are rarely buyers.</p>
+
+  <h2>What does Google Ads management include?</h2>
+  <p>Google Ads management is the weekly work of keeping search spend pointed at buyers. Search ads are different from social ads because the buyer tells you what they want, in their own words. Our job is to show up for the searches that lead to sales and stay out of the ones that do not.</p>
+  <ul>
+    <li><strong>Keyword research by intent.</strong> "Divorce lawyer near me" and "how does divorce work" are different buyers. We bid hard on the first and usually skip the second.</li>
+    <li><strong>Negative keywords.</strong> Every week we read the actual search terms that triggered your ads and block the irrelevant ones, which is where most wasted spend hides.</li>
+    <li><strong>Ad copy and assets.</strong> Responsive search ads with headlines that repeat the searcher's words, plus sitelinks, callouts and call assets.</li>
+    <li><strong>Quality Score.</strong> Google rates each keyword from 1 to 10 on expected click-through rate, ad relevance and landing page experience. Higher scores usually mean you pay less for the same position.</li>
+    <li><strong>Bidding.</strong> Automated bidding works well once it has enough conversion data. Until then we keep tighter control, and we import offline sales so the system learns from revenue.</li>
+  </ul>
+
+  <h2>What do ROAS, CPA and CPC mean?</h2>
+  <p>These numbers decide whether paid advertising is working. Here they are in plain English, with a worked example on a $1,000 monthly spend.</p>
+  <div class="table-wrap"><table>
+    <caption>Paid advertising terms, with an illustrative example</caption>
+    <thead><tr><th>Term</th><th>What it means</th><th>Formula</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>CPC</td><td>Cost per click: what one visit costs you</td><td>Spend divided by clicks</td><td>$1,000 / 500 clicks = $2.00</td></tr>
+      <tr><td>CPL</td><td>Cost per lead: what one enquiry costs you</td><td>Spend divided by leads</td><td>$1,000 / 40 leads = $25</td></tr>
+      <tr><td>CPA</td><td>Cost per acquisition: what one paying customer costs you</td><td>Spend divided by new customers</td><td>$1,000 / 8 customers = $125</td></tr>
+      <tr><td>ROAS</td><td>Return on ad spend: revenue for each dollar spent</td><td>Ad revenue divided by spend</td><td>$4,000 / $1,000 = 4x</td></tr>
+    </tbody>
+  </table></div>
+  <p>The example numbers only show the arithmetic. Your own numbers depend on your market, offer and price.</p>
+
+  <h2>What is a good return on ad spend?</h2>
+  <p>A good return on ad spend is one that leaves profit after the cost of the product and the ads, so it depends on your margin, not on an industry average. The quickest check is your break-even ROAS: one divided by your gross margin.</p>
+  <div class="table-wrap"><table>
+    <caption>Break-even ROAS by gross margin (1 divided by margin)</caption>
+    <thead><tr><th>Gross margin</th><th>Break-even ROAS</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>20%</td><td>5.0x</td><td>Thin margins need very efficient ads, or repeat purchases to make up the difference</td></tr>
+      <tr><td>40%</td><td>2.5x</td><td>Every dollar of ads must bring back $2.50 in sales just to break even</td></tr>
+      <tr><td>60%</td><td>1.67x</td><td>Room to spend more to win customers</td></tr>
+      <tr><td>80%</td><td>1.25x</td><td>Typical of services and software, where first-sale ROAS can be low if customers stay</td></tr>
+    </tbody>
+  </table></div>
+  <p>For businesses with repeat customers, the better test is payback: how many months of a customer's revenue it takes to cover their acquisition cost. A 1.5x first-purchase ROAS can be excellent if the average customer buys four more times.</p>
+
+  <h2>How much should you spend on ads?</h2>
+  <p>Work backwards from the customers you want, not forwards from a round number. If you want 20 new customers a month and you can afford up to $150 each, your ceiling is $3,000 a month. Then check the floor: the budget must be big enough to produce a meaningful number of conversions each month, or the platforms cannot learn and you cannot tell a winning ad from luck.</p>
+  <p>Where we do not have your history yet, we start with a test budget on the platform most likely to work, read the results after a fixed period, and only then scale. Spending more on an account that is not yet profitable just makes the loss bigger.</p>
+
+  <h2>Why do Google and Meta both claim the same sale?</h2>
+  <p>Every ad platform measures its own results with its own rules, so two platforms can both claim the same customer. Someone might click a Google ad, see a Meta ad two days later, and then buy. Each platform counts the sale. Add up the platform reports and you get more revenue than you actually made.</p>
+  <p>That is why we report a blended number next to the platform numbers: total ad spend divided by total new customers from your CRM. If the blended cost per customer is healthy, the account is working, whatever each dashboard claims.</p>
+
+  <Info eyebrow="Proof" title="What paid advertising produced for two clients" sub="Numbers from the published case studies, with the period each was measured over." theme="light">
+    <Stats items={[
+      { value: 3.5, suf: 'x', label: 'return on ad spend', sub: 'Austere, one quarter' },
+      { value: 450, suf: '+', label: 'qualified leads', sub: 'Austere, first quarter' },
+      { value: 3, suf: 'x', label: 'lead volume', sub: 'Dimov Associates, 90 days' },
+      { value: 40, suf: '%', label: 'lower cost per acquisition', sub: 'Dimov Associates, 90 days' },
+    ]} />
+  </Info>
+
+  <h2>How do we test ad creative?</h2>
+  <p>We test one idea at a time so the result means something. A test changes the hook, the angle or the format, not all three at once. The hook is the first line or first two seconds; the angle is the reason to buy, such as saving time, saving money or avoiding a risk; the format is static, video, carousel or demo.</p>
+  <p>Each test runs until it has spent enough to judge it against the current best ad on cost per customer. Winners become the new control and losers are switched off. Over a few months this builds a library of proven hooks and angles that also feeds your <a href="/social-media-marketing/">social media</a> and <a href="/email-marketing/">email</a>.</p>
+
+  <Info eyebrow="Search vs social" title="Google ads and Meta ads do different jobs" theme="mint">
+    <Versus a="Google Search ads" b="Meta ads" win="b" caption="How search and social advertising differ"
+      rows={[
+        ['How people find you', 'They search for what you sell', 'You interrupt their scroll'],
+        ['What does the targeting', 'The keyword', 'The creative'],
+        ['Main lever', 'Keywords, negatives, landing page', 'Hooks, angles and offers'],
+        ['Best for', 'Demand that already exists', 'Creating new demand'],
+        ['Biggest waste', 'Irrelevant search terms', 'Tired creative shown too often'],
+      ]} />
+  </Info>
 
   <h2>Why do most ad accounts lose money after the click?</h2>
   <p>Most ad accounts lose money after the click because the page, the form or the follow-up was never built for the traffic. The ad does its job, then the visitor lands on a generic home page, meets a long form, or waits a day for a reply. That is why every ad project starts with a <a href="/funnel-audit/">funnel audit</a>: fixing the leak first makes every future dollar of spend worth more.</p>

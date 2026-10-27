@@ -1,10 +1,16 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['Which platforms do you work on?', 'Instagram, TikTok, LinkedIn, Facebook and YouTube. We pick two or three for most clients, based on where their buyers already spend time, rather than spreading thin across all five.'],
   ['Do you make the videos?', 'Yes. We plan hooks and scripts, edit short-form video from your footage, and produce motion graphics and AI-assisted visuals. If you appear on camera, we send a shot list so filming takes one session a month.'],
   ['Do you run paid social?', 'Yes, as part of the system: boosting the posts that already perform and retargeting people who engaged, with every click sent to a page that captures the email address.'],
   ['How is social media priced?', 'It depends on platforms, posting frequency and how much video is involved, so we scope it on a call and send a fixed monthly price before any work starts.'],
+  ['How often should we post?', 'As often as you can keep quality high. A steady rhythm of a few strong posts a week beats a burst of daily posts that fades after a month. We set the cadence from your capacity and test whether more volume actually brings more sign-ups.'],
+  ['Does social media work for B2B companies?', 'Yes, mostly on LinkedIn and YouTube, and mostly through founders and experts posting in their own voice. B2B buyers research quietly for months, and useful posts keep you in mind until they are ready to talk.'],
 ];
 ---
 <Service slug="social-media-marketing"
@@ -12,7 +18,7 @@ const faq: [string, string][] = [
   description="Social media marketing services for Instagram, TikTok, LinkedIn and YouTube: strategy, short-form video, posting and ads that turn followers into buyers."
   h1="Social media marketing services: content that turns followers into subscribers and buyers"
   answer="Our social media marketing services plan, produce and publish content that earns attention, then turn it into business. We run strategy, short-form video, scheduled posting and paid social on Instagram, TikTok, LinkedIn, Facebook and YouTube, and connect every channel to your email list so followers become subscribers and buyers."
-  cases={[]} serviceType="Social media marketing" faq={faq}>
+  cases={['maestro', 'soulful-evolution']} serviceType="Social media marketing" faq={faq}>
 
   <h2>Why connect social media to email?</h2>
   <p>Social media and email work best as one system because you own your email list and you rent your audience on social platforms. An algorithm change can cut your reach overnight; an email list stays yours. So every content plan we build has a route from post to profile to a lead magnet or offer page that captures the email address, and from there into the welcome flow.</p>
@@ -41,6 +47,74 @@ const faq: [string, string][] = [
 
   <h2>How do we decide what to post?</h2>
   <p>We decide what to post from evidence, not taste. Before the first calendar we review your best and worst posts, the questions your customers ask in comments and emails, and what is getting traction in your niche. Each month the calendar keeps the formats and hooks that drove saves, shares, profile visits and email sign-ups, and drops the ones that only drove likes.</p>
+
+  <h2>What is the difference between social media management and social media marketing?</h2>
+  <p>Social media management services keep your accounts running: posting, replying to comments and keeping the feed consistent. Social media marketing goes further. It decides who the content is for, what each post should make people do, and how a viewer becomes a lead and then a customer. Management is a task list; marketing is a plan with a revenue target. We do both, but we price and report the work as marketing.</p>
+
+  <Info eyebrow="Management vs marketing" title="Posting on schedule is not the same as growing revenue" theme="mint">
+    <Versus a="Social media management" b="Social media marketing" win="b" caption="What each service covers"
+      rows={[
+        ['Goal', 'Keep the accounts active', 'Turn followers into subscribers and buyers'],
+        ['Planning', 'A posting calendar', 'Audience, offer and content pillars first'],
+        ['Content', 'Posts to fill the calendar', 'Posts built around hooks that were tested'],
+        ['Paid social', 'Rarely included', 'Budget behind proven posts and retargeting'],
+        ['Reporting', 'Followers, reach, likes', 'Email sign-ups, leads and sales from social'],
+      ]} />
+  </Info>
+
+  <h2>What are content pillars?</h2>
+  <p>Content pillars are the three to five themes every post comes back to. They keep a feed focused, make planning faster, and teach the platform and your audience what you are about. Each pillar should serve a buyer need, not just a topic you like. Here is an example set for a coaching business:</p>
+  <div class="table-wrap"><table>
+    <caption>Example content pillars for a coaching business</caption>
+    <thead><tr><th>Pillar</th><th>Job it does</th><th>Example post</th></tr></thead>
+    <tbody>
+      <tr><td>Teach</td><td>Show expertise, earn saves</td><td>Three questions to ask before hiring a coach</td></tr>
+      <tr><td>Prove</td><td>Build trust with results</td><td>A client story told as before, during and after</td></tr>
+      <tr><td>Behind the scenes</td><td>Make the brand human</td><td>How a session is planned</td></tr>
+      <tr><td>Point of view</td><td>Stand apart from the crowd</td><td>A common piece of advice you disagree with, and why</td></tr>
+      <tr><td>Offer</td><td>Turn attention into leads</td><td>A free guide or workshop with a sign-up link</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What does Instagram reward now?</h2>
+  <p>In January 2025, Instagram head Adam Mosseri said the three signals that matter most for ranking are watch time, likes and sends. Sends are how often people share a post with a friend in a direct message. That points to a simple brief for Instagram marketing: hold attention long enough to be watched, and make posts useful or funny enough that people send them on. Carousels that teach, Reels with a strong first line, and posts that settle a common argument all earn sends.</p>
+
+  <h2>What does a TikTok marketing strategy look like?</h2>
+  <p>A TikTok marketing strategy starts from the feed, not your follower count. TikTok shows videos to people based on how earlier viewers reacted, so a small account can reach a large audience with one strong video. The strategy is to post often enough to learn quickly, and to make videos that look like TikTok, not like ads.</p>
+  <ul>
+    <li><strong>Native style.</strong> Filmed on a phone, talking to camera, with on-screen text. Polished studio ads often get skipped.</li>
+    <li><strong>Hook in the first line.</strong> The opening words and the first frame decide whether people stay.</li>
+    <li><strong>Series, not one-offs.</strong> A repeatable format, such as "one mistake a day", gives viewers a reason to follow.</li>
+    <li><strong>A route off the platform.</strong> A link in the profile to a lead magnet, so viewers become subscribers you own.</li>
+  </ul>
+
+  <h2>How do you advertise on TikTok?</h2>
+  <p>You advertise on TikTok through TikTok Ads Manager, choosing an objective such as traffic, leads or sales, then an audience, a budget and the creative. The format we use most is Spark Ads, which turns an existing organic post into an ad and keeps its likes and comments. That way we only pay to push videos that already proved themselves organically, the same rule we follow on Meta.</p>
+
+  <h2>When does LinkedIn marketing make sense?</h2>
+  <p>LinkedIn marketing makes sense when you sell to businesses and know the job titles of your buyers. Founder-led posting builds trust over months; LinkedIn ads can target by job title, company size and industry, which is precise but usually costs more per click than other platforms. We pair both with direct outreach. For <a href="/case-studies/scalability/">Scalability</a>, personalised LinkedIn outreach reached a 38% connection acceptance rate and a 15% response rate alongside cold email.</p>
+
+  <Info eyebrow="From post to purchase" title="How a single post turns into a customer" sub="Every content plan we build has this route mapped before the first post goes out." theme="dark">
+    <Flow steps={[
+      { tag: 'Attention', t: 'Hook', p: 'The first line or two seconds stop the scroll.' },
+      { tag: 'Trust', t: 'Value', p: 'The post teaches, proves or entertains, so people save or send it.' },
+      { tag: 'Interest', t: 'Profile visit', p: 'A clear bio says who you help and links to one offer.' },
+      { tag: 'Lead', t: 'Email sign-up', p: 'A guide, checklist or workshop is swapped for an email address.' },
+      { tag: 'Sale', t: 'Welcome flow', p: 'An email sequence makes the offer to people who now know you.' },
+    ]} />
+  </Info>
+
+  <h2>What has social media produced for clients?</h2>
+  <p>For <a href="/case-studies/maestro/">Maestro</a>, a creator platform, social campaigns with feature demos and user stories reached more than 200,000 potential users, and engagement rose 50% compared with previous outreach, while segmented cold email and LinkedIn lifted sign-ups by 65%. For <a href="/case-studies/soulful-evolution/">Soulful Evolution</a>, LinkedIn outreach with thought leadership content reached a 42% acceptance rate as part of a system that added $500,000 in new annual revenue.</p>
+
+  <Info eyebrow="Proof" title="Social and outreach results from the case studies" theme="light">
+    <Stats items={[
+      { value: 200, suf: 'K+', label: 'potential users reached by social campaigns', sub: 'Maestro' },
+      { value: 50, suf: '%', label: 'more engagement than previous outreach', sub: 'Maestro' },
+      { value: 42, suf: '%', label: 'LinkedIn acceptance rate', sub: 'Soulful Evolution' },
+      { value: 38, suf: '%', label: 'LinkedIn acceptance rate', sub: 'Scalability' },
+    ]} />
+  </Info>
 
   <h2>How do we use AI in social media?</h2>
   <p>We use AI for the slow parts: turning one long video into several clips, drafting caption variations, resizing designs for each platform, and generating background visuals. A person writes the hooks, checks every claim and approves every post. Nothing is published automatically under your name without review.</p>

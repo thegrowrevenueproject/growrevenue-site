@@ -1,10 +1,16 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['Do I have to be on camera?', 'No. Many clients use faceless formats: motion graphics, product shots, screen recordings and 3D visuals. If you are comfortable on camera, one filming session a month gives us enough footage for the whole month.'],
   ['Who owns the content?', 'You do. Every file, edit and source project is delivered to your shared drive and is yours to reuse anywhere.'],
   ['How do you keep it on brand?', 'We build a short brand kit at the start: colours, fonts, tone of voice, words to use and avoid, and approved visual references. Every piece is checked against it before you see it.'],
   ['How is content creation priced?', 'By monthly volume and how much video is involved. We scope it on a call and send a fixed monthly price before work starts.'],
+  ['Do you write blog articles for search?', 'Yes. Each article answers one question your buyers ask, opens with a direct answer, and uses headings, tables and structured data so both search engines and AI answer engines can quote it. Articles link to the service or offer they support.'],
+  ['Can you make UGC-style ads?', 'Yes. We write the brief and script, work with creators or your customers to film, edit the footage into several ad versions, and make sure every paid endorsement is clearly disclosed.'],
 ];
 ---
 <Service slug="content-creation"
@@ -40,6 +46,52 @@ const faq: [string, string][] = [
 
   <h2>How does content turn into revenue?</h2>
   <p>Content turns into revenue when there is a path from the post to a purchase. Every content plan we build includes that path: a post earns attention, the profile or article offers something worth an email address, and an <a href="/email-marketing/">email sequence</a> makes the offer. We report which pieces brought in subscribers and sales, and the next month's plan does more of what worked.</p>
+
+  <h2>What is the difference between content creation services and content marketing services?</h2>
+  <p>Content creation services make the assets: the videos, graphics, articles and emails. Content marketing services decide what to make, who it is for, where it runs and how it leads to a sale, then measure the result. You can buy creation alone, but without the marketing around it, content tends to pile up without moving revenue. We plan, make, publish and measure as one job.</p>
+
+  <Info eyebrow="Two ways to make content" title="Content made to fill a calendar versus content made to sell" theme="mint">
+    <Versus a="Calendar content" b="Revenue content" win="b" caption="How the two approaches differ"
+      rows={[
+        ['Starting point', 'How many posts a week', 'Which buyer question to answer'],
+        ['Every piece has', 'A topic', 'A job: attention, a lead or a sale'],
+        ['Next step for the viewer', 'Usually none', 'Follow, sign up or book'],
+        ['What gets measured', 'Views and likes', 'Subscribers, leads and sales per piece'],
+        ['What happens next month', 'More of the same', 'More of what earned, less of what did not'],
+      ]} />
+  </Info>
+
+  <h2>How does short form video marketing sell?</h2>
+  <p>Short form video marketing sells when each clip moves the viewer one step, not when it tries to do everything. A clip that sells usually follows the same shape: it stops the scroll, names a problem the viewer has, shows proof that it can be solved, and gives one clear next step. Most short videos are watched on a phone, often with the sound off, so every clip we make is captioned and readable without audio.</p>
+
+  <Info eyebrow="Anatomy of a short video" title="The five beats of a short video that sells" sub="A structure we start from and then test. Timings are a guide for a clip of under a minute." theme="dark">
+    <Flow steps={[
+      { tag: 'First 2 seconds', t: 'Hook', p: 'A bold claim, a result or a mistake named out loud.' },
+      { tag: 'Next few seconds', t: 'Problem', p: 'Say the problem the way the viewer would say it.' },
+      { tag: 'Middle', t: 'Proof', p: 'A demo, a before and after, or a customer result.' },
+      { tag: 'Near the end', t: 'Offer', p: 'What they get and why it is worth having now.' },
+      { tag: 'Last line', t: 'One action', p: 'Follow, comment a keyword, or tap the link.' },
+    ]} />
+  </Info>
+
+  <h2>What is user generated content?</h2>
+  <p>User generated content, or UGC, is content made by customers or independent creators rather than by the brand. A customer's unboxing video, a review on camera, or a creator showing how they use your product are all UGC. It works because buyers trust people like them more than they trust a brand talking about itself.</p>
+  <p>In marketing, UGC now covers two things. Organic UGC is what real customers post without being paid. UGC-style ads are paid videos where a creator films in that natural style for you to run as ads. Both need care: get written permission before reusing a customer's post, and when a creator is paid, the endorsement must be clearly disclosed, as advertising rules in both the US and UK require.</p>
+
+  <h2>How do we run UGC content creation?</h2>
+  <p>We run UGC content creation as a brief, not a lottery. Each brief names the buyer, the problem, the proof to show and the hook to open with. Creators or customers film; we edit each video into several versions with different hooks and lengths, then test them as ads. The versions that bring in customers at the lowest cost get more budget, and their hooks feed the next round of briefs.</p>
+
+  <h2>How do we write content for search and AI answers?</h2>
+  <p>People now ask Google and AI assistants full questions, and the answer often appears before anyone clicks. So every article we write is built to be quoted. It answers one question, gives the direct answer in the first paragraph, uses question headings, puts comparisons in tables, and carries structured data. That approach helps the article rank in search, and makes it easy for AI answer engines to cite your brand as the source.</p>
+
+  <Info eyebrow="Proof" title="What content-led campaigns produced" sub="Results from the Maestro and Synaps Dx case studies, where content fed outreach and email." theme="light">
+    <Stats items={[
+      { value: 65, suf: '%', label: 'more sign-ups from segmented outreach', sub: 'Maestro' },
+      { value: 200, suf: 'K+', label: 'potential users reached by social campaigns', sub: 'Maestro' },
+      { value: 10, suf: 'K', label: 'new leads from rebuilt sign-up forms', sub: 'Synaps Dx' },
+      { value: 25, suf: 'K', label: 'dormant subscribers re-engaged', sub: 'Synaps Dx, first quarter' },
+    ]} />
+  </Info>
 
   <h2>How do we use AI in content production?</h2>
   <p>We use AI for speed and a person for judgment. AI tools help us cut clips, draft variations, resize for every platform and generate 3D visuals and backgrounds. A person writes the hooks, checks every claim, keeps the brand consistent and approves every piece. Nothing goes out under your name without review, and no AI-generated people are presented as real customers or staff.</p>
