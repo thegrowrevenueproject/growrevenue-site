@@ -31,13 +31,13 @@ const schema: object[] = [{
 if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
 ---
 <Base title={title} description={description} path={path} pageType="service" query={s.query} crumbs={[{ name: s.nav, path }]} schema={schema}>
-  <section class="sh" data-pin-hero>
-    <div class="wrap inner grid">
+  <section class="sh">
+    <div class="wrap grid">
       <div>
         <span class="eyebrow">{s.group} &middot; {s.from ? `From ${usd(s.from)}` : 'Scoped to your account'}</span>
         <h1 data-split>{h1}</h1>
         <p class="lead">{answer}</p>
-        <div class="btns reveal">
+        <div class="btns">
           <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a>
           {s.tiers.length > 0 && <a class="btn ghost" href="#pricing">See prices</a>}
         </div>
@@ -72,9 +72,9 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
           <h2 id="pricing">How much does it cost?</h2>
           <p>Three fixed-price packages, the same as our Upwork project catalog. Prices are in US dollars, as of October 26, 2026.</p>
         </div>
-        <div class="wrap tstack" data-stack>
+        <div class="wrap tiers3" data-stagger="90">
           {s.tiers.map((t, i) => (
-            <div class={'tier' + (i === 1 ? ' mid' : '')} style={`--i:${i}`}>
+            <div class={'tier' + (i === 1 ? ' mid' : '')} data-r="up">
               <h3>{t.name}</h3>
               <p class="price">{usd(t.price)} <small>{t.days} days</small></p>
               <p>{t.items}</p>

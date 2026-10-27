@@ -1,8 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Ribbon from '../components/Ribbon.astro';
-import * as si from 'simple-icons';
-import { SERVICES, GROUPS, CASES, REVENUE_PROOF } from '../data/site';
+import { SERVICES, GROUPS, CASES, REVENUE_PROOF, usd } from '../data/site';
 import { CASE_BODY } from '../data/cases';
 const Q = 'marketing company';
 const faq: [string, string][] = [
@@ -14,22 +13,20 @@ const faq: [string, string][] = [
   ['Where are you based?', 'London, United Kingdom. We work with businesses in the US, UK, Canada and Europe, mostly in their own time zones.'],
 ];
 const schema = [{ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
-const ic = (k: string) => (si as any)[k]?.path as string;
-const trail = ['siInstagram', 'siTiktok', 'siYoutube', 'siMeta', 'siGoogleads', 'siHubspot', 'siGmail', 'siShopify'].map(ic).filter(Boolean);
-const stageStyle = ['c1', 'c2', 'c3', 'c4'];
-const stagePoints: Record<string, string[]> = {
-  Attract: ['Google Ads', 'Meta Ads', 'TikTok', 'Instagram', 'YouTube', 'Short-form video'],
-  Capture: ['Cold email', 'LinkedIn outreach', 'Lead magnets', 'Landing pages', 'Booked calls'],
-  Convert: ['Funnel audits', 'Welcome flows', 'Abandoned cart', 'Win-back', 'CRM routing'],
-  Scale: ['n8n', 'Make', 'Zapier', 'AI agents', 'Inbox placement', 'Reporting'],
-};
-const proofPics: [string, string][] = [
-  ['ecom', 'Photographer shooting skincare products for an online store at night'],
-  ['coach', 'Coach leading a small workshop group in a dark loft'],
-  ['adsdesk', 'Media buyer watching ad performance graphs climb on two monitors'],
-  ['lawyer', 'Lawyer reading a lead report on a tablet in her office'],
+const mark = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 51A7 7 0 0 1 20 44V51Z" fill="#2B8A5C"/><path d="M20 44A12 12 0 0 1 32 32V44Z" fill="#43C483"/><path d="M32 32A19 19 0 0 1 51 13V32Z" fill="#A6F2C8"/></svg>';
+// the six faces of the revenue flywheel: channel, video, word typed into the headline, proof line
+const faces = [
+  { name: 'Paid ads', vid: 'ads', word: 'sales.', tag: '3.5x ROAS' },
+  { name: 'Social', vid: 'creator', word: 'audience.', tag: 'Reels, TikTok' },
+  { name: 'Content', vid: 'podcast', word: 'brand.', tag: 'Monthly plan' },
+  { name: 'Lead gen', vid: 'leads', word: 'pipeline.', tag: '150+ leads/mo' },
+  { name: 'Email', vid: 'email', word: 'repeat sales.', tag: '38%+ of revenue' },
+  { name: 'AI automation', vid: 'aiwall', word: 'margins.', tag: 'Agents + flows' },
 ];
-const casePics: Record<string, [string, string]> = {
+const svcPic: Record<string, string> = { 'paid-advertising': 'adsdesk', 'social-media-marketing': 'streamer', 'content-creation': 'editor', 'lead-generation': 'salescall', 'cold-email-infrastructure': 'b2bwindow', 'funnel-audit': 'strategists', 'email-marketing': 'emailmacro', 'ai-automation': 'aiwall', 'email-deliverability': 'wallchart' };
+const svcAlt: Record<string, string> = { 'paid-advertising': 'Media buyer watching ad results climb on two monitors', 'social-media-marketing': 'Musician live streaming to followers from a home studio', 'content-creation': 'Video editor cutting a short vertical ad', 'lead-generation': 'Saleswoman booking a sales meeting on a video call', 'cold-email-infrastructure': 'Consultant on a call with a prospect by a city window', 'funnel-audit': 'Two strategists mapping funnel numbers late at night', 'email-marketing': 'Hands building an email automation flow on a laptop', 'ai-automation': 'Man watching an AI workflow map light up on a wall', 'email-deliverability': 'Team reading inbox placement results on a wall screen' };
+const short: Record<string, string> = { 'paid-advertising': 'Paid ads', 'social-media-marketing': 'Social media', 'content-creation': 'Content', 'lead-generation': 'Lead generation', 'cold-email-infrastructure': 'Cold email', 'funnel-audit': 'Funnels', 'email-marketing': 'Email marketing', 'ai-automation': 'AI automation', 'email-deliverability': 'Deliverability' };
+const casePic: Record<string, [string, string]> = {
   'synaps-dx': ['ecom', 'Product photo shoot for an online health brand at night'],
   'scalability': ['b2bwindow', 'B2B consultant on a sales call by a city window at night'],
   'maestro': ['streamer', 'Musician live streaming from a home studio with a ring light'],
@@ -37,81 +34,68 @@ const casePics: Record<string, [string, string]> = {
   'dimov-associates': ['lawyer', 'Lawyer reviewing a lead report on a tablet at dusk'],
   'austere': ['artist', 'Painter checking social media results on her phone in her studio'],
 };
-const short: Record<string, string> = { 'paid-advertising': 'Paid ads', 'social-media-marketing': 'Social media', 'content-creation': 'Content', 'lead-generation': 'Lead generation', 'cold-email-infrastructure': 'Cold email', 'funnel-audit': 'Funnels', 'email-marketing': 'Email marketing', 'ai-automation': 'AI automation', 'email-deliverability': 'Deliverability' };
+const zzPics: [string, string][] = [['pointing', 'Team reading a rising revenue chart on a wall screen'], ['coach', 'Coach leading a small workshop group in a dark loft'], ['adsdesk', 'Media buyer watching ad performance graphs climb'], ['lawyer', 'Lawyer reading a lead report on a tablet in her office']];
+const stageLine: Record<string, string> = { Attract: 'Get in front of the right buyers', Capture: 'Turn attention into leads', Convert: 'Turn leads into revenue', Scale: 'Keep it growing without more headcount' };
 const flips = [
   { slug: 'synaps-dx', big: '40%', what: 'growth in online revenue', who: 'Synaps Dx', role: 'Ecommerce', quote: CASES[0].quote },
   { slug: 'scalability', big: '150+', what: 'qualified leads a month', who: 'Scalability', role: 'B2B services', quote: CASES[1].quote },
   { slug: 'dimov-associates', big: '3x', what: 'lead volume at 40% lower cost per acquisition', who: 'Dimov Associates', role: 'Legal', quote: CASES[4].quote },
-  { slug: 'soulful-evolution', big: '$500K', what: 'new annual revenue', who: 'Soulful Evolution', role: 'Coaching', text: 'Program sign-ups rose 60%, with 300+ leads a month coming in across LinkedIn, Google Ads and email nurture.' },
-  { slug: 'maestro', big: '+65%', what: 'creator sign-ups', who: 'Maestro', role: 'Creator platform', text: 'Segmented cold email and LinkedIn reached 200,000+ potential users at a 42% open rate.' },
-  { slug: 'austere', big: '3.5x', what: 'return on ad spend', who: 'Austere', role: 'Marketing services', text: 'Ads matched to landing pages produced 450+ qualified leads in one quarter at an 18% lower cost per click.' },
 ];
+const deck = [CASES[3], CASES[5], CASES[2]];
 const team = [
-  { name: 'Barbara Arora', role: 'Co-founder. Client strategy, social media and campaign planning.', img: '/img/barbara-arora.webp', href: '/about/' },
-  { name: 'Kunal Arora', role: 'Founder. Growth strategy, email, outreach and automation.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
-  { name: 'Rahul Arora', role: 'Creative director. Ad creative, video, design and landing pages.', img: '/img/rahul-arora.webp', href: '/about/' },
+  { name: 'Kunal Arora', role: 'Founder', bio: 'Growth strategy, email, outreach and automation.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
+  { name: 'Barbara Arora', role: 'Co-founder', bio: 'Client strategy, social media and campaign planning.', img: '/img/barbara-arora.webp', href: '/about/' },
+  { name: 'Rahul Arora', role: 'Creative director', bio: 'Ad creative, video, design and landing pages.', img: '/img/rahul-arora.webp', href: '/about/' },
 ];
-const mark = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 51A7 7 0 0 1 20 44V51Z" fill="#2B8A5C"/><path d="M20 44A12 12 0 0 1 32 32V44Z" fill="#43C483"/><path d="M32 32A19 19 0 0 1 51 13V32Z" fill="#A6F2C8"/></svg>';
-const vid = (n: string, label: string) => `<video muted loop playsinline preload="none" poster="/video/sq-${n}.webp" data-lazy aria-hidden="true"><source data-src="/video/sq-${n}.webm" type="video/webm" /><source data-src="/video/sq-${n}.mp4" type="video/mp4" /></video><span class="lab">${label}</span>`;
+const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
 ---
 <Base title="Revenue-Driven Marketing Company in London | Grow Revenue"
   description="The Grow Revenue Company is a revenue-driven marketing company in London running paid ads, social, content, lead generation, email and AI automation."
   path="/" pageType="home" query={Q} schema={schema} ogImage="/og/home.png">
 
-  <!-- 1. Pinned hero: typewriter headline, video cube turning with scroll, icons travelling a curved path -->
-  <section class="h2-hero" data-pin-hero>
-    <div class="wrap inner grid">
-      <div>
-        <span class="eyebrow">Revenue-driven marketing &middot; London</span>
-        <h1 data-split>The revenue-driven marketing company built to grow your <em data-type="revenue.|pipeline.|sales.|margins.">revenue.</em></h1>
-        <p class="lead">The Grow Revenue Company is a revenue-driven marketing company. We run paid ads, social media, content, lead generation, email marketing, funnels and AI automation as one system, and report one number first: the revenue it brings in.</p>
-        <div class="btns">
-          <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute growth call</a>
-          <a class="btn ghost" href="/case-studies/">See the revenue results</a>
-        </div>
-      </div>
-      <div class="hstage">
-        <svg class="trail" viewBox="0 0 800 800" aria-hidden="true">
-          <path id="trailPath" class="path" d="M-40 640 C 120 520, 220 780, 420 700 S 720 420, 860 120" />
-          {trail.map((p, i) => (
-            <g class="bub"><circle r="26" /><g transform="translate(-13 -13) scale(1.0833)"><path d={p} /></g>
-              <animateMotion dur="24s" repeatCount="indefinite" begin={`-${(i * 3).toFixed(1)}s`}><mpath href="#trailPath" /></animateMotion></g>
-          ))}
-        </svg>
-        <div class="vcube" data-spin="ry:-24:300;rx:-14:6" data-idle="ry:5" data-src="page" data-drag data-cursor="Drag" role="img" aria-label="A turning cube of short films: a media buyer reading ad results, a podcast recording, a creator filming and an AI workflow map">
-          <div class="p3d">
-            <div class="face f1" set:html={vid('ads', 'Paid ads')} />
-            <div class="face f2" set:html={vid('podcast', 'Content')} />
-            <div class="face f3" set:html={vid('creator', 'Social')} />
-            <div class="face f4" set:html={vid('aiwall', 'AI automation')} />
-            <div class="face f5" set:html={mark} />
-            <div class="face f6" set:html={mark} />
+  <!-- 1. Pinned hero. The flywheel turns one channel per stretch of scroll and types its word into the headline. Nothing slides over it. -->
+  <div class="pinwrap" data-pinwrap>
+    <section class="pinstage" aria-labelledby="hero-h">
+      <div class="wrap hero4">
+        <div>
+          <p class="kick"><i aria-hidden="true"></i><span>Revenue-driven marketing.<br />London, serving the US, UK and Europe.</span></p>
+          <h1 id="hero-h">The revenue-driven marketing company built to grow your <br /><span class="tw" data-cycle={faces.map((f) => f.word).join('|')}>revenue.</span><span class="caret" aria-hidden="true"></span></h1>
+          <p class="lead">The Grow Revenue Company is a revenue-driven marketing company. We run paid ads, social media, content, lead generation, email marketing, funnels and AI automation as one system, and report one number first: the revenue it brings in.</p>
+          <div class="btns">
+            <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute growth call</a>
+            <a class="btn ghost" href="/case-studies/">See the revenue results</a>
+          </div>
+          <div class="trust">
+            <span class="av"><img src="/img/kunal-arora.webp" alt="" width="34" height="34" /><img src="/img/barbara-arora.webp" alt="" width="34" height="34" /><img src="/img/rahul-arora.webp" alt="" width="34" height="34" /></span>
+            <span>123 Upwork projects delivered<br />at 100% Job Success.</span>
           </div>
         </div>
-        <div class="chip3 c1"><span><strong>3.5x</strong>return on ad spend</span></div>
-        <div class="chip3 c2"><span><strong>$500K</strong>new annual revenue</span></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="over">
-    <Ribbon />
-
-    <!-- 2. About curtain -->
-    <section class="curtain" aria-labelledby="about-h">
-      <div class="wrap">
-        <div class="row reveal">
-          <p>We help ambitious businesses grow revenue with paid ads, social media, content, outreach and email that work as one plan.</p>
-          <img src="/img/cine/strategists-800.webp" alt="Two strategists reviewing funnel charts late at night" width="800" height="450" loading="lazy" />
-          <h2 id="about-h">About <em>us</em></h2>
-          <img src="/img/cine/salescall-800.webp" alt="Saleswoman on a video call in a glass meeting room" width="800" height="604" loading="lazy" />
-          <p class="r">From the first ad to the repeat purchase, we turn attention into pipeline and pipeline into sales, one measured step at a time.</p>
+        <div class="prismzone">
+          <div class="prism" data-cursor="Drag" role="img" aria-label="The revenue flywheel: six short films, one per channel, paid ads, social, content, lead generation, email and AI automation, turning as you scroll">
+            <div class="p3d">
+              {faces.map((f, k) => (
+                <div class="pf" style={`--k:${k}`}>
+                  <video autoplay muted loop playsinline preload="metadata" poster={`/video/pf-${f.vid}.webp`} aria-hidden="true"><source src={`/video/pf-${f.vid}.webm`} type="video/webm" /><source src={`/video/pf-${f.vid}.mp4`} type="video/mp4" /></video>
+                  <span class="shade"></span>
+                  <span class="tag">{f.name}<b>{f.tag}</b></span>
+                </div>
+              ))}
+              <div class="cap t" set:html={mark} />
+              <div class="cap b" />
+            </div>
+          </div>
+          <div class="prism-floor" aria-hidden="true"></div>
+          <ul class="chan" aria-label="Channels in the flywheel">{faces.map((f, k) => <li class={k === 0 ? 'on' : ''}>{f.name}</li>)}</ul>
         </div>
-        <p class="statement" data-scrub>We judge every ad, post and email by <em>the revenue it brings in</em>, and we cut whatever does not earn its place.</p>
-        <div class="btns"><a class="btn" href="/about/"><span class="arr" aria-hidden="true">&#8599;</span>Meet the company</a></div>
       </div>
+      <span class="scrollcue" aria-hidden="true">SCROLL</span>
     </section>
+  </div>
 
+  <Ribbon />
+
+  <!-- 2. Ticker, featured case carousel, drifting results strip, promo banner -->
+  <section class="section" style="padding-top:0">
     <div class="ticker" aria-label="Recent client results">
       <span class="lab">Results</span>
       <div class="marquee">
@@ -122,349 +106,322 @@ const vid = (n: string, label: string) => `<video muted loop playsinline preload
         ))}
       </div>
     </div>
-
-    <!-- 3. Proof: spinning coin + stat rows -->
-    <section class="section">
-      <div class="wrap">
-        <div class="proofgrid">
-          <div>
-            <span class="eyebrow">Proof</span>
-            <h2 data-split>What revenue have <em>clients</em> seen?</h2>
-            <p class="lead reveal">Four numbers from published case studies. Each one links to the full story, with the starting point and the period it was measured over.</p>
-          </div>
-          <div class="coin" data-spin="ry:-60:600;rx:10:-10" data-idle="ry:10" aria-hidden="true">
-            <div class="p3d">{Array.from({ length: 24 }, (_, n) => <i class="rim" style={`--n:${n}`}></i>)}<div class="cf"><b>$</b></div><div class="cf cb" set:html={mark} /></div>
-          </div>
-        </div>
-        <ul class="srows">
-          {REVENUE_PROOF.map((r, i) => (
-            <li class="srow reveal">
-              <strong data-count={r.value} data-pre={r.pre} data-suf={r.suf} data-dec={String(r.value).includes('.') ? '1' : '0'}>{r.pre}{r.value}{r.suf}</strong>
-              <p><b>{r.label}</b><a href={'/case-studies/' + r.slug + '/'}>{r.client} case study &rarr;</a></p>
-              <div class="pic" data-zoom><img src={`/img/cine/${proofPics[i][0]}-800.webp`} alt={proofPics[i][1]} width="800" height="604" loading="lazy" /></div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- 4. Definition block for answer engines -->
-    <section class="section" style="background:var(--paper)">
-      <div class="narrow">
-        <span class="eyebrow">The short answer</span>
-        <h2 data-split>What is a revenue-driven <em>marketing company?</em></h2>
-        <p class="reveal">A revenue-driven marketing company plans, runs and reports every channel against the revenue it produces, not against clicks, followers or opens. It sets a baseline before any work starts, connects ads, content, outreach and email into one path to purchase, and moves budget to whatever earns. That is the only way we work.</p>
-        <div class="table-wrap reveal"><table>
-          <caption>How we differ from a channel-by-channel supplier</caption>
-          <thead><tr><th>Question</th><th>Channel supplier</th><th>Revenue-driven</th></tr></thead>
-          <tbody>
-            <tr><td>What gets reported?</td><td>Clicks, reach, followers, opens</td><td>Revenue, cost per customer, pipeline</td></tr>
-            <tr><td>Who owns the gaps between channels?</td><td>Nobody</td><td>We do: one plan, one team</td></tr>
-            <tr><td>When is a channel cut?</td><td>When the contract ends</td><td>When it stops paying for itself</td></tr>
-            <tr><td>Who owns the accounts and data?</td><td>Often the supplier</td><td>You, always</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-    </section>
-
-    <!-- 5. Services: stage cards stack over each other, then a 3D ring of every service turns with scroll -->
-    <section class="section" style="background:var(--cream)">
-      <div class="wrap">
-        <div class="center">
-          <span class="eyebrow">Services</span>
-          <h2 data-split>What do we run <em>for your revenue?</em></h2>
-          <p class="lead reveal">The full path from a stranger's first look to their repeat purchase: nine services in four stages, each one starting from a measured baseline.</p>
-        </div>
-        <div class="stack" data-stack>
-          {GROUPS.map((g, i) => (
-            <article class={'stack-card ' + stageStyle[i]} style={`--i:${i}`}>
-              <div>
-                <span class="k">0{i + 1} {g.name}</span>
-                <h3>{g.line}</h3>
-                <ul class="sl">
-                  {SERVICES.filter((s) => s.group === g.name).map((s) => (
-                    <li><a href={'/' + s.slug + '/'}><img src={`/img/3d/${s.icon}.webp`} alt="" width="48" height="48" loading="lazy" /><span><b>{s.nav}</b><small>{s.blurb.split('. ')[0].replace(/\.$/, '')}.</small></span></a></li>
-                  ))}
-                </ul>
-                <ul class="chips" aria-label={g.name + ' tools and tactics'}>{stagePoints[g.name].map((c) => <li>{c}</li>)}</ul>
-              </div>
-              <div class="mock" aria-hidden="true">
-                {g.name === 'Attract' && <>
-                  <div class="tile"><small>Return on ad spend</small><b>3.5x</b><span class="up">&#9650; vs last quarter</span></div>
-                  <div class="tile"><small>Cost per customer</small><b>$41</b><span class="up">&#9660; 22%</span></div>
-                  <div class="tile w"><small>Revenue by week</small><div class="bars"><i style="--h:30%"></i><i style="--h:44%"></i><i style="--h:38%"></i><i style="--h:56%"></i><i style="--h:62%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:88%"></i><i style="--h:96%"></i></div></div>
-                  <div class="tile w"><div class="rowi"><span class="dot">G</span>Search, brand terms<span class="pill">5.1x</span></div><div class="rowi"><span class="dot">M</span>Meta, video retargeting<span class="pill">3.8x</span></div><div class="rowi"><span class="dot">T</span>TikTok, creator ads<span class="pill g">testing</span></div></div>
-                </>}
-                {g.name === 'Capture' && <>
-                  <div class="tile"><small>Qualified leads</small><b>150+</b><span class="up">per month</span></div>
-                  <div class="tile"><small>Reply rate</small><b>11.4%</b><span class="up">&#9650; 3.2 pts</span></div>
-                  <div class="tile w"><small>This week's booked calls</small><div class="rowi"><span class="dot">AC</span>Head of Growth, SaaS<span class="pill">Tue 10:00</span></div><div class="rowi"><span class="dot">JR</span>Founder, law firm<span class="pill">Wed 15:30</span></div><div class="rowi"><span class="dot">MK</span>COO, ecommerce<span class="pill">Thu 09:00</span></div><div class="rowi"><span class="dot">SL</span>VP Sales, B2B<span class="pill g">confirmed</span></div></div>
-                </>}
-                {g.name === 'Convert' && <>
-                  <div class="tile w"><small>Email share of online revenue</small><b>38%+</b><svg class="spark" viewBox="0 0 300 60" preserveAspectRatio="none"><path d="M0 55 C 40 52, 60 48, 90 44 S 150 30, 180 26 S 240 12, 300 6" /></svg></div>
-                  <div class="tile"><small>Open rate</small><b>35%</b><span class="up">from 18%</span></div>
-                  <div class="tile"><small>Click rate</small><b>3.2%</b><span class="up">from 1.5%</span></div>
-                  <div class="tile w"><small>Live flows</small><div class="flow"><span>Sign-up</span><i></i><span>Welcome</span><i></i><span>Cart</span><i></i><span>Win-back</span></div></div>
-                </>}
-                {g.name === 'Scale' && <>
-                  <div class="tile w"><small>AI agent: reply triage</small><div class="flow"><span>Inbox</span><i></i><span>Classify</span><i></i><span>Draft</span><i></i><span>Human OK</span><i></i><span>CRM</span></div></div>
-                  <div class="tile"><small>Hours saved a week</small><b>14</b><span class="up">per team</span></div>
-                  <div class="tile"><small>Inbox placement</small><b>96%</b><span class="up">Gmail and Outlook</span></div>
-                  <div class="tile w"><div class="rowi"><span class="dot">n8n</span>Lead research workflow<span class="pill g">running</span></div><div class="rowi"><span class="dot">AI</span>Weekly revenue report<span class="pill">Mon 08:00</span></div></div>
-                </>}
-              </div>
-            </article>
-          ))}
-        </div>
-        <nav class="ring3d" data-spin="ry:40:-320" data-idle="ry:-3" aria-label="All services">
-          <div class="p3d">
-            {SERVICES.map((s, k) => <a href={'/' + s.slug + '/'} style={`--k:${k}`}><img src={`/img/3d/${s.icon}.webp`} alt="" width="104" height="104" loading="lazy" />{short[s.slug]}<small>{s.from ? `from $${s.from}` : 'scoped'}</small></a>)}
-          </div>
-        </nav>
-        <p class="note center" style="margin-top:30px">Dashboard figures on the cards illustrate what we report. Client results are on the case study pages.</p>
-      </div>
-    </section>
-
-    <!-- 6. AI era: gyroscope rings turning with scroll -->
-    <section class="section dark">
-      <div class="wrap">
-        <div class="era2">
-          <div>
-            <span class="eyebrow">Marketing in the AI era</span>
-            <h2 data-split>AI made marketing cheap to make. <em>Growth</em> is still hard to earn.</h2>
-            <p class="lead reveal">Anyone can now produce a thousand ads, posts and emails in an afternoon, so feeds and inboxes are flooded and attention costs more every year. The businesses that grow connect every channel into one engine, use AI for the busywork, and keep people on strategy, creative and judgment. That engine is what we build.</p>
-            <div class="btns reveal"><a class="btn" href="/ai-automation/"><span class="arr" aria-hidden="true">&#8599;</span>See our AI automation</a></div>
-          </div>
-          <div class="gyro" aria-hidden="true">
-            <div class="p3d r1" data-spin="rx:70:70;ry:0:420" data-idle="ry:14"><i></i></div>
-            <div class="p3d r2" data-spin="rx:-55:-55;ry:0:-360" data-idle="ry:-10"><i></i></div>
-            <div class="p3d r3" data-spin="rx:10:190;rz:0:220" data-idle="rz:8"><i></i></div>
-            <img src="/img/3d/ai.webp" alt="" width="480" height="480" loading="lazy" />
-          </div>
-        </div>
-        <div class="era">
-          <div class="reveal">
-            <h3>How marketing used to work</h3>
-            <ul>
-              <li>Separate suppliers for ads, social, email and the website</li>
-              <li>Each one reporting its own vanity metric: clicks, likes, opens</li>
-              <li>Leads handed to sales with no follow-up system behind them</li>
-              <li>Reports stitched together by hand at month end</li>
-            </ul>
-          </div>
-          <div class="now reveal d1">
-            <h3>How growth works now</h3>
-            <ul>
-              <li>One plan where ads, content and outreach all feed the same funnel</li>
-              <li>Every channel judged by cost per customer and revenue, not reach</li>
-              <li>Email and automation turn every lead into a long-term buyer</li>
-              <li>AI agents research, sort, follow up and report around the clock</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. Coverflow strip: what we make -->
-    <section class="hs" data-hscroll aria-labelledby="make-h">
-      <div class="stick">
-        <div class="wrap">
-          <span class="eyebrow">Inside the work</span>
-          <h2 id="make-h" data-split>What do we make <em>every month?</em></h2>
-        </div>
-        <div class="htrack">
-          <article class="hcard"><div class="m"><span class="n">Video</span><video muted loop playsinline preload="none" poster="/video/sq-creator.webp" data-lazy aria-label="Creator filming a product video on a phone gimbal"><source data-src="/video/sq-creator.webm" type="video/webm" /><source data-src="/video/sq-creator.mp4" type="video/mp4" /></video></div><div class="t"><h3>Short-form video</h3><p>Hooks, scripts and edits for Reels, TikTok and Shorts, planned around what your buyers search for.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Ads</span><img src="/img/cine/editor-800.webp" alt="Video editor cutting a short vertical ad in a dark suite" width="800" height="450" loading="lazy" /></div><div class="t"><h3>Ad creative and landing pages</h3><p>Static, video and motion ads with the page they point to, tested against cost per customer.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Social</span><img src="/img/cine/streamer-800.webp" alt="Musician live streaming to followers from a home studio" width="800" height="604" loading="lazy" /></div><div class="t"><h3>Social content</h3><p>Carousels, posts and creator content on a calendar, with every post pointing somewhere useful.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Email</span><img src="/img/cine/emailmacro-800.webp" alt="Hands typing beside an email automation flow on a laptop" width="800" height="450" loading="lazy" /></div><div class="t"><h3>Email flows and campaigns</h3><p>Welcome, cart, post-purchase and win-back flows that keep selling after the first order.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Leads</span><img src="/img/cine/salescall-800.webp" alt="Saleswoman booking a meeting on a video call at night" width="800" height="604" loading="lazy" /></div><div class="t"><h3>Outreach that books calls</h3><p>Lead lists, cold email and LinkedIn sequences that fill your calendar with buyers.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Podcast</span><video muted loop playsinline preload="none" poster="/video/sq-podcast.webp" data-lazy aria-label="Two hosts recording a business podcast"><source data-src="/video/sq-podcast.webm" type="video/webm" /><source data-src="/video/sq-podcast.mp4" type="video/mp4" /></video></div><div class="t"><h3>Podcasts and long-form</h3><p>Episodes and articles cut into a month of posts, emails and ads from one recording.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">AI</span><video muted loop playsinline preload="none" poster="/video/sq-aiwall.webp" data-lazy aria-label="Man watching an AI workflow map light up on a wall"><source data-src="/video/sq-aiwall.webm" type="video/webm" /><source data-src="/video/sq-aiwall.mp4" type="video/mp4" /></video></div><div class="t"><h3>AI agents and automations</h3><p>Workflows that research leads, sort replies, update the CRM and write the weekly report.</p></div></article>
-          <article class="hcard"><div class="m"><span class="n">Reports</span><img src="/img/cine/wallchart-800.webp" alt="Team reading a revenue chart on a large wall screen" width="800" height="450" loading="lazy" /></div><div class="t"><h3>Revenue reports</h3><p>One monthly report that ties spend in every channel to the sales it produced.</p></div></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. Case studies: tabs by client -->
-    <section class="section">
-      <div class="wrap">
-        <div class="center">
-          <span class="eyebrow">Case studies</span>
-          <h2 data-split>Real work. <em>Real revenue.</em></h2>
-          <p class="lead reveal">Ecommerce, B2B services, coaching, legal and creator platforms. Pick a client to see what changed and what it earned.</p>
-        </div>
-        <div data-tabs>
-          <div class="tabs" role="tablist" aria-label="Client case studies">
-            {CASES.map((c, i) => <button role="tab" id={'t-' + c.slug} aria-controls={'p-' + c.slug} aria-selected={i === 0 ? 'true' : 'false'}>{c.client} &middot; {c.industry}</button>)}
-          </div>
-          {CASES.map((c) => (
-            <div class="tpanel" role="tabpanel" id={'p-' + c.slug} aria-labelledby={'t-' + c.slug}>
-              <div class="pic"><img src={`/img/cine/${casePics[c.slug][0]}-800.webp`} alt={casePics[c.slug][1]} width="800" height="604" loading="lazy" /></div>
-              <div class="tx">
-                <span class="cl">{c.client}</span>
-                <h3><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h3>
-                <p>{CASE_BODY[c.slug]?.summary.split('. ').slice(0, 2).join('. ').replace(/\.?$/, '.')}</p>
-                <ul class="statchips">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <b>{r.value}</b></li>)}</ul>
-                <a class="btn dark" href={'/case-studies/' + c.slug + '/'}><span class="arr" aria-hidden="true">&#8599;</span>Read the {c.client} story</a>
-              </div>
+    <div class="wrap">
+      <div class="lineh fh" data-r="up"><h2>Featured client results</h2></div>
+      <div class="feat" data-carousel="6500" data-r="up" aria-roledescription="carousel" aria-label="Featured client results">
+        {CASES.map((c, i) => (
+          <article class={'slide' + (i === 0 ? ' on' : '')} aria-label={c.client}>
+            <img src={`/img/cine/${casePic[c.slug][0]}-1600.webp`} alt={casePic[c.slug][1]} width="1600" height="1200" loading={i === 0 ? 'eager' : 'lazy'} />
+            <div class="card">
+              <p class="meta"><span>{c.client}</span><span>{c.industry}</span></p>
+              <h3><a href={'/case-studies/' + c.slug + '/'}><span class="tt">{c.headline}</span></a><span class="caret" aria-hidden="true"></span></h3>
+              <p>{first(CASE_BODY[c.slug]?.summary ?? '')}</p>
             </div>
+          </article>
+        ))}
+        <div class="nav2"><button class="prev" type="button" aria-label="Previous result">&#8249;</button><button class="next" type="button" aria-label="Next result">&#8250;</button></div>
+        <div class="bar" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="drift" data-drift aria-label="More results">
+        <div class="row">
+          {[...CASES, ...CASES.slice(0, 3)].map((c) => (
+            <a href={'/case-studies/' + c.slug + '/'}><span><b>{c.results[0].metric}: {c.results[0].value}</b><small>{c.client} &middot; {c.period}</small></span><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="64" height="64" loading="lazy" /></a>
           ))}
         </div>
-        <div class="marquee names" aria-hidden="true">
-          {[0, 1].map(() => <div class="track">{CASES.map((c) => <span>{c.client}</span>)}<span>Upwork Top Rated Plus</span></div>)}
-        </div>
       </div>
-    </section>
-
-    <!-- 9. Why: video grows to full width, then approach list -->
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="grow" data-grow>
-          <video muted loop playsinline preload="none" poster="/video/celebrate.webp" data-lazy aria-label="A team celebrating a revenue spike on a laptop at night"><source data-src="/video/celebrate.webm" type="video/webm" /><source data-src="/video/celebrate.mp4" type="video/mp4" /></video>
-          <p class="cap">One team. Every channel. <em>One revenue number.</em></p>
-        </div>
-        <div class="why">
-          <div>
-            <span class="eyebrow">Why us</span>
-            <h2 data-split>Why hire one team instead of <em>five suppliers?</em></h2>
-            <p class="reveal">When ads, social, email and outreach sit with different suppliers, nobody owns the number that matters. Each reports a metric that looks good on its own, and the leaks between channels stay hidden. One team running the whole path sees those leaks and fixes them first.</p>
-            <div class="btns reveal"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Talk to us about your goals</a></div>
-          </div>
-          <ul class="approach">
-            <li class="reveal"><img src="/img/3d/diagnose.webp" alt="" width="64" height="64" loading="lazy" /><div><h3>Revenue is the scoreboard</h3><p>Every channel is judged by cost per customer and sales. Clicks and likes are inputs, not results.</p></div></li>
-            <li class="reveal d1"><img src="/img/3d/funnel.webp" alt="" width="64" height="64" loading="lazy" /><div><h3>One plan across channels</h3><p>Ads, content and outreach point at the same buyers, and the follow-up is built before the traffic arrives.</p></div></li>
-            <li class="reveal d2"><img src="/img/3d/content.webp" alt="" width="64" height="64" loading="lazy" /><div><h3>Creative made in-house</h3><p>Video, design and copy are produced by the same team that runs the campaigns, so tests never wait.</p></div></li>
-            <li class="reveal d3"><img src="/img/3d/ai.webp" alt="" width="64" height="64" loading="lazy" /><div><h3>Automation does the busywork</h3><p>AI agents handle research, sorting and reporting. People handle strategy, creative and judgment.</p></div></li>
-            <li class="reveal"><img src="/img/3d/shield.webp" alt="" width="64" height="64" loading="lazy" /><div><h3>You own every account</h3><p>Ad accounts, domains, mailboxes and data are in your name. If we part ways, everything keeps running.</p></div></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10. Pinned process stepper -->
-    <section class="pin" data-pin-steps aria-labelledby="proc-h">
-      <div class="stick">
-        <div class="wrap grid">
-          <div>
-            <span class="eyebrow">How we work</span>
-            <h2 id="proc-h" data-split>How does working with us <em>run?</em></h2>
-            <p>The same four steps on every engagement, whether we start with one channel or all of them.</p>
-            <div class="snav" aria-hidden="true">
-              <span class="pin-fill"></span>
-              <div class="sn on" data-step-nav><span>01</span>Diagnose</div><div class="sn" data-step-nav><span>02</span>Plan</div><div class="sn" data-step-nav><span>03</span>Launch</div><div class="sn" data-step-nav><span>04</span>Grow</div>
-            </div>
-          </div>
-          <div class="panels">
-            <div class="panel on" data-step><div><h3>01 Diagnose</h3><p>We read your numbers channel by channel and find where revenue is lost: traffic, conversion, follow-up or retention.</p><ul><li>90 days of ad, CRM and email data</li><li>A test lead through your funnel, timed</li><li>Baseline for every number we will report</li></ul></div><img class="i3" src="/img/3d/diagnose.webp" alt="3D magnifying glass over a chart for the diagnosis step" width="480" height="480" loading="lazy" /></div>
-            <div class="panel" data-step><div><h3>02 Plan</h3><p>You get a written plan that ranks every fix and channel by expected revenue, with the budget each one needs.</p><ul><li>Fixes first, new traffic second</li><li>Budget per channel with a target cost per customer</li><li>What we will stop doing, in writing</li></ul></div><img class="i3" src="/img/3d/funnel.webp" alt="3D sales funnel with coins for the planning step" width="480" height="480" loading="lazy" /></div>
-            <div class="panel" data-step><div><h3>03 Launch</h3><p>We build and run the campaigns, content, outreach, pages and automations, with your approval on anything public.</p><ul><li>Creative, copy and pages produced in-house</li><li>Tracking checked before money is spent</li><li>Weekly numbers from the first week</li></ul></div><img class="i3" src="/img/3d/plane.webp" alt="3D paper plane taking off for the launch step" width="480" height="480" loading="lazy" /></div>
-            <div class="panel" data-step><div><h3>04 Grow</h3><p>Monthly reports tie spend to revenue. Budget moves to what earns, and what does not earn is cut.</p><ul><li>One report across every channel</li><li>New channels added only when the first pay</li><li>Quarterly reset of goals and budget</li></ul></div><img class="i3" src="/img/3d/growth.webp" alt="3D rising bar chart with coins for the growth step" width="480" height="480" loading="lazy" /></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="bigm"><span class="sr">Public Upwork record: 123 jobs, $300K+ earned, 8,700+ hours, 100% Job Success.</span>
-      <div class="marquee" aria-hidden="true">
-        {[0, 1].map(() => <div class="track"><span>123<em>Upwork jobs</em></span><span class="star">&#10022;</span><span>$300K+<em>earned</em></span><span class="star">&#10022;</span><span>8,700+<em>hours</em></span><span class="star">&#10022;</span><span>100%<em>Job Success</em></span><span class="star">&#10022;</span></div>)}
+      <div class="promo" data-r="up">
+        <small>FREE FOR NEW CLIENTS</small>
+        <a href="/contact/"><b>Send us your site and numbers.<br />Get a written first read of your funnel.</b><span class="big">$0</span><span class="go">Get my free read &#8599;</span></a>
       </div>
     </div>
+  </section>
 
-    <!-- 11. Pricing: cards tilt up from the floor as you scroll -->
-    <section class="section">
-      <div class="wrap">
-        <div class="center">
-          <span class="eyebrow">Pricing</span>
-          <h2 data-split>How much does it cost <em>to start?</em></h2>
-          <p class="lead reveal">Start small with a fixed-price package, or hand us the whole engine. Prices in US dollars, as of October 26, 2026.</p>
-        </div>
-        <div class="pfan" data-grow>
-          <div class="pcard"><h3>Funnel audit</h3><p class="price">$500 <small>from, 5 days</small></p><ul><li>One funnel audited stage by stage</li><li>Written leak report with ranked fixes</li><li>30 minute walkthrough call</li></ul><a class="btn" href="/funnel-audit/"><span class="arr" aria-hidden="true">&#8599;</span>See the audit</a></div>
-          <div class="pcard dk"><h3>Growth partnership</h3><p class="price">Monthly <small>fixed fee, scoped</small></p><ul><li>Paid ads, social, content, outreach and email as one plan</li><li>Creative and automation included</li><li>Weekly numbers and a monthly revenue report</li></ul><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Scope it on a call</a></div>
-          <div class="pcard"><h3>Cold email setup</h3><p class="price">$600 <small>from, 5 days</small></p><ul><li>Sending domains and mailboxes in your name</li><li>Authentication and warmup</li><li>Sending tool connected and checked</li></ul><a class="btn" href="/cold-email-infrastructure/"><span class="arr" aria-hidden="true">&#8599;</span>See the setup</a></div>
-        </div>
-        <p class="note center" style="margin-top:24px">Email landing in spam? A <a href="/email-deliverability/">deliverability audit</a> starts at $350.</p>
+  <!-- 3. Services as category tiles -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center" data-r="drop">
+        <span class="eyebrow">Services</span>
+        <h2>Explore what we run</h2>
       </div>
-    </section>
+      <div class="tiles" data-stagger="55">
+        {SERVICES.map((s) => (
+          <a href={'/' + s.slug + '/'} data-r="scale">
+            <span class="im"><img src={`/img/cine/${svcPic[s.slug]}-800.webp`} alt={svcAlt[s.slug]} width="800" height="600" loading="lazy" /><img class="ic" src={`/img/3d/${s.icon}.webp`} alt="" width="46" height="46" loading="lazy" /></span>
+            <span>{short[s.slug]}<small>{s.from ? `from ${usd(s.from)}` : 'scoped to you'}</small></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-    <!-- 12. Testimonials: flip cards with cinematic fronts, swaying with scroll -->
-    <section class="section" style="background:var(--cream)">
-      <div class="wrap">
-        <div class="center">
-          <span class="eyebrow">Clients</span>
-          <h2 data-split>What do clients say once <em>the numbers are in?</em></h2>
-          <p class="lead reveal">Hover or tap a card to turn it over. Photos show the kind of business each client runs.</p>
-        </div>
-        <div class="flipzone">
-          {flips.map((f, i) => (
-            <div class="fcard" data-cursor="Flip" data-wave={i % 2 ? '-9' : '9'}>
-              <div class="fcard-inner">
-                <div class="fcard-front">
-                  <img src={`/img/cine/${casePics[f.slug][0]}-800.webp`} alt="" width="800" height="604" loading="lazy" />
-                  <span class="hint" aria-hidden="true">Turn over</span>
-                  <div><strong>{f.big}</strong><p class="what">{f.what}</p><div class="who">{f.who}<small>{f.role}</small></div></div>
-                </div>
-                <div class="fcard-back">
-                  {f.quote ? <><p>"{f.quote.text}"</p><small>{f.quote.who}</small></> : <p>{f.text}</p>}
-                  <a href={'/case-studies/' + f.slug + '/'}>Read the case study &rarr;</a>
-                </div>
+  <!-- 4. Zigzag proof -->
+  <section class="section" style="background:var(--paper)">
+    <div class="wrap center">
+      <span class="badge2" data-r="up">REAL CLIENTS. REAL REVENUE.</span>
+      <h2 style="margin-top:18px" data-r="up">What revenue have clients seen?</h2>
+      <ul class="zz">
+        {REVENUE_PROOF.map((r, i) => (
+          <li data-r="up">
+            <div class={'ph' + (i % 2 ? ' r' : '')} data-r={i % 2 ? 'right' : 'left'}><img src={`/img/cine/${zzPics[i][0]}-800.webp`} alt={zzPics[i][1]} width="800" height="600" loading="lazy" /></div>
+            <div class="mid">
+              <strong data-count={r.value} data-pre={r.pre} data-suf={r.suf} data-dec={String(r.value).includes('.') ? '1' : '0'}>{r.pre}{r.value}{r.suf}</strong>
+              <h3>{r.label}</h3>
+              <p>Measured for {r.client} against a baseline taken before any work started. <a href={'/case-studies/' + r.slug + '/'}>Read the {r.client} case study</a>.</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="btns" style="justify-content:center"><a class="btn dark" href="/case-studies/"><span class="arr" aria-hidden="true">&#8599;</span>See every case study</a></div>
+    </div>
+  </section>
+
+  <!-- 5. Dispatch blocks: services by stage -->
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">How the engine fits together</span>
+      <h2 data-r="up">Four stages, nine services, one revenue number</h2>
+      {GROUPS.map((g, gi) => {
+        const list = SERVICES.filter((s) => s.group === g.name);
+        const [lead, ...side] = list;
+        return (
+          <div class="dispatch">
+            <div class="dhead" data-r="up"><h3>0{gi + 1} {g.name} <em>{stageLine[g.name]}</em></h3><a class="pill" href={'/' + lead.slug + '/'}>View {short[lead.slug]}</a></div>
+            <div class="dgrid">
+              <a class="dlead" href={'/' + lead.slug + '/'} data-r="left">
+                <span class="im"><img src={`/img/cine/${svcPic[lead.slug]}-800.webp`} alt={svcAlt[lead.slug]} width="800" height="600" loading="lazy" /><img class="ic" src={`/img/3d/${lead.icon}.webp`} alt="" width="44" height="44" loading="lazy" /></span>
+                <span><span class="tagl">{g.name} <span>&middot; {lead.from ? `from ${usd(lead.from)}` : 'scoped'}</span></span><h4>{lead.card}</h4><p>{lead.blurb}</p></span>
+              </a>
+              <div class="dside" data-r="right">
+                {side.length ? side.map((s) => (
+                  <a href={'/' + s.slug + '/'}><span class="im"><img src={`/img/cine/${svcPic[s.slug]}-800.webp`} alt="" width="800" height="600" loading="lazy" /></span><span><span class="tagl">{g.name} <span>&middot; {s.from ? `from ${usd(s.from)}` : 'scoped'}</span></span><b>{s.card}</b><small>{first(s.blurb)}</small></span></a>
+                )) : (
+                  <a href="/case-studies/"><span class="im"><img class="icn" src="/img/3d/growth.webp" alt="" width="480" height="480" loading="lazy" /></span><span><span class="tagl">Proof</span><b>See the revenue each stage produced</b><small>Six published case studies with baselines.</small></span></a>
+                )}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 13. Team -->
-    <section class="section">
-      <div class="wrap center">
-        <span class="eyebrow">The people</span>
-        <h2 data-split>Who will you <em>work with?</em></h2>
-        <p class="lead reveal">A small senior team that does the work itself, supported by specialists and AI tooling. No hand-offs to juniors you never meet.</p>
-        <div class="team3">
-          {team.map((t, i) => (
-            <a class="tc" href={t.href} data-wave={['14', '0', '-14'][i]} data-wavevar="--ty"><img src={t.img} alt={`Portrait of ${t.name} from The Grow Revenue Company team`} width="480" height="480" loading="lazy" /><div><b>{t.name}</b><small>{t.role}</small></div></a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 14. FAQ two-panel -->
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="center">
-          <span class="eyebrow">FAQ</span>
-          <h2 data-split>Questions people ask <em>before they hire us</em></h2>
-        </div>
-        <div class="faqp" data-faq>
-          <div class="fqs">{faq.map(([q], i) => <button class="fq" type="button" aria-controls={'fa' + i} aria-expanded={i === 0 ? 'true' : 'false'}>{q}</button>)}</div>
-          <div class="fas">
-            {faq.map(([q, a], i) => <div class={'fa' + (i === 0 ? ' on' : '')} id={'fa' + i}><h3>{q}</h3><p>{a}</p></div>)}
-            <a class="btn dark" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Ask us something else</a>
           </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- 6. About statement + the short answer for AI engines -->
+  <section class="curtain" aria-labelledby="about-h">
+    <div class="wrap">
+      <div class="row" data-r="up">
+        <p>We help ambitious businesses grow revenue with paid ads, social media, content, outreach and email that work as one plan.</p>
+        <img src="/img/cine/strategists-800.webp" alt="Two strategists reviewing funnel charts late at night" width="800" height="450" loading="lazy" />
+        <h2 id="about-h">About <em>us</em></h2>
+        <img src="/img/cine/salescall-800.webp" alt="Saleswoman on a video call in a glass meeting room" width="800" height="604" loading="lazy" />
+        <p class="r">From the first ad to the repeat purchase, we turn attention into pipeline and pipeline into sales, one measured step at a time.</p>
+      </div>
+      <p class="statement" data-scrub>We judge every ad, post and email by <em>the revenue it brings in</em>, and we cut whatever does not earn its place.</p>
+      <div class="btns"><a class="btn" href="/about/"><span class="arr" aria-hidden="true">&#8599;</span>Meet the company</a></div>
+    </div>
+  </section>
+  <section class="section" style="background:var(--paper)">
+    <div class="narrow">
+      <span class="eyebrow">The short answer</span>
+      <h2 data-r="up">What is a revenue-driven marketing company?</h2>
+      <p data-r="up">A revenue-driven marketing company plans, runs and reports every channel against the revenue it produces, not against clicks, followers or opens. It sets a baseline before any work starts, connects ads, content, outreach and email into one path to purchase, and moves budget to whatever earns. That is the only way we work.</p>
+      <div class="table-wrap" data-r="up"><table>
+        <caption>How we differ from a channel-by-channel supplier</caption>
+        <thead><tr><th>Question</th><th>Channel supplier</th><th>Revenue-driven</th></tr></thead>
+        <tbody>
+          <tr><td>What gets reported?</td><td>Clicks, reach, followers, opens</td><td>Revenue, cost per customer, pipeline</td></tr>
+          <tr><td>Who owns the gaps between channels?</td><td>Nobody</td><td>We do: one plan, one team</td></tr>
+          <tr><td>When is a channel cut?</td><td>When the contract ends</td><td>When it stops paying for itself</td></tr>
+          <tr><td>Who owns the accounts and data?</td><td>Often the supplier</td><td>You, always</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- 7. Curated 2x2 + sidebar -->
+  <div class="wrap cur">
+    <div class="main">
+      <h2 data-r="up">What do we make every month?</h2>
+      <div class="grid22" data-stagger="80">
+        <article data-r="scale"><a href="/content-creation/"><span class="im"><img src="/img/cine/editor-800.webp" alt="Video editor cutting a short vertical ad in a dark suite" width="800" height="450" loading="lazy" /></span><span class="tagl">Creative <span>&middot; every week</span></span><b>Ad creative, short-form video and the landing pages they point to</b></a></article>
+        <article data-r="scale"><a href="/social-media-marketing/"><span class="im"><img src="/img/cine/streamer-800.webp" alt="Musician live streaming to followers from a home studio" width="800" height="604" loading="lazy" /></span><span class="tagl">Social <span>&middot; daily</span></span><b>Posts, carousels and creator content on a calendar that points somewhere</b></a></article>
+        <article data-r="scale"><a href="/email-marketing/"><span class="im"><img src="/img/cine/emailmacro-800.webp" alt="Hands typing beside an email automation flow on a laptop" width="800" height="450" loading="lazy" /></span><span class="tagl">Email <span>&middot; always on</span></span><b>Welcome, cart, post-purchase and win-back flows that keep selling</b></a></article>
+        <article data-r="scale"><a href="/lead-generation/"><span class="im"><img src="/img/cine/salescall-800.webp" alt="Saleswoman booking a meeting on a video call at night" width="800" height="604" loading="lazy" /></span><span class="tagl">Outreach <span>&middot; weekly</span></span><b>Lead lists, cold email and LinkedIn sequences that book sales calls</b></a></article>
+      </div>
+    </div>
+    <aside data-r="right">
+      <div>
+        <h3>Watch the work</h3>
+        <div class="lv"><video muted loop playsinline preload="none" poster="/video/celebrate.webp" data-lazy aria-label="A team celebrating a revenue spike on a laptop at night"><source data-src="/video/celebrate.webm" type="video/webm" /><source data-src="/video/celebrate.mp4" type="video/mp4" /></video><span class="play" aria-hidden="true">&#9654;</span></div>
+        <p class="lvt">The moment the weekly revenue report comes in.</p>
+      </div>
+      <div>
+        <h3>From the case files</h3>
+        <ul class="eps">
+          {CASES.slice(0, 4).map((c) => <li><a href={'/case-studies/' + c.slug + '/'}><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="54" height="54" loading="lazy" /><span><small>{c.industry.toUpperCase()} &middot; {c.period.toUpperCase()}</small><b>{c.client}: {c.results[0].value} {c.results[0].metric.toLowerCase()}</b></span><i aria-hidden="true">&#8599;</i></a></li>)}
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 8. AI era -->
+  <section class="section dark">
+    <div class="wrap">
+      <div class="era2">
+        <div>
+          <span class="eyebrow">Marketing in the AI era</span>
+          <h2 data-split>AI made marketing cheap to make. <em>Growth</em> is still hard to earn.</h2>
+          <p class="lead" data-r="up">Anyone can now produce a thousand ads, posts and emails in an afternoon, so feeds and inboxes are flooded and attention costs more every year. The businesses that grow connect every channel into one engine, use AI for the busywork, and keep people on strategy, creative and judgment.</p>
+          <div class="btns" data-r="up"><a class="btn" href="/ai-automation/"><span class="arr" aria-hidden="true">&#8599;</span>See our AI automation</a></div>
+        </div>
+        <div class="gyro" aria-hidden="true">
+          <div class="p3d r1" data-spin="rx:70:70;ry:0:420" data-idle="ry:14"><i></i></div>
+          <div class="p3d r2" data-spin="rx:-55:-55;ry:0:-360" data-idle="ry:-10"><i></i></div>
+          <div class="p3d r3" data-spin="rx:10:190;rz:0:220" data-idle="rz:8"><i></i></div>
+          <img src="/img/3d/ai.webp" alt="" width="480" height="480" loading="lazy" />
         </div>
       </div>
-    </section>
-
-    <section class="gbar" aria-label="Free first read">
-      <div class="wrap">
-        <div><h2>Get a free first read of your funnel.</h2><p>Send us your site and your numbers. We reply within one working day.</p></div>
-        <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Send your numbers</a>
+      <div class="era">
+        <div data-r="left">
+          <h3>How marketing used to work</h3>
+          <ul><li>Separate suppliers for ads, social, email and the website</li><li>Each one reporting its own vanity metric: clicks, likes, opens</li><li>Leads handed to sales with no follow-up system behind them</li><li>Reports stitched together by hand at month end</li></ul>
+        </div>
+        <div class="now" data-r="right">
+          <h3>How growth works now</h3>
+          <ul><li>One plan where ads, content and outreach all feed the same funnel</li><li>Every channel judged by cost per customer and revenue, not reach</li><li>Email and automation turn every lead into a long-term buyer</li><li>AI agents research, sort, follow up and report around the clock</li></ul>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 15. Closing with a spinning coin -->
-    <section class="reach">
+  <!-- 9. Pinned process stepper (self-contained, nothing covers it) -->
+  <section class="pin" data-pin-steps aria-labelledby="proc-h">
+    <div class="stick">
       <div class="wrap grid">
         <div>
-          <h2 data-split>Don't wait to <em>grow your revenue.</em></h2>
-          <p class="lead reveal">Book a 20 minute call. You leave with the two or three changes most likely to grow your revenue first, whether you hire us or not.</p>
-          <div class="btns reveal"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute growth call</a><a class="btn ghost" href="mailto:kunal@growrevenue.co">kunal@growrevenue.co</a></div>
+          <span class="eyebrow">How we work</span>
+          <h2 id="proc-h">How does working with us <em>run?</em></h2>
+          <p>The same four steps on every engagement, whether we start with one channel or all of them.</p>
+          <div class="snav" aria-hidden="true"><span class="pin-fill"></span><div class="sn on" data-step-nav><span>01</span>Diagnose</div><div class="sn" data-step-nav><span>02</span>Plan</div><div class="sn" data-step-nav><span>03</span>Launch</div><div class="sn" data-step-nav><span>04</span>Grow</div></div>
         </div>
-        <div class="coin" data-spin="ry:0:720;rx:-12:12" data-idle="ry:16" aria-hidden="true">
-          <div class="p3d">{Array.from({ length: 24 }, (_, n) => <i class="rim" style={`--n:${n}`}></i>)}<div class="cf" set:html={mark} /><div class="cf cb"><b>$</b></div></div>
+        <div class="panels">
+          <div class="panel on" data-step><div><h3>01 Diagnose</h3><p>We read your numbers channel by channel and find where revenue is lost: traffic, conversion, follow-up or retention.</p><ul><li>90 days of ad, CRM and email data</li><li>A test lead through your funnel, timed</li><li>Baseline for every number we will report</li></ul></div><img class="i3" src="/img/3d/diagnose.webp" alt="3D magnifying glass over a chart for the diagnosis step" width="480" height="480" loading="lazy" /></div>
+          <div class="panel" data-step><div><h3>02 Plan</h3><p>You get a written plan that ranks every fix and channel by expected revenue, with the budget each one needs.</p><ul><li>Fixes first, new traffic second</li><li>Budget per channel with a target cost per customer</li><li>What we will stop doing, in writing</li></ul></div><img class="i3" src="/img/3d/funnel.webp" alt="3D sales funnel with coins for the planning step" width="480" height="480" loading="lazy" /></div>
+          <div class="panel" data-step><div><h3>03 Launch</h3><p>We build and run the campaigns, content, outreach, pages and automations, with your approval on anything public.</p><ul><li>Creative, copy and pages produced in-house</li><li>Tracking checked before money is spent</li><li>Weekly numbers from the first week</li></ul></div><img class="i3" src="/img/3d/plane.webp" alt="3D paper plane taking off for the launch step" width="480" height="480" loading="lazy" /></div>
+          <div class="panel" data-step><div><h3>04 Grow</h3><p>Monthly reports tie spend to revenue. Budget moves to what earns, and what does not earn is cut.</p><ul><li>One report across every channel</li><li>New channels added only when the first pay</li><li>Quarterly reset of goals and budget</li></ul></div><img class="i3" src="/img/3d/growth.webp" alt="3D rising bar chart with coins for the growth step" width="480" height="480" loading="lazy" /></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
+  <div class="bigm"><span class="sr">Public Upwork record: 123 jobs, $300K+ earned, 8,700+ hours, 100% Job Success.</span>
+    <div class="marquee" aria-hidden="true">{[0, 1].map(() => <div class="track"><span>123<em>Upwork jobs</em></span><span class="star">&#10022;</span><span>$300K+<em>earned</em></span><span class="star">&#10022;</span><span>8,700+<em>hours</em></span><span class="star">&#10022;</span><span>100%<em>Job Success</em></span><span class="star">&#10022;</span></div>)}</div>
   </div>
+
+  <!-- 10. Pricing -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center"><span class="eyebrow">Pricing</span><h2 data-r="up">How much does it cost to start?</h2><p class="lead" data-r="up">Start small with a fixed-price package, or hand us the whole engine. Prices in US dollars, as of October 26, 2026.</p></div>
+      <div class="pfan" data-grow>
+        <div class="pcard"><h3>Funnel audit</h3><p class="price">$500 <small>from, 5 days</small></p><ul><li>One funnel audited stage by stage</li><li>Written leak report with ranked fixes</li><li>30 minute walkthrough call</li></ul><a class="btn" href="/funnel-audit/"><span class="arr" aria-hidden="true">&#8599;</span>See the audit</a></div>
+        <div class="pcard dk"><h3>Growth partnership</h3><p class="price">Monthly <small>fixed fee, scoped</small></p><ul><li>Paid ads, social, content, outreach and email as one plan</li><li>Creative and automation included</li><li>Weekly numbers and a monthly revenue report</li></ul><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Scope it on a call</a></div>
+        <div class="pcard"><h3>Cold email setup</h3><p class="price">$600 <small>from, 5 days</small></p><ul><li>Sending domains and mailboxes in your name</li><li>Authentication and warmup</li><li>Sending tool connected and checked</li></ul><a class="btn" href="/cold-email-infrastructure/"><span class="arr" aria-hidden="true">&#8599;</span>See the setup</a></div>
+      </div>
+      <p class="note center" style="margin-top:24px">Email landing in spam? A <a href="/email-deliverability/">deliverability audit</a> starts at $350.</p>
+    </div>
+  </section>
+
+  <!-- 11. Testimonials -->
+  <section class="section" style="background:var(--cream)">
+    <div class="wrap">
+      <div class="center"><span class="eyebrow">Clients</span><h2 data-r="up">What do clients say once the numbers are in?</h2><p class="lead" data-r="up">Hover or tap a card to turn it over. Photos show the kind of business each client runs.</p></div>
+      <div class="flipzone" data-stagger="90">
+        {flips.map((f, i) => (
+          <div class="fcard" data-r="up" data-wave={i % 2 ? '-8' : '8'}>
+            <div class="fcard-inner">
+              <div class="fcard-front"><img src={`/img/cine/${casePic[f.slug][0]}-800.webp`} alt="" width="800" height="604" loading="lazy" /><span class="hint" aria-hidden="true">Turn over</span><div><strong>{f.big}</strong><p class="what">{f.what}</p><div class="who">{f.who}<small>{f.role}</small></div></div></div>
+              <div class="fcard-back"><p>"{f.quote!.text}"</p><small>{f.quote!.who}</small><a href={'/case-studies/' + f.slug + '/'}>Read the case study &rarr;</a></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Dark section: email bar + fanned case deck with word-by-word titles -->
+  <section class="subd" aria-labelledby="sub-h">
+    <div class="wrap">
+      <div class="top2">
+        <div><h2 id="sub-h" data-r="up">Get a written first read of your funnel, free.</h2><p data-r="up">Leave your email and we reply within one working day with the two or three changes most likely to grow your revenue first. No call needed, no obligation.</p></div>
+        <div class="why2" data-r="right"><h3>What you get</h3><ul><li>Where your funnel leaks, by stage</li><li>The fix we would make first</li><li>A rough revenue estimate for it</li></ul></div>
+      </div>
+      <div class="gb" data-r="up">
+        <b>Stay ahead of your numbers.</b>
+        <form id="qf" action="/api/lead" method="post" data-quick>
+          <input type="hidden" name="name" value="Email bar signup" /><input type="hidden" name="topic" value="Free funnel read (homepage bar)" />
+          <input class="hp" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label class="sr" for="qe">Your email address</label><input id="qe" type="email" name="email" required placeholder="you@company.com" autocomplete="email" />
+          <button type="submit" aria-label="Send">&#8599;</button>
+        </form>
+        <label class="consent"><input type="checkbox" name="consent" value="1" required form="qf" /><span>I agree to be contacted about my request. See the <a href="/privacy/">privacy policy</a>.</span></label>
+        <p class="msg" aria-live="polite"></p>
+      </div>
+      <div class="deck">
+        {deck.map((c) => (
+          <a class="dc" href={'/case-studies/' + c.slug + '/'}>
+            <span class="im"><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="800" height="604" loading="lazy" /><span>{c.industry.toUpperCase()}</span></span>
+            <strong>{c.results[0].value}</strong>
+            <h4 data-words>{c.headline}</h4>
+            <span class="rm">Read the case &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Team row -->
+  <section class="section">
+    <div class="wrap">
+      <div class="lineh" data-r="up"><h2>Who will you work with?</h2></div>
+      <p class="lead" style="margin-top:14px" data-r="up">A small senior team that does the work itself, supported by specialists and AI tooling. No hand-offs to juniors you never meet.</p>
+      <div class="team4" data-stagger="90">
+        {team.map((t) => <a href={t.href} data-r="up"><span class="im"><img src={t.img} alt={`Portrait of ${t.name}, ${t.role.toLowerCase()} of The Grow Revenue Company`} width="480" height="480" loading="lazy" /></span><p>{t.name}<span>{t.role}</span></p><small>{t.bio}</small></a>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. Bento -->
+  <section class="section" style="background:var(--paper)">
+    <div class="wrap">
+      <div class="dhead" data-r="up"><h2 style="margin:0">Inside the engine</h2><a class="pill" href="/case-studies/">All case studies</a></div>
+      <div class="bento" data-stagger="90">
+        <a class="bc big" href="/ai-automation/" data-r="up"><video muted loop playsinline preload="none" poster="/video/sq-aiwall.webp" data-lazy aria-label="Man watching an AI workflow map light up on a wall"><source data-src="/video/sq-aiwall.webm" type="video/webm" /><source data-src="/video/sq-aiwall.mp4" type="video/mp4" /></video><span class="chip">AI AUTOMATION</span><div><small>AGENTS + WORKFLOWS</small><h3>Research, triage, follow-up and reporting, with a person approving what goes out</h3></div></a>
+        <a class="bc" href="/lead-generation/" data-r="up"><video muted loop playsinline preload="none" poster="/video/leads.webp" data-lazy aria-label="Saleswoman booking a meeting on a video call"><source data-src="/video/leads.webm" type="video/webm" /><source data-src="/video/leads.mp4" type="video/mp4" /></video><div><small>LEAD GENERATION</small><h3>Calendars filled with qualified buyers</h3></div></a>
+        <a class="bc" href="/email-marketing/" data-r="up"><video muted loop playsinline preload="none" poster="/video/email.webp" data-lazy aria-label="Hands building an email automation flow on a laptop"><source data-src="/video/email.webm" type="video/webm" /><source data-src="/video/email.mp4" type="video/mp4" /></video><div><small>EMAIL MARKETING</small><h3>Flows that keep selling after the first order</h3></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. FAQ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center"><span class="eyebrow">FAQ</span><h2 data-r="up">Questions people ask before they hire us</h2></div>
+      <div class="faqp" data-faq>
+        <div class="fqs">{faq.map(([q], i) => <button class="fq" type="button" aria-controls={'fa' + i} aria-expanded={i === 0 ? 'true' : 'false'}>{q}</button>)}</div>
+        <div class="fas">{faq.map(([q, a], i) => <div class={'fa' + (i === 0 ? ' on' : '')} id={'fa' + i}><h3>{q}</h3><p>{a}</p></div>)}<a class="btn dark" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Ask us something else</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. Closing -->
+  <section class="reach">
+    <div class="wrap grid">
+      <div>
+        <h2 data-split>Don't wait to <em>grow your revenue.</em></h2>
+        <p class="lead" data-r="up">Book a 20 minute call. You leave with the two or three changes most likely to grow your revenue first, whether you hire us or not.</p>
+        <div class="btns" data-r="up"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute growth call</a><a class="btn ghost" href="mailto:kunal@growrevenue.co">kunal@growrevenue.co</a></div>
+      </div>
+      <div class="coin" data-spin="ry:0:720;rx:-12:12" data-idle="ry:16" aria-hidden="true">
+        <div class="p3d">{Array.from({ length: 24 }, (_, n) => <i class="rim" style={`--n:${n}`}></i>)}<div class="cf" set:html={mark} /><div class="cf cb"><b>$</b></div></div>
+      </div>
+    </div>
+  </section>
 </Base>

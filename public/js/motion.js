@@ -1,7 +1,7 @@
-// Motion layer v2. Scroll-linked: pinned hero fade, scrubbed word reveals, stacking cards,
-// pinned stepper, horizontal track, media grow, image zoom, progress bar.
-// Interaction: typewriter, draggable cube, flip cards, FAQ panel, googly eyes, tilt, magnetic buttons, cursor.
-// Everything degrades to static, readable content without JS or with reduced motion.
+// Motion v4 (JiroNews structure). Nothing slides over another section.
+// Scroll-linked: pinned hero flywheel, drifting results strip, process stepper, small extras.
+// Viewport-linked (reversible): [data-r] reveals, word reveals, card deck.
+// Time-linked: typewriter, featured carousel, ticker (CSS), deck fan.
 (() => {
   const d = document, root = d.documentElement, $$ = (s, c = d) => [...c.querySelectorAll(s)];
   root.classList.add('js');
@@ -9,11 +9,19 @@
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
-  // header state + progress bar
   const top = d.querySelector('.top');
   const bar = d.createElement('div'); bar.className = 'progress'; d.body.append(bar);
 
-  // split headings into words (entrance animation)
+  // rolling labels on buttons and pills (hover swaps two copies of the text)
+  $$('.btn, .pill').forEach((b) => {
+    const t = [...b.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!t) return;
+    const label = t.textContent.trim(), r = d.createElement('span'); r.className = 'roll';
+    r.innerHTML = '<span></span><span aria-hidden="true"></span>'; r.children[0].textContent = label; r.children[1].textContent = label;
+    t.replaceWith(r);
+  });
+
+  // split headings into words for the entrance
   $$('[data-split]').forEach((el) => {
     const walk = (node) => [...node.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -25,221 +33,187 @@
           const i = d.createElement('span'); i.textContent = t; w.append(i); frag.append(w);
         });
         n.replaceWith(frag);
-      } else if (n.nodeType === 1 && !n.matches('.rotator,[data-type]')) walk(n);
+      } else if (n.nodeType === 1 && !n.matches('.tw,.caret')) walk(n);
     });
     walk(el); el.classList.add('split');
     $$('.w > span', el).forEach((s, k) => (s.style.transitionDelay = k * 0.045 + 's'));
   });
 
-  // scrubbed word reveal: words light up as the block scrolls through the viewport
+  // word-by-word reveal blocks
+  $$('[data-words]').forEach((el) => {
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map((w, i) => `<span class="wd" style="--i:${i}">${w.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</span>`).join(' ');
+  });
+
+  // staggered children
+  $$('[data-stagger]').forEach((p) => [...p.querySelectorAll('[data-r]')].forEach((c, i) => c.style.setProperty('--d', (i * +(p.dataset.stagger || 60)) / 1000 + 's')));
+
+  // scrubbed statement
   const scrub = $$('[data-scrub]').map((el) => {
     const words = [];
     const walk = (node) => [...node.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
         const frag = d.createDocumentFragment();
-        n.textContent.split(/(\s+)/).forEach((t) => {
-          if (!t) return;
-          if (/^\s+$/.test(t)) { frag.append(t); return; }
-          const s = d.createElement('span'); s.className = 'sw'; s.textContent = t; words.push(s); frag.append(s);
-        });
+        n.textContent.split(/(\s+)/).forEach((t) => { if (!t) return; if (/^\s+$/.test(t)) { frag.append(t); return; } const s = d.createElement('span'); s.className = 'sw'; s.textContent = t; words.push(s); frag.append(s); });
         n.replaceWith(frag);
       } else if (n.nodeType === 1) walk(n);
     });
-    walk(el); el.classList.add('scrubbing');
-    return { el, words };
+    walk(el); el.classList.add('scrubbing'); return { el, words };
   });
 
-  // prose blocks reveal as they enter
+  // reversible reveal: in when any part is on screen, out only once fully off screen
+  const rio = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('in', e.isIntersecting)), { threshold: 0 });
+  $$('[data-r], [data-words], .split, .deck').forEach((el) => (reduce ? el.classList.add('in') : rio.observe(el)));
+  // one-shot reveals used on inner pages
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }));
   $$('.prose > h2, .prose > p, .prose > ul, .prose > ol, .prose > .table-wrap').forEach((el) => el.classList.add('reveal'));
-  if (reduce) $$('svg.trail').forEach((s) => s.pauseAnimations && s.pauseAnimations());
-
-  // reveal on enter
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -4% 0px' });
-  $$('.reveal, .split, .fan, .clip').forEach((el) => (reduce ? el.classList.add('in') : io.observe(el)));
+  $$('.reveal').forEach((el) => (reduce ? el.classList.add('in') : io.observe(el)));
 
   // counters
   const cio = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return; cio.unobserve(e.target);
-    if (reduce) return;
-    const el = e.target, end = parseFloat(el.dataset.count), pre = el.dataset.pre || '', suf = el.dataset.suf || '', dec = +(el.dataset.dec || 0);
-    const t0 = performance.now(), dur = 1700;
-    const step = (t) => { const p = Math.min(1, (t - t0) / dur), v = end * (1 - Math.pow(1 - p, 3)); el.textContent = pre + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf; if (p < 1) requestAnimationFrame(step); };
+    if (!e.isIntersecting) return; cio.unobserve(e.target); if (reduce) return;
+    const el = e.target, end = parseFloat(el.dataset.count), pre = el.dataset.pre || '', suf = el.dataset.suf || '', dec = +(el.dataset.dec || 0), t0 = performance.now();
+    const step = (t) => { const p = Math.min(1, (t - t0) / 1600), v = end * (1 - Math.pow(1 - p, 3)); el.textContent = pre + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf; if (p < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
   }), { threshold: .4 });
   $$('[data-count]').forEach((el) => cio.observe(el));
 
-  // typewriter (JiroNews): types each word, deletes, moves on. Static text stays in the HTML for crawlers.
-  $$('[data-type]').forEach((el) => {
-    const words = el.dataset.type.split('|'); el.classList.add('typing');
-    if (reduce) return;
-    let w = 0, i = words[0].length, del = true;
-    const tick = () => {
-      const word = words[w];
-      if (del) { i--; if (i <= 0) { del = false; w = (w + 1) % words.length; } }
-      else { i++; if (i >= words[w].length) { del = true; el.textContent = words[w]; return setTimeout(tick, 2200); } }
-      el.textContent = words[w].slice(0, Math.max(0, i)) || ' ';
-      setTimeout(tick, del ? 45 : 85);
-    };
-    setTimeout(tick, 2600);
-  });
+  // typewriter: deletes the current text, then types the new word
+  const typers = new WeakMap();
+  const typeTo = (el, word, speed = 70) => {
+    if (reduce) { el.textContent = word; return; }
+    const job = {}; typers.set(el, job);
+    const typ = (i) => { if (typers.get(el) !== job) return; el.textContent = word.slice(0, i); if (i < word.length) setTimeout(() => typ(i + 1), speed); };
+    const del = () => { if (typers.get(el) !== job) return; if (el.textContent.length) { el.textContent = el.textContent.slice(0, -1); setTimeout(del, speed / 2.5); } else typ(1); };
+    del();
+  };
 
-  // lazy videos: load near the viewport, pause off screen
+  // lazy videos
   const vio = new IntersectionObserver((es) => es.forEach((e) => {
     const v = e.target;
-    if (e.isIntersecting) {
-      if (!v.dataset.loaded) { $$('source[data-src]', v).forEach((s) => (s.src = s.dataset.src)); v.load(); v.dataset.loaded = '1'; }
-      if (!reduce) v.play().catch(() => {});
-    } else v.pause();
+    if (e.isIntersecting) { if (!v.dataset.loaded) { $$('source[data-src]', v).forEach((s) => (s.src = s.dataset.src)); v.load(); v.dataset.loaded = '1'; } if (!reduce) v.play().catch(() => {}); }
+    else v.pause();
   }), { rootMargin: '300px' });
   $$('video[data-lazy]').forEach((v) => vio.observe(v));
 
-  // case tabs (Growlio case studies)
-  $$('[data-tabs]').forEach((box) => {
-    const tabs = $$('[role="tab"]', box), panels = $$('[role="tabpanel"]', box);
-    const show = (k) => { tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === k); t.tabIndex = j === k ? 0 : -1; }); panels.forEach((p, j) => { p.hidden = j !== k; if (j === k) { p.classList.remove('in'); requestAnimationFrame(() => p.classList.add('in')); } }); };
-    tabs.forEach((t, k) => {
-      t.addEventListener('click', () => show(k));
-      t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (k + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length; show(n); tabs[n].focus(); } });
-    });
-    show(0);
+  // featured carousel: auto-advance, arrows, typed headline, progress bar
+  $$('[data-carousel]').forEach((c) => {
+    const slides = $$('.slide', c), fill = c.querySelector('.bar i'), dur = +(c.dataset.carousel || 6000);
+    let k = 0, t0 = performance.now(), paused = false;
+    slides.forEach((s) => { const h = s.querySelector('.tt'); if (h) h.dataset.full = h.textContent; });
+    const show = (n) => {
+      slides[k].classList.remove('on'); k = (n + slides.length) % slides.length; slides[k].classList.add('on'); t0 = performance.now();
+      const h = slides[k].querySelector('.tt'); if (h) { h.textContent = ''; typeTo(h, h.dataset.full, 26); }
+    };
+    $$('.prev', c).forEach((b) => b.addEventListener('click', () => show(k - 1)));
+    $$('.next', c).forEach((b) => b.addEventListener('click', () => show(k + 1)));
+    c.addEventListener('pointerenter', () => (paused = true)); c.addEventListener('pointerleave', () => { paused = false; t0 = performance.now(); });
+    if (reduce) return;
+    const tick = (now) => { if (!paused) { const p = (now - t0) / dur; if (fill) fill.style.width = clamp(p) * 100 + '%'; if (p >= 1) show(k + 1); } requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
   });
 
-  // FAQ two-panel (Growlio): question list left, answer right. Without JS every answer shows.
+  // card deck: fans in from a pile on enter, folds back on exit (CSS); fixed slots, no overlap
+  $$('.deck').forEach((dk) => { $$('.dc', dk).forEach((c, i) => c.classList.add(['p1', 'p0', 'p2'][i % 3])); });
+
+  // FAQ two-panel and flip cards
   $$('[data-faq]').forEach((box) => {
     const qs = $$('.fq', box), as = $$('.fa', box); box.classList.add('live');
     const show = (k) => { qs.forEach((q, j) => q.setAttribute('aria-expanded', j === k)); as.forEach((a, j) => a.classList.toggle('on', j === k)); };
     qs.forEach((q, k) => { q.addEventListener('click', () => show(k)); if (fine) q.addEventListener('pointerenter', () => show(k)); });
     show(0);
   });
-
-  // flip cards: tap to flip on touch, hover/focus on desktop
   $$('.fcard').forEach((c) => c.addEventListener('click', () => c.classList.toggle('flipped')));
 
-  // ---------- scroll-linked engine ----------
-  const hero = d.querySelector('[data-pin-hero]');
-  const stacks = $$('[data-stack]').map((s) => ({ s, cards: [...s.children] }));
+  // quick email form (posts to the same lead endpoint as the contact page)
+  $$('form[data-quick]').forEach((f) => f.addEventListener('submit', async (e) => {
+    e.preventDefault(); const msg = f.closest('.gb').querySelector('.msg');
+    try { const r = await fetch(f.action, { method: 'POST', body: new FormData(f) }); const j = await r.json(); msg.textContent = j.ok ? 'Thanks. We will reply within one working day.' : 'Please check your email address and tick the consent box.'; }
+    catch { msg.textContent = 'Something went wrong. Email kunal@growrevenue.co instead.'; }
+  }));
+
+  // ---------- hero flywheel (pinned) ----------
+  const pinw = d.querySelector('[data-pinwrap]');
+  const fly = pinw && (() => {
+    const zone = pinw.querySelector('.prismzone'), p3 = pinw.querySelector('.prism .p3d'), faces = $$('.pf', pinw), shades = faces.map((f) => f.querySelector('.shade'));
+    const chips = $$('.chan li', pinw), tw = pinw.querySelector('.tw'), words = (tw?.dataset.cycle || '').split('|');
+    let active = -1, drag = 0, auto = 0, last = performance.now();
+    const setActive = (i) => { if (i === active) return; active = i; chips.forEach((c, j) => c.classList.toggle('on', j === i)); if (tw && words[i]) typeTo(tw, words[i]); };
+    const prism = pinw.querySelector('.prism');
+    if (prism && !reduce) {
+      let on = false, lx = 0;
+      prism.addEventListener('pointerdown', (e) => { on = true; lx = e.clientX; prism.setPointerCapture(e.pointerId); prism.classList.add('grabbing'); });
+      prism.addEventListener('pointermove', (e) => { if (on) { drag += (e.clientX - lx) * .4; lx = e.clientX; } });
+      const up = () => { on = false; prism.classList.remove('grabbing'); }; prism.addEventListener('pointerup', up); prism.addEventListener('pointercancel', up);
+    }
+    return (now) => {
+      const pinned = pinw.offsetHeight > innerHeight * 1.5;
+      const r = pinw.getBoundingClientRect(), p = pinned ? clamp(-r.top / (r.height - innerHeight)) : 0;
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      if (!pinned && !reduce) auto += dt * 20;
+      drag *= .95;
+      const turn = pinned ? clamp(p / .82) * 300 : auto % 360;
+      const wob = reduce ? 0 : Math.sin(now / 1400) * 4;
+      const ry = -(turn + drag) + wob;
+      if (p3) p3.style.transform = `rotateX(-9deg) rotateY(${ry.toFixed(2)}deg)`;
+      faces.forEach((f, k) => { const a = (ry + k * 60) * Math.PI / 180; shades[k].style.opacity = clamp((1 - Math.cos(a)) * .32, 0, .6).toFixed(2); });
+      setActive(((Math.round((turn + drag) / 60) % 6) + 6) % 6);
+      if (zone) { const ex = clamp((p - .86) / .14); zone.style.transform = `translateX(${(ex * 110).toFixed(1)}px) scale(${(1 - ex * .1).toFixed(3)})`; zone.style.opacity = (1 - ex).toFixed(3); }
+    };
+  })();
+
+  // ---------- scroll-linked frame ----------
   const pins = $$('[data-pin-steps]').map((p) => ({ p, steps: $$('[data-step]', p), navs: $$('[data-step-nav]', p), fill: p.querySelector('.pin-fill') }));
-  const hs = $$('[data-hscroll]').map((h) => ({ h, track: h.querySelector('.htrack') }));
-  const grow = $$('[data-grow]'), zoom = $$('[data-zoom]'), px = $$('[data-parallax]');
-  const waves = $$('[data-wave]'), cards3 = $$('.hcard');
-  // scroll progress of an element through the viewport, 0 entering at the bottom, 1 leaving at the top
-  const prog = (el) => { const r = el.getBoundingClientRect(); return clamp((innerHeight - r.top) / (innerHeight + r.height)); };
-
-  const sizeH = () => hs.forEach(({ h, track }) => {
-    if (innerWidth < 700) { h.style.height = ''; return; }
-    const extra = Math.max(0, track.scrollWidth - innerWidth + 64);
-    h.style.height = innerHeight + extra + 'px';
-  });
-
+  const drifts = $$('[data-drift]'), grow = $$('[data-grow]'), zoom = $$('[data-zoom]'), waves = $$('[data-wave]');
+  let lastY = scrollY;
   const frame = () => {
     const vh = innerHeight, y = scrollY;
-    top && top.classList.toggle('scrolled', y > 30);
+    if (top) { top.classList.toggle('scrolled', y > 30); if (Math.abs(y - lastY) > 6) { top.classList.toggle('hide', y > lastY && y > 300 && !top.matches(':hover, :focus-within')); lastY = y; } }
     bar.style.transform = `scaleX(${clamp(y / (root.scrollHeight - vh))})`;
     if (reduce) return;
-
-    if (hero) { const p = clamp(y / vh); hero.style.setProperty('--p', p.toFixed(3)); }
-
     scrub.forEach(({ el, words }) => {
       const r = el.getBoundingClientRect(); if (r.bottom < -50 || r.top > vh + 50) return;
-      const p = clamp((vh * 0.88 - r.top) / (r.height + vh * 0.42));
-      const lit = Math.round(p * words.length * 1.15);
+      const lit = Math.round(clamp((vh * .88 - r.top) / (r.height + vh * .42)) * words.length * 1.15);
       words.forEach((w, i) => w.classList.toggle('lit', i < lit));
     });
-
-    stacks.forEach(({ cards }) => cards.forEach((c, i) => {
-      const next = cards[i + 1]; if (!next) return;
-      const r = c.getBoundingClientRect(), n = next.getBoundingClientRect();
-      const cover = clamp(1 - (n.top - r.top) / Math.max(1, r.height));
-      c.style.setProperty('--cover', cover.toFixed(3));
-      const stuck = r.top <= (parseFloat(getComputedStyle(c).top) || 0) + 2;
-      c.style.setProperty('--fade', stuck ? clamp((r.bottom - n.top + 120) / 180).toFixed(3) : '0');
-    }));
-
     pins.forEach(({ p, steps, navs, fill }) => {
-      const r = p.getBoundingClientRect(), total = r.height - vh;
-      const prog = clamp(-r.top / Math.max(1, total));
+      const r = p.getBoundingClientRect(), prog = clamp(-r.top / Math.max(1, r.height - vh));
       const k = Math.min(steps.length - 1, Math.floor(prog * steps.length));
-      steps.forEach((s, j) => s.classList.toggle('on', j === k));
-      navs.forEach((s, j) => { s.classList.toggle('on', j === k); s.classList.toggle('done', j < k); });
+      steps.forEach((s, j) => s.classList.toggle('on', j === k)); navs.forEach((s, j) => { s.classList.toggle('on', j === k); s.classList.toggle('done', j < k); });
       if (fill) fill.style.transform = `scaleY(${prog.toFixed(3)})`;
       p.style.setProperty('--spin', (Math.sin(prog * Math.PI * 4) * 28).toFixed(1) + 'deg');
     });
-
-    if (innerWidth >= 700) hs.forEach(({ h, track }) => {
-      const r = h.getBoundingClientRect(), total = r.height - vh;
-      const prog = clamp(-r.top / Math.max(1, total));
-      track.style.transform = `translate3d(${(-prog * Math.max(0, track.scrollWidth - innerWidth + 64)).toFixed(1)}px,0,0)`;
-    });
-
-    grow.forEach((el) => {
-      const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
-      const p = clamp((vh - r.top) / (vh * 0.9));
-      el.style.setProperty('--g', p.toFixed(3));
-    });
-    zoom.forEach((el) => {
-      const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
-      el.style.setProperty('--z', clamp((vh - r.top) / (vh + r.height)).toFixed(3));
-    });
-    // coverflow: strip cards turn toward the centre of the screen
-    if (innerWidth >= 700) cards3.forEach((c) => {
-      const r = c.getBoundingClientRect(); if (r.right < -100 || r.left > innerWidth + 100) return;
-      const k = clamp(((r.left + r.width / 2) - innerWidth / 2) / (innerWidth / 2), -1, 1);
-      c.style.setProperty('--ry', (k * -32).toFixed(1) + 'deg'); c.style.setProperty('--sc', (1 - Math.abs(k) * .08).toFixed(3));
-    });
-    // gentle Y-rotation wave tied to vertical position (testimonials, team, icons)
-    waves.forEach((el) => {
-      const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
-      const k = clamp(((r.top + r.height / 2) - vh / 2) / vh, -1, 1), amp = parseFloat(el.dataset.wave) || 10;
-      el.style.setProperty(el.dataset.wavevar || '--wave', (k * amp).toFixed(2) + 'deg');
-    });
-    px.forEach((el) => {
-      const r = el.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
-      const s = parseFloat(el.dataset.parallax) || 0.15, c = r.top + r.height / 2 - vh / 2;
-      el.style.translate = `0 ${(-c * s).toFixed(1)}px`;
-    });
+    drifts.forEach((el) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const row = el.firstElementChild, max = Math.max(0, row.scrollWidth - el.clientWidth); row.style.transform = `translate3d(${(-clamp((vh - r.top) / (vh + r.height)) * max).toFixed(1)}px,0,0)`; });
+    grow.forEach((el) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; el.style.setProperty('--g', clamp((vh - r.top) / (vh * .9)).toFixed(3)); });
+    zoom.forEach((el) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; el.style.setProperty('--z', clamp((vh - r.top) / (vh + r.height)).toFixed(3)); });
+    waves.forEach((el) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const k = clamp(((r.top + r.height / 2) - vh / 2) / vh, -1, 1); el.style.setProperty(el.dataset.wavevar || '--wave', (k * (parseFloat(el.dataset.wave) || 10)).toFixed(2) + 'deg'); });
   };
   let ticking = false;
-  const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
-  addEventListener('scroll', req, { passive: true });
-  addEventListener('resize', () => { sizeH(); req(); });
-  addEventListener('load', () => { sizeH(); req(); });
-  sizeH(); frame();
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } }, { passive: true });
+  addEventListener('resize', frame); frame();
+
+  // continuous loop: hero flywheel + small 3D extras (coin, gyroscope)
+  const spins = $$('[data-spin]').map((el) => {
+    const parse = (v) => Object.fromEntries((v || '').split(';').filter(Boolean).map((x) => { const [k, a, b] = x.split(':'); return [k.trim(), [+a, b === undefined ? +a : +b]]; }));
+    return { el, t: el.querySelector('.p3d') || el, map: parse(el.dataset.spin), idle: parse(el.dataset.idle) };
+  });
+  const t0 = performance.now();
+  const loop = (now) => {
+    if (fly) fly(now);
+    const sec = (now - t0) / 1000, vh = innerHeight;
+    spins.forEach((o) => {
+      const r = o.el.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;
+      const p = clamp((vh - r.top) / (vh + r.height));
+      const v = (k) => (o.map[k] ? o.map[k][0] + (o.map[k][1] - o.map[k][0]) * p : 0) + (o.idle[k] && !reduce ? o.idle[k][0] * sec : 0);
+      o.t.style.transform = `rotateX(${v('rx').toFixed(2)}deg) rotateY(${v('ry').toFixed(2)}deg) rotateZ(${v('rz').toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
 
   if (reduce) return;
 
-  // scroll-driven 3D objects: data-spin="ry:-20:340;rx:-12:12" maps scroll progress to rotation,
-  // data-idle="ry:8" adds slow drift in degrees per second, data-drag lets the pointer add rotation.
-  const spins = $$('[data-spin]').map((el) => {
-    const parse = (v) => Object.fromEntries((v || '').split(';').filter(Boolean).map((x) => { const [k, a, b] = x.split(':'); return [k.trim(), [+a, b === undefined ? +a : +b]]; }));
-    const o = { el, t: el.querySelector('.p3d') || el, map: parse(el.dataset.spin), idle: parse(el.dataset.idle), page: el.dataset.src === 'page', dx: 0, dy: 0, vis: true, ring: el.matches('.ring3d') ? $$('.p3d > a', el) : null };
-    if (el.hasAttribute('data-drag')) {
-      let on = false, lx = 0, ly = 0;
-      el.addEventListener('pointerdown', (e) => { on = true; lx = e.clientX; ly = e.clientY; el.setPointerCapture(e.pointerId); el.classList.add('grabbing'); });
-      el.addEventListener('pointermove', (e) => { if (!on) return; o.dy += (e.clientX - lx) * .4; o.dx = clamp(o.dx - (e.clientY - ly) * .4, -50, 50); lx = e.clientX; ly = e.clientY; });
-      const up = () => { on = false; el.classList.remove('grabbing'); };
-      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
-    }
-    return o;
-  });
-  const sio = new IntersectionObserver((es) => es.forEach((e) => { const o = spins.find((x) => x.el === e.target); if (o) o.vis = e.isIntersecting; }), { rootMargin: '100px' });
-  spins.forEach((o) => sio.observe(o.el));
-  const t0 = performance.now();
-  const spinLoop = (now) => {
-    const sec = (now - t0) / 1000;
-    spins.forEach((o) => {
-      if (!o.vis) return;
-      const p = o.page ? clamp(scrollY / (innerHeight * 1.4)) : prog(o.el);
-      const v = (k) => { const m = o.map[k]; return (m ? m[0] + (m[1] - m[0]) * p : 0) + (o.idle[k] ? o.idle[k][0] * sec : 0); };
-      const ry = v('ry') + o.dy;
-      o.t.style.transform = `rotateX(${(v('rx') + o.dx).toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${v('rz').toFixed(2)}deg)`;
-      // ring: only tiles facing the viewer stay visible, so side tiles never sit over front ones
-      if (o.ring) o.ring.forEach((a, k) => { const c = Math.cos((ry + k * 40) * Math.PI / 180), op = c > .62 ? 1 : 0; a.style.opacity = op.toFixed(2); a.style.pointerEvents = op > .5 ? '' : 'none'; a.tabIndex = op > .5 ? 0 : -1; });
-    });
-    requestAnimationFrame(spinLoop);
-  };
-  if (spins.length) requestAnimationFrame(spinLoop);
-
-  // googly eyes follow the pointer (Growlio footer)
+  // googly eyes follow the pointer
   const pupils = $$('.pupil');
   if (pupils.length) addEventListener('pointermove', (e) => pupils.forEach((p) => {
     const r = p.parentElement.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -249,29 +223,24 @@
 
   if (!fine) return;
 
-  $$('[data-tilt]').forEach((el) => {
-    el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      el.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
-    });
-    el.addEventListener('pointerleave', () => (el.style.transform = ''));
-  });
-
-  $$('.btn').forEach((b) => {
-    b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.translate = `${(e.clientX - r.left - r.width / 2) * .15}px ${(e.clientY - r.top - r.height / 2) * .25}px`; });
-    b.addEventListener('pointerleave', () => (b.style.translate = ''));
-  });
-
-  // cursor: dot + trailing ring, grows on links, shows a label on [data-cursor]
-  const dot = d.createElement('div'), ring = d.createElement('div');
-  dot.className = 'cursor-dot'; ring.className = 'cursor-ring'; d.body.append(dot, ring);
-  let mx = -100, my = -100, rx2 = -100, ry2 = -100;
-  addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)`; }, { passive: true });
-  const loop = () => { rx2 += (mx - rx2) * .18; ry2 += (my - ry2) * .18; ring.style.transform = `translate(${rx2}px,${ry2}px)`; requestAnimationFrame(loop); };
-  loop();
-  d.addEventListener('pointerover', (e) => {
-    const lab = e.target.closest('[data-cursor]');
-    ring.classList.toggle('label', !!lab); ring.textContent = lab ? lab.dataset.cursor : '';
-    ring.classList.toggle('big', !lab && !!e.target.closest('a, button, [data-tilt], summary'));
-  });
+  // cursor: a short fading revenue line trailing the pointer (the system cursor stays as it is)
+  const cv = d.createElement('canvas'); cv.className = 'trailc'; cv.setAttribute('aria-hidden', 'true'); d.body.append(cv);
+  const ctx = cv.getContext('2d'); let dpr = 1, pts = [], running = false, hot = false;
+  const size = () => { dpr = Math.min(2, devicePixelRatio || 1); cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; };
+  size(); addEventListener('resize', size);
+  const draw = () => {
+    const now = performance.now(); pts = pts.filter((p) => now - p.t < 520);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i], life = 1 - (now - b.t) / 520;
+      ctx.strokeStyle = hot ? `rgba(30,122,88,${life.toFixed(3)})` : `rgba(67,196,131,${(life * .85).toFixed(3)})`;
+      ctx.lineWidth = .6 + life * (hot ? 4 : 3); ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    }
+    const h = pts[pts.length - 1];
+    if (h) { ctx.fillStyle = hot ? '#1E7A58' : '#43C483'; ctx.beginPath(); ctx.arc(h.x, h.y, hot ? 4 : 2.5, 0, Math.PI * 2); ctx.fill(); }
+    if (pts.length) requestAnimationFrame(draw); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+  };
+  addEventListener('pointermove', (e) => { pts.push({ x: e.clientX, y: e.clientY, t: performance.now() }); if (pts.length > 40) pts.shift(); if (!running) { running = true; requestAnimationFrame(draw); } }, { passive: true });
+  d.addEventListener('pointerover', (e) => (hot = !!e.target.closest('a, button, [data-spin], .prism, summary')));
 })();
