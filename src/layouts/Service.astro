@@ -46,7 +46,7 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
         </div>
       </div>
       {cut ? (
-        <div class="art art-cut"><Cut name={cut.name} ratio={cut.ratio} alt={cut.alt} chips={cut.chips} eager /></div>
+        <div class="art art-cut"><Cut name={cut.name} ratio={cut.ratio} alt={cut.alt} chips={cut.chips} priority /></div>
       ) : (
       <div class="art">
         <div class="p" data-wave="12" data-wavevar="--ry"><img src={`/img/cine/${pic}-800.webp`} srcset={`/img/cine/${pic}-800.webp 800w, /img/cine/${pic}-1600.webp 1600w`} sizes="(max-width: 900px) 80vw, 400px" alt={picAlt} width="800" height="600" /></div>

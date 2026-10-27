@@ -1,7 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Ribbon from '../components/Ribbon.astro';
-import { SERVICES, GROUPS, CASES, REVENUE_PROOF, usd } from '../data/site';
+import { SERVICES, GROUPS, CASES, REVENUE_PROOF, usd, svc } from '../data/site';
+import Cut from '../components/Cut.astro';
+import { CUTS } from '../data/cuts';
 import Info from '../components/info/Info.astro';
 import { CASE_BODY } from '../data/cases';
 const Q = 'marketing company';
@@ -35,7 +37,8 @@ const casePic: Record<string, [string, string]> = {
   'dimov-associates': ['lawyer', 'Lawyer reviewing a lead report on a tablet at dusk'],
   'austere': ['artist', 'Painter checking social media results on her phone in her studio'],
 };
-const zzPics: [string, string][] = [['pointing', 'Team reading a rising revenue chart on a wall screen'], ['coach', 'Coach leading a small workshop group in a dark loft'], ['adsdesk', 'Media buyer watching ad performance graphs climb'], ['lawyer', 'Lawyer reading a lead report on a tablet in her office']];
+const zzIcon: Record<string, string> = { 'synaps-dx': 'loop', 'soulful-evolution': 'growth', 'austere': 'ads', 'dimov-associates': 'funnel' };
+const cutOf = (k: string) => CUTS[k];
 const stageLine: Record<string, string> = { Attract: 'Get in front of the right buyers', Capture: 'Turn attention into leads', Convert: 'Turn leads into revenue', Scale: 'Keep it growing without more headcount' };
 const flips = [
   { slug: 'synaps-dx', big: '40%', what: 'growth in online revenue', who: 'Synaps Dx', role: 'Ecommerce', quote: CASES[0].quote },
@@ -112,7 +115,11 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <div class="feat" data-carousel="6500" data-r="up" aria-roledescription="carousel" aria-label="Featured client results">
         {CASES.map((c, i) => (
           <article class={'slide' + (i === 0 ? ' on' : '')} aria-label={c.client}>
-            <img src={`/img/cine/${casePic[c.slug][0]}-1600.webp`} alt={casePic[c.slug][1]} width="1600" height="1200" loading={i === 0 ? 'eager' : 'lazy'} />
+            <div class="fart" aria-hidden="true">
+              <img class="fic" src={`/img/3d/${svc(c.service).icon}.webp`} alt="" width="480" height="480" loading={i === 0 ? 'eager' : 'lazy'} />
+              <span class="fnum">{c.results[0].value}</span>
+              <ul>{c.results.slice(1, 4).map((r) => <li><b>{r.value}</b>{r.metric}</li>)}</ul>
+            </div>
             <div class="card">
               <p class="meta"><span>{c.client}</span><span>{c.industry}</span></p>
               <h3><a href={'/case-studies/' + c.slug + '/'}><span class="tt">{c.headline}</span></a><span class="caret" aria-hidden="true"></span></h3>
@@ -126,7 +133,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <div class="drift" data-drift aria-label="More results">
         <div class="row">
           {[...CASES, ...CASES.slice(0, 3)].map((c) => (
-            <a href={'/case-studies/' + c.slug + '/'}><span><b>{c.results[0].metric}: {c.results[0].value}</b><small>{c.client} &middot; {c.period}</small></span><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="64" height="64" loading="lazy" /></a>
+            <a href={'/case-studies/' + c.slug + '/'}><span><b>{c.results[0].metric}: {c.results[0].value}</b><small>{c.client} &middot; {c.period}</small></span><img src={`/img/3d/${svc(c.service).icon}.webp`} alt="" width="64" height="64" loading="lazy" /></a>
           ))}
         </div>
       </div>
@@ -147,7 +154,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <div class="tiles" data-stagger="55">
         {SERVICES.map((s) => (
           <a href={'/' + s.slug + '/'} data-r="scale">
-            <span class="im"><img src={`/img/cine/${svcPic[s.slug]}-800.webp`} alt={svcAlt[s.slug]} width="800" height="600" loading="lazy" /><img class="ic" src={`/img/3d/${s.icon}.webp`} alt="" width="46" height="46" loading="lazy" /></span>
+            <span class="im ico3"><span class="cut-blob" aria-hidden="true"></span><img src={`/img/3d/${s.icon}.webp`} alt="" width="480" height="480" loading="lazy" /></span>
             <span>{short[s.slug]}<small>{s.from ? `from ${usd(s.from)}` : 'scoped to you'}</small></span>
           </a>
         ))}
@@ -163,7 +170,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <ul class="zz">
         {REVENUE_PROOF.map((r, i) => (
           <li data-r="up">
-            <div class={'ph' + (i % 2 ? ' r' : '')} data-r={i % 2 ? 'right' : 'left'}><img src={`/img/cine/${zzPics[i][0]}-800.webp`} alt={zzPics[i][1]} width="800" height="600" loading="lazy" /></div>
+            <div class={'ph ico3' + (i % 2 ? ' r' : '')} data-r={i % 2 ? 'right' : 'left'}><span class="cut-blob" aria-hidden="true"></span><img src={`/img/3d/${zzIcon[r.slug]}.webp`} alt="" width="480" height="480" loading="lazy" /></div>
             <div class="mid">
               <strong data-count={r.value} data-pre={r.pre} data-suf={r.suf} data-dec={String(r.value).includes('.') ? '1' : '0'}>{r.pre}{r.value}{r.suf}</strong>
               <h3>{r.label}</h3>
@@ -189,12 +196,12 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
             <div class="dhead" data-r="up"><h3>0{gi + 1} {g.name} <em>{stageLine[g.name]}</em></h3><a class="pill" href={'/' + lead.slug + '/'}>View {short[lead.slug]}</a></div>
             <div class="dgrid">
               <a class="dlead" href={'/' + lead.slug + '/'} data-r="left">
-                <span class="im"><img src={`/img/cine/${svcPic[lead.slug]}-800.webp`} alt={svcAlt[lead.slug]} width="800" height="600" loading="lazy" /><img class="ic" src={`/img/3d/${lead.icon}.webp`} alt="" width="44" height="44" loading="lazy" /></span>
+                <Cut name={cutOf(lead.slug).name} ratio={cutOf(lead.slug).ratio} alt={cutOf(lead.slug).alt} chips={cutOf(lead.slug).chips.slice(0, 1)} cls="dcut" tone={gi % 2 ? 'bright' : 'deep'} />
                 <span><span class="tagl">{g.name} <span>&middot; {lead.from ? `from ${usd(lead.from)}` : 'scoped'}</span></span><h4>{lead.card}</h4><p>{lead.blurb}</p></span>
               </a>
               <div class="dside" data-r="right">
                 {side.length ? side.map((s) => (
-                  <a href={'/' + s.slug + '/'}><span class="im"><img src={`/img/cine/${svcPic[s.slug]}-800.webp`} alt="" width="800" height="600" loading="lazy" /></span><span><span class="tagl">{g.name} <span>&middot; {s.from ? `from ${usd(s.from)}` : 'scoped'}</span></span><b>{s.card}</b><small>{first(s.blurb)}</small></span></a>
+                  <a href={'/' + s.slug + '/'}><span class="im"><img class="icn" src={`/img/3d/${s.icon}.webp`} alt="" width="480" height="480" loading="lazy" /></span><span><span class="tagl">{g.name} <span>&middot; {s.from ? `from ${usd(s.from)}` : 'scoped'}</span></span><b>{s.card}</b><small>{first(s.blurb)}</small></span></a>
                 )) : (
                   <a href="/case-studies/"><span class="im"><img class="icn" src="/img/3d/growth.webp" alt="" width="480" height="480" loading="lazy" /></span><span><span class="tagl">Proof</span><b>See the revenue each stage produced</b><small>Six published case studies with baselines.</small></span></a>
                 )}
@@ -211,9 +218,9 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
     <div class="wrap">
       <div class="row" data-r="up">
         <p>We help ambitious businesses grow revenue with paid ads, social media, content, outreach and email that work as one plan.</p>
-        <img src="/img/cine/strategists-800.webp" alt="Two strategists reviewing funnel charts late at night" width="800" height="450" loading="lazy" />
+        <Cut name="arrow" ratio={0.848} alt="Two people carrying a giant green arrow pointing upward together" size="sm" tone="bright" cls="rowcut" />
         <h2 id="about-h">About <em>us</em></h2>
-        <img src="/img/cine/salescall-800.webp" alt="Saleswoman on a video call in a glass meeting room" width="800" height="604" loading="lazy" />
+        <Cut name="button" ratio={0.556} alt="Excited man pressing a giant green button that sets everything running" size="sm" tone="bright" cls="rowcut" />
         <p class="r">From the first ad to the repeat purchase, we turn attention into pipeline and pipeline into sales, one measured step at a time.</p>
       </div>
       <p class="statement" data-scrub>We judge every ad, post and email by <em>the revenue it brings in</em>, and we cut whatever does not earn its place.</p>
@@ -253,10 +260,10 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
     <div class="main">
       <h2 data-r="up">What do we make every month?</h2>
       <div class="grid22" data-stagger="80">
-        <article data-r="scale"><a href="/content-creation/"><span class="im"><img src="/img/cine/editor-800.webp" alt="Video editor cutting a short vertical ad in a dark suite" width="800" height="450" loading="lazy" /></span><span class="tagl">Creative <span>&middot; every week</span></span><b>Ad creative, short-form video and the landing pages they point to</b></a></article>
-        <article data-r="scale"><a href="/social-media-marketing/"><span class="im"><img src="/img/cine/streamer-800.webp" alt="Musician live streaming to followers from a home studio" width="800" height="604" loading="lazy" /></span><span class="tagl">Social <span>&middot; daily</span></span><b>Posts, carousels and creator content on a calendar that points somewhere</b></a></article>
-        <article data-r="scale"><a href="/email-marketing/"><span class="im"><img src="/img/cine/emailmacro-800.webp" alt="Hands typing beside an email automation flow on a laptop" width="800" height="450" loading="lazy" /></span><span class="tagl">Email <span>&middot; always on</span></span><b>Welcome, cart, post-purchase and win-back flows that keep selling</b></a></article>
-        <article data-r="scale"><a href="/lead-generation/"><span class="im"><img src="/img/cine/salescall-800.webp" alt="Saleswoman booking a meeting on a video call at night" width="800" height="604" loading="lazy" /></span><span class="tagl">Outreach <span>&middot; weekly</span></span><b>Lead lists, cold email and LinkedIn sequences that book sales calls</b></a></article>
+        <article data-r="scale"><a href="/content-creation/"><Cut name={cutOf('content-creation').name} ratio={cutOf('content-creation').ratio} alt={cutOf('content-creation').alt} cls="curcut" tone="mint" /><span class="tagl">Creative <span>&middot; every week</span></span><b>Ad creative, short-form video and the landing pages they point to</b></a></article>
+        <article data-r="scale"><a href="/social-media-marketing/"><Cut name={cutOf('social-media-marketing').name} ratio={cutOf('social-media-marketing').ratio} alt={cutOf('social-media-marketing').alt} cls="curcut" tone="mint" /><span class="tagl">Social <span>&middot; daily</span></span><b>Posts, carousels and creator content on a calendar that points somewhere</b></a></article>
+        <article data-r="scale"><a href="/email-marketing/"><Cut name={cutOf('email-marketing').name} ratio={cutOf('email-marketing').ratio} alt={cutOf('email-marketing').alt} cls="curcut" tone="mint" /><span class="tagl">Email <span>&middot; always on</span></span><b>Welcome, cart, post-purchase and win-back flows that keep selling</b></a></article>
+        <article data-r="scale"><a href="/lead-generation/"><Cut name={cutOf('cold-email-infrastructure').name} ratio={cutOf('cold-email-infrastructure').ratio} alt={cutOf('cold-email-infrastructure').alt} cls="curcut" tone="mint" /><span class="tagl">Outreach <span>&middot; weekly</span></span><b>Lead lists, cold email and LinkedIn sequences that book sales calls</b></a></article>
       </div>
     </div>
     <aside data-r="right">
@@ -268,7 +275,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <div>
         <h3>From the case files</h3>
         <ul class="eps">
-          {CASES.slice(0, 4).map((c) => <li><a href={'/case-studies/' + c.slug + '/'}><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="54" height="54" loading="lazy" /><span><small>{c.industry.toUpperCase()} &middot; {c.period.toUpperCase()}</small><b>{c.client}: {c.results[0].value} {c.results[0].metric.toLowerCase()}</b></span><i aria-hidden="true">&#8599;</i></a></li>)}
+          {CASES.slice(0, 4).map((c) => <li><a href={'/case-studies/' + c.slug + '/'}><span class="epn" aria-hidden="true">{c.results[0].value}</span><span><small>{c.industry.toUpperCase()} &middot; {c.period.toUpperCase()}</small><b>{c.client}: {c.results[0].value} {c.results[0].metric.toLowerCase()}</b></span><i aria-hidden="true">&#8599;</i></a></li>)}
         </ul>
       </div>
     </aside>
@@ -348,7 +355,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
         {flips.map((f, i) => (
           <div class="fcard" data-r="up" data-wave={i % 2 ? '-8' : '8'}>
             <div class="fcard-inner">
-              <div class="fcard-front"><img src={`/img/cine/${casePic[f.slug][0]}-800.webp`} alt="" width="800" height="604" loading="lazy" /><span class="hint" aria-hidden="true">Turn over</span><div><strong>{f.big}</strong><p class="what">{f.what}</p><div class="who">{f.who}<small>{f.role}</small></div></div></div>
+              <div class="fcard-front typo"><span class="fbig" aria-hidden="true">{f.big}</span><span class="hint" aria-hidden="true">Turn over</span><div><strong>{f.big}</strong><p class="what">{f.what}</p><div class="who">{f.who}<small>{f.role}</small></div></div></div>
               <div class="fcard-back"><p>"{f.quote!.text}"</p><small>{f.quote!.who}</small><a href={'/case-studies/' + f.slug + '/'}>Read the case study &rarr;</a></div>
             </div>
           </div>
@@ -378,7 +385,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       <div class="deck">
         {deck.map((c) => (
           <a class="dc" href={'/case-studies/' + c.slug + '/'}>
-            <span class="im"><img src={`/img/cine/${casePic[c.slug][0]}-800.webp`} alt="" width="800" height="604" loading="lazy" /><span>{c.industry.toUpperCase()}</span></span>
+            <span class="im ill"><span class="cut-blob" aria-hidden="true"></span><img src={`/img/3d/${svc(c.service).icon}.webp`} alt="" width="480" height="480" loading="lazy" /><span>{c.industry.toUpperCase()}</span></span>
             <strong>{c.results[0].value}</strong>
             <h4 data-words>{c.headline}</h4>
             <span class="rm">Read the case &rarr;</span>

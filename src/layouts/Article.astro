@@ -2,8 +2,10 @@
 import Base from './Base.astro';
 import { SITE } from '../data/site';
 import { LEARN } from '../data/learn';
-interface Props { slug: string; title: string; description: string; h1: string; answer: string; query: string; faq?: [string, string][]; updated?: string; figure?: string; figureAlt?: string }
-const { slug, title, description, h1, answer, query, faq = [], updated = '2026-10-27', figure, figureAlt } = Astro.props;
+import Cut from '../components/Cut.astro';
+import { cutFor } from '../data/cuts';
+interface Props { slug: string; title: string; description: string; h1: string; answer: string; query: string; faq?: [string, string][]; updated?: string }
+const { slug, title, description, h1, answer, query, faq = [], updated = '2026-10-27' } = Astro.props;
 const path = '/learn/' + slug + '/';
 const me = LEARN.find((l) => l.slug === slug);
 const more = LEARN.filter((l) => l.slug !== slug);
@@ -12,18 +14,20 @@ const schema: object[] = [{
   author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true,
 }];
 if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+const fig = cutFor('learn:' + slug);
 const nice = new Date(updated + 'T12:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 <Base title={title} description={description} path={path} pageType="article" query={query} crumbs={[{ name: 'Learn', path: '/learn/' }, { name: me?.tag ?? 'Article', path }]} schema={schema}>
   <article class="art">
-    <header class="art-hd">
-      <div class="narrow">
+    <header class={'art-hd' + (fig ? ' has-fig' : '')}>
+      <div class={fig ? 'wrap art-hgrid' : 'narrow'}><div>
         <span class="eyebrow">{me?.tag ?? 'Learn'} &middot; {me?.minutes ?? 8} minute read</span>
         <h1 data-split>{h1}</h1>
         <p class="lead">{answer}</p>
         <p class="byline">By <a href="/kunal-arora/">Kunal Arora</a>, founder &middot; Updated <time datetime={updated}>{nice}</time></p>
       </div>
-      {figure && <div class="art-fig" aria-hidden={figureAlt ? undefined : 'true'}><slot name="figure" /></div>}
+      {fig && <div class="art-fig"><Cut name={fig.name} ratio={fig.ratio} alt={fig.alt} chips={fig.chips} tone="bright" eager /></div>}
+      </div>
     </header>
     <div class="narrow prose art-body">
       <slot />
