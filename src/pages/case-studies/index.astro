@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { CASES } from '../../data/site';
+import Info from '../../components/info/Info.astro';
+import Stats from '../../components/info/Stats.astro';
+import { CASES, REVENUE_PROOF, svc } from '../../data/site';
+const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 ---
 <Base title="Marketing Case Studies: Revenue We Have Grown | Grow Revenue"
   description="Six marketing case studies with the revenue results: 40% online revenue growth, $500K in new annual revenue, 3.5x return on ad spend and 3x lead volume."
@@ -11,7 +14,19 @@ import { CASES } from '../../data/site';
       <p class="lead">Six client projects across ecommerce, B2B services, a creator platform, coaching, legal and marketing services. Each page shows the starting point, what we changed and the measured result, with the period it was measured over.</p>
     </div>
   </section>
+
   <section class="section" style="padding-top:0">
+    <div class="narrow prose">
+      <h2>How do we measure the results in these case studies?</h2>
+      <p>Every case study starts from a baseline. Before any work begins we record where the numbers stand: revenue from the channel, leads per month, conversion rates, cost per lead or customer. Results are then reported against that baseline, over a stated period, so you can see both how much changed and how long it took.</p>
+      <p>We report revenue and pipeline numbers first. Opens, clicks and reach appear too, because they explain how a result happened, but they are supporting numbers. A campaign with a high open rate and no sales is not a success, and we do not present it as one.</p>
+      <p>Every number on these pages comes from the original case study for that client, shown with the period it was measured over. Where a number is a rate, we say what it is a rate of.</p>
+    </div>
+
+    <Info eyebrow="Headline results" title="Four numbers from four different businesses" sub="Each one links to the full case study with the starting point, the work and the period it was measured over." theme="dark">
+      <Stats items={REVENUE_PROOF.map((r) => ({ value: r.value, pre: r.pre, suf: r.suf, label: r.label, sub: r.client }))} />
+    </Info>
+
     <div class="wrap grid3">
       {CASES.map((c) => (
         <article class="card case">
@@ -20,6 +35,33 @@ import { CASES } from '../../data/site';
           <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
         </article>
       ))}
+    </div>
+
+    <div class="narrow prose">
+      <h2>How do the six case studies compare?</h2>
+      <p>The table puts all six side by side: the client, the market they sell in, the service that produced the result, the headline number and the period it was measured over.</p>
+      <div class="table-wrap"><table>
+        <caption>All six case studies at a glance</caption>
+        <thead><tr><th>Client</th><th>Industry</th><th>Service</th><th>Headline result</th><th>Period</th></tr></thead>
+        <tbody>{CASES.map((c) => <tr><td><a href={'/case-studies/' + c.slug + '/'}>{c.client}</a></td><td>{c.industry}</td><td>{svc(c.service).nav}</td><td>{c.headline}</td><td>{c.period}</td></tr>)}</tbody>
+      </table></div>
+
+      <h2>How should you read a marketing case study?</h2>
+      <p>A case study is useful when it helps you predict what might happen in your own business. These four questions help you judge any case study, ours included.</p>
+      <ul>
+        <li><strong>Is there a baseline?</strong> A result means little without the starting point. "Open rate 35%" says less than "open rate from 18% to 35%".</li>
+        <li><strong>Is there a period?</strong> A number achieved in one quarter is different from the same number achieved over two years.</li>
+        <li><strong>Is the result about revenue?</strong> Leads, meetings, enrollments and revenue matter more than reach and impressions.</li>
+        <li><strong>Is the business like yours?</strong> The closer the market, offer and sales cycle, the more the result tells you.</li>
+      </ul>
+      <p>No case study is a promise. Results depend on your offer, list, market and budget, which is why every project with us starts with a written first read of your numbers.</p>
+
+      <h2>Which case study is closest to your business?</h2>
+      <ul>
+        {CASES.map((c) => <li><strong>{c.industry}:</strong> <a href={'/case-studies/' + c.slug + '/'}>{c.client}</a>, {lc(c.headline)}.</li>)}
+      </ul>
+      <p>If none of these matches your business closely, the method usually still applies: measure the baseline, fix the biggest leak first, connect the channels into one path, and report on revenue. Send us your site and goal and we will tell you which of these projects is the nearest comparison.</p>
+      <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Get a free first read</a></div>
     </div>
   </section>
 </Base>
