@@ -247,3 +247,8 @@
 @media (prefers-reduced-motion: reduce) { .ico3 img, .feat .fart .fic, .dside .im img.icn, .deck .dc .im.ill img { animation: none; } }
 .curtain .row .rowcut img.cut-img { width: auto; aspect-ratio: auto; object-fit: contain; border-radius: 0; }
 @media (max-width: 760px) { .feat .fart .fic { width: 30%; left: 6%; top: 10%; } .feat .fart .fnum { top: auto; bottom: 8%; right: 6%; font-size: clamp(3.4rem, 17vw, 5rem); } }
+/* process stepper: outgoing panel clears before the next appears, so two panels never show text at once */
+.js .panel { transition: opacity .18s linear, transform .7s var(--ease); }
+.js .panel.on { transition: opacity .45s .22s, transform .7s var(--ease); }
+.feat .slide .fart > * { opacity: 0; transition: opacity .2s; }
+.feat .slide.on .fart > * { opacity: 1; transition: opacity .45s .4s; }
