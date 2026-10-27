@@ -1,0 +1,145 @@
+---
+import Article from '../../layouts/Article.astro';
+import Info from '../../components/info/Info.astro';
+import Flow from '../../components/info/Flow.astro';
+import Versus from '../../components/info/Versus.astro';
+import Stats from '../../components/info/Stats.astro';
+
+const faq: [string, string][] = [
+  ['Is marketing automation only for big companies?', 'No. The first automations, a welcome series, an abandoned cart reminder and instant lead follow-up, pay off on small lists and low volumes because they earn from every new subscriber and every order. Small businesses often gain the most, because they have the least time to do the work by hand.'],
+  ['What is the difference between marketing automation and a CRM?', 'A CRM stores your contacts, deals and conversations. Marketing automation acts on that data: it sends messages, updates records and alerts people when something happens. Many platforms, such as HubSpot or GoHighLevel, combine both.'],
+  ['Will automated emails feel impersonal?', 'Only if they are written that way. Automations triggered by what a person just did are usually more relevant than a broadcast, because they arrive at the moment of interest. Write them in a human voice, keep them short and let people reply to a real inbox.'],
+  ['How long does it take to set up marketing automation?', 'The core flows for one business can usually be planned, written and launched within a few weeks. Connecting several systems, cleaning old data or building custom AI steps takes longer, so start with the flows that touch revenue first.'],
+  ['Do I need n8n, Make or Zapier if my email platform has automation?', 'Not always. Email platforms automate messages well inside their own walls. A workflow tool becomes useful when data has to move between systems, for example from a form to the CRM, the email platform and a sales alert at once.'],
+];
+---
+<Article slug="what-is-marketing-automation"
+  title="What Is Marketing Automation? Tools, Examples | Grow Revenue"
+  description="What is marketing automation? How triggers and workflows work, five automations to build first, tools compared, benefits and the mistakes that cost sales."
+  h1="What is marketing automation, and what should you automate first?"
+  answer="What is marketing automation? It is software that sends the right message or does the right task automatically when a person does something, such as signing up, leaving a cart or booking a call. A trigger starts a workflow, rules choose the path, and actions run on their own: emails, CRM updates, alerts and audience changes. Done well, it turns one-off campaigns into systems that earn every day."
+  query="what is marketing automation" faq={faq}>
+
+  <p>Most businesses already do marketing by hand that a machine could do better: copying leads from a form into a spreadsheet, sending the same welcome email one at a time, remembering to follow up with people who went quiet. Each task is small. Together they cost hours every week, and the follow-ups that get forgotten cost sales. Marketing automation fixes that by turning those repeat tasks into rules that run on their own.</p>
+
+  <h2>What is marketing automation, in simple terms?</h2>
+  <p>In simple terms, marketing automation is a set of "when this happens, do that" rules applied to your customers and leads. When someone downloads a guide, send them the guide and a short series that explains your product. When someone abandons a cart, remind them. When a high-value lead fills in a form, alert sales within seconds.</p>
+  <p>The key idea is the trigger. Broadcast marketing sends the same message to everyone at a time that suits you. Automated marketing sends a message to one person at the moment that suits them, because they just did something that shows interest.</p>
+
+  <h2>How does marketing automation work?</h2>
+  <p>Every automation, from a two-email welcome series to a complex lead routing system, is built from the same five parts.</p>
+
+  <Info eyebrow="Anatomy of an automation" title="Trigger, condition, action, wait, measure" sub="Example: a lead downloads a pricing guide from your website." theme="dark">
+    <Flow steps={[
+      { tag: 'Trigger', t: 'Something happens', p: 'A lead submits the pricing guide form.' },
+      { tag: 'Condition', t: 'Rules choose the path', p: 'Company size over 50 goes to sales; smaller goes to nurture.' },
+      { tag: 'Action', t: 'Work runs by itself', p: 'Guide sent, CRM record created, sales alerted on Slack.' },
+      { tag: 'Wait', t: 'Time passes', p: 'Two days later, a case study email goes out if no call is booked.' },
+      { tag: 'Measure', t: 'Results are tracked', p: 'Calls booked and revenue per path, reviewed monthly.' },
+    ]} />
+  </Info>
+
+  <p>Two details separate automations that earn from ones that annoy. First, exit conditions: the moment someone buys, books or replies, they should leave the sequence. Second, clean data: an automation can only be as good as the fields it reads, so a wrong country or a missing company name breaks personalization at scale.</p>
+
+  <h2>Which marketing automation examples should you build first?</h2>
+  <p>Build the automations that sit closest to revenue first. These five pay off for most businesses, and the first three apply to almost every one.</p>
+  <div class="table-wrap"><table>
+    <caption>Five automations to build first</caption>
+    <thead><tr><th>Automation</th><th>Trigger</th><th>What it does</th><th>Who needs it</th></tr></thead>
+    <tbody>
+      <tr><td>Welcome series</td><td>New subscriber or lead</td><td>Introduces the business, earns trust, makes the first offer</td><td>Everyone with a signup form</td></tr>
+      <tr><td>Instant lead follow-up</td><td>Form submitted or call requested</td><td>Replies within minutes, alerts sales, books a time</td><td>Service and B2B businesses</td></tr>
+      <tr><td>Abandoned cart or checkout</td><td>Checkout started, no order</td><td>Reminds, answers the objection, recovers the order</td><td>Ecommerce</td></tr>
+      <tr><td>Post-purchase</td><td>Order placed</td><td>Thanks, how-to content, review request, second purchase</td><td>Ecommerce and repeat-purchase services</td></tr>
+      <tr><td>Win-back</td><td>No purchase or engagement for a set period</td><td>Brings lapsed customers back or removes them cleanly</td><td>Any business with a list older than a year</td></tr>
+    </tbody>
+  </table></div>
+  <p>For B2B, add meeting reminders that cut no-shows and a nurture sequence for leads who are interested but not ready. For ecommerce, browse abandonment is usually next on the list.</p>
+
+  <h3>What these flows did for one client</h3>
+  <p>At <a href="/case-studies/synaps-dx/">Synaps Dx</a>, an ecommerce brand, email had no automation at all: a few promotional blasts and nothing else. We built a welcome series, abandoned cart reminders, post-purchase emails and a win-back flow, alongside segmented campaigns and rebuilt signup forms.</p>
+
+  <Info eyebrow="Case study: Synaps Dx" title="What automated flows changed in the first quarter" theme="mint" note="Measured for Synaps Dx over the first quarter against a baseline taken before work started.">
+    <Stats items={[
+      { value: 20, suf: '%+', label: 'of online revenue from automated flows', sub: 'First 3 months, up from under 5%' },
+      { value: 38, suf: '%+', label: 'of online revenue from email overall', sub: 'Up from under 5%' },
+      { value: 40, suf: '%', label: 'growth in online revenue', sub: 'First quarter' },
+      { value: 10, suf: 'K', label: 'new leads from rebuilt signup forms', sub: 'Feeding the welcome series' },
+    ]} />
+  </Info>
+
+  <h2>What are the benefits of marketing automation?</h2>
+  <p>The benefits of marketing automation come down to speed, consistency and focus.</p>
+  <ul>
+    <li><strong>Speed.</strong> Leads get a reply in seconds instead of hours. Interest fades fast, so the first response often decides who wins the deal.</li>
+    <li><strong>Consistency.</strong> Every new subscriber gets the full welcome series and every abandoned cart gets its reminder, even during your busiest week.</li>
+    <li><strong>Relevance.</strong> Messages follow behavior, so people get the next useful thing rather than the same blast as everyone else.</li>
+    <li><strong>Revenue you can see.</strong> Each flow reports what it earned, which makes it clear where to invest next.</li>
+    <li><strong>Time back.</strong> The repeat work moves to software, and people spend their time on conversations, creative and strategy.</li>
+  </ul>
+
+  <h2>How is marketing automation different from workflow automation?</h2>
+  <p>Marketing automation is focused on customers and leads: messages, segments, scores and journeys, usually inside an email or CRM platform. Workflow automation is broader: it moves data and triggers actions between any business tools, from forms and spreadsheets to invoicing and project management.</p>
+  <p>In practice they work together. The email platform runs the customer journey. A workflow tool such as n8n, Make or Zapier connects the platform to everything else: it takes the lead from your website form, enriches it, creates the CRM record, starts the right email flow and posts an alert for sales.</p>
+
+  <h2>Which marketing automation tools should you use?</h2>
+  <p>Choose tools by what your customer journey needs, not by feature lists. Most small and mid-sized businesses need two layers.</p>
+  <div class="table-wrap"><table>
+    <caption>The two layers of a marketing automation stack</caption>
+    <thead><tr><th>Layer</th><th>Job</th><th>Common tools</th></tr></thead>
+    <tbody>
+      <tr><td>Email and CRM platform</td><td>Contacts, segments, email flows, campaigns, deals</td><td>Klaviyo for ecommerce, HubSpot, ActiveCampaign, Mailchimp, GoHighLevel</td></tr>
+      <tr><td>Workflow tool</td><td>Moving data and triggering actions between all your other tools</td><td>Zapier, Make, n8n</td></tr>
+    </tbody>
+  </table></div>
+  <p>For marketing automation software for a small business, start with the email platform that fits your business model and only add a workflow tool when you have a real gap to close. Two well-run tools beat six half-configured ones.</p>
+
+  <h3>n8n vs Make vs Zapier</h3>
+  <p>The three workflow tools overlap a lot. The biggest practical differences are how they charge and where they run.</p>
+  <div class="table-wrap"><table>
+    <caption>n8n, Make and Zapier compared, as of October 2026</caption>
+    <thead><tr><th>Question</th><th>Zapier</th><th>Make</th><th>n8n</th></tr></thead>
+    <tbody>
+      <tr><td>What you pay for</td><td>Tasks: each action step that runs</td><td>Credits: one per module run for standard steps, since August 2025</td><td>Executions: one per workflow run, however many steps</td></tr>
+      <tr><td>Where it runs</td><td>Zapier's cloud</td><td>Make's cloud</td><td>n8n's cloud, or your own server with the free self-hosted edition</td></tr>
+      <tr><td>Learning curve</td><td>Easiest</td><td>Moderate, visual canvas</td><td>Steeper, more technical</td></tr>
+      <tr><td>Best for</td><td>Simple links between popular apps</td><td>Visual multi-step scenarios</td><td>Complex, high-volume or AI-heavy workflows</td></tr>
+    </tbody>
+  </table></div>
+  <p>The billing model matters more than the headline price. A ten-step workflow that runs 1,000 times costs about 10,000 tasks or credits on per-step pricing, but 1,000 executions on n8n. For long or frequent workflows, that difference adds up quickly.</p>
+
+  <h2>What are the most common marketing automation mistakes?</h2>
+  <p>Most automation mistakes come from building once and never looking again. These are the ones we fix most often:</p>
+  <ul>
+    <li><strong>No exit rules.</strong> A customer who just bought keeps getting "still thinking about it?" emails.</li>
+    <li><strong>Automating a broken process.</strong> If manual follow-up does not convert, sending it faster will not either. Fix the offer and message first.</li>
+    <li><strong>Too many emails.</strong> Overlapping flows hit the same person three times in a day. Add frequency limits across flows.</li>
+    <li><strong>Ignoring deliverability.</strong> Automated email that lands in spam earns nothing. Since 2024, Gmail and Yahoo require bulk senders to authenticate their domains and support one-click unsubscribe, so check <a href="/email-deliverability/">your setup</a> first.</li>
+    <li><strong>Judging by opens.</strong> Apple Mail Privacy Protection loads images automatically for many users, so opens are inflated. Judge flows by clicks, orders and revenue.</li>
+    <li><strong>Set and forget.</strong> Offers, prices and products change. Review every flow at least once a quarter.</li>
+  </ul>
+
+  <Info eyebrow="Before and after" title="The same lead, handled by hand and by an automation" theme="light">
+    <Versus a="Manual follow-up" b="Automated follow-up" caption="What happens after a lead fills in your contact form" rows={[
+      ['First reply', 'Hours or days, depending on the inbox', 'Within minutes, every time'],
+      ['Sales alert', 'Someone checks the inbox and forwards it', 'Instant alert with the lead details'],
+      ['CRM record', 'Typed in later, if at all', 'Created and filled automatically'],
+      ['If they go quiet', 'Often forgotten', 'A planned sequence of useful follow ups'],
+      ['Reporting', 'Hard to say which leads became sales', 'Each lead traced from form to revenue'],
+    ]} />
+  </Info>
+
+  <h2>Where does AI fit into marketing automation?</h2>
+  <p>AI fits into marketing automation as the step that handles messy, unstructured work inside an otherwise fixed workflow. The automation decides when something happens. The AI step reads a reply and labels it, summarizes a lead's website, drafts a personalized first line or turns a long video into short posts.</p>
+  <p>Keep a person approving anything customer-facing, at least until the error rate is proven low. When the AI step starts choosing its own next actions, you have moved from automation to an AI agent, which we explain in <a href="/learn/what-are-ai-agents/">our guide to AI agents</a>.</p>
+  <p>If you want these flows built and measured for you, our <a href="/email-marketing/">email marketing</a> and <a href="/ai-automation/">AI automation</a> services start with a free review of what you already run.</p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://help.make.com/introducing-credits-new-billing-unit-live-in-make" rel="noopener">Make: Introducing credits, the new billing unit</a></li>
+    <li><a href="https://n8n.io/pricing/" rel="noopener">n8n: Pricing and plans</a></li>
+    <li><a href="https://zapier.com/pricing" rel="noopener">Zapier: Plans and pricing</a></li>
+    <li><a href="https://support.google.com/a/answer/81126" rel="noopener">Google: Email sender guidelines</a></li>
+    <li><a href="https://senders.yahooinc.com/best-practices/" rel="noopener">Yahoo: Sender best practices</a></li>
+  </ul>
+</Article>

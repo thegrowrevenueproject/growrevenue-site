@@ -1,0 +1,165 @@
+---
+import Article from '../../layouts/Article.astro';
+import Info from '../../components/info/Info.astro';
+import Timeline from '../../components/info/Timeline.astro';
+import Versus from '../../components/info/Versus.astro';
+import Flow from '../../components/info/Flow.astro';
+import Stats from '../../components/info/Stats.astro';
+
+const faq: [string, string][] = [
+  ['Is cold email legal?', 'In most markets, B2B cold email is legal when you follow the local rules. In the US, the CAN-SPAM Act requires an accurate sender, honest subject lines, a working way to opt out that you honor within 10 business days, and a valid postal address. In the UK and EU, B2B outreach usually relies on legitimate interest and still needs a clear opt-out. Check the rules for each country you email.'],
+  ['How many cold emails can I send per day?', 'Fewer than most people think. Spread sending across several mailboxes on separate domains, start low while mailboxes warm up, and increase only while replies stay healthy and complaints stay near zero. Volume is the main reason outreach domains get burned.'],
+  ['What is a good reply rate for cold email?', 'It varies widely by market, offer and list quality, so treat any single benchmark with care. The more useful test is your own trend: if replies and booked meetings per 100 people contacted rise as you sharpen the list and message, the program is working.'],
+  ['Should I use my main domain for cold email?', 'No. Send outreach from separate domains that look like your brand, so a reputation problem never reaches the domain your invoices, support and customer emails come from.'],
+  ['How many follow ups should a cold email sequence have?', 'Two or three follow ups after the first email is a sensible default, spaced a few days apart. Each one should add something new: a proof point, a short resource or a simpler question. Stop as soon as someone replies or asks you to.'],
+];
+---
+<Article slug="does-cold-email-still-work"
+  title="Does Cold Emailing Work in 2026? What Changed | Grow Revenue"
+  description="Does cold emailing work in 2026? What changed after the Gmail, Yahoo and Outlook sender rules, what still gets replies, and how to set it up the right way."
+  h1="Does cold emailing work in 2026? What changed, and what still gets replies"
+  answer="Does cold emailing work in 2026? Yes, when it is targeted, authenticated and worth reading, and no when it is sent at volume to bought lists. Since February 2024, Gmail and Yahoo have required bulk senders to authenticate their domains, offer one-click unsubscribe and keep spam complaints under 0.3%. Small, researched lists sent from properly set up domains still book meetings every week."
+  query="does cold emailing work" faq={faq}>
+
+  <p>Every year someone declares cold email dead. What actually died is the old way of doing it: buying a large list, loading one template and sending thousands of emails a day from the company domain. The mailbox providers changed the rules, buyers got better at ignoring generic pitches, and the old tracking numbers stopped meaning much. What replaced it is smaller, more careful and, done well, more profitable.</p>
+
+  <h2>What is cold email, and how is it different from spam?</h2>
+  <p>Cold email is a one-to-one business email sent to someone who has not heard from you before, about a problem they plausibly have. The meaning of cold outreach more broadly is the same idea across channels: email, LinkedIn or phone to people with no prior relationship.</p>
+  <p>The difference from spam is relevance and honesty, not the word "cold". A good cold email goes to a person you chose for a reason, says who you are, makes one clear point, and gives an easy way to say no. Spam is untargeted, often misleading, and sent in volumes no person could read.</p>
+  <p>The law draws a similar line. In the US, the CAN-SPAM Act covers commercial email including B2B. It requires accurate sender details, subject lines that are not deceptive, a working opt-out honored within 10 business days, and a valid physical postal address. Rules in the UK and EU differ, so check them for each market you contact.</p>
+
+  <h2>How has cold email changed since 2024?</h2>
+  <p>Cold email changed in three ways since 2024: mailbox providers now enforce authentication and complaint limits, tracking got less reliable, and buyers reward relevance over volume. The timeline below shows the turning points.</p>
+
+  <Info eyebrow="Timeline" title="How the rules of cold email changed" sub="Each change raised the cost of sending at volume and rewarded senders who do the basics properly." theme="dark">
+    <Timeline items={[
+      { when: '2021', t: 'Opens stop meaning much', p: 'Apple Mail Privacy Protection starts loading email images for users who turn it on, so many emails count as opened whether or not a person read them.' },
+      { when: 'Feb 2024', t: 'Gmail and Yahoo set sender rules', p: 'Bulk senders must use SPF, DKIM and DMARC, offer one-click unsubscribe and keep spam complaints under 0.3%.' },
+      { when: 'May 2025', t: 'Outlook joins in', p: 'Microsoft starts rejecting mail from high-volume senders to Outlook.com, Hotmail and Live addresses that fails SPF, DKIM and DMARC.' },
+      { when: 'Nov 2025', t: 'Gmail enforcement tightens', p: 'Google warns that non-compliant mail now faces temporary and permanent rejections, not just slower delivery.' },
+    ]} />
+  </Info>
+
+  <h3>What the Gmail and Yahoo rules require</h3>
+  <p>Google's sender guidelines treat anyone sending close to 5,000 messages a day to personal Gmail accounts as a bulk sender. Bulk senders must pass SPF and DKIM, publish a DMARC record with at least a p=none policy and an aligned From domain, support one-click unsubscribe on marketing mail, and keep the spam rate reported in Postmaster Tools below 0.3%. Yahoo set matching rules from February 2024 and asks senders to honor unsubscribes within two days.</p>
+  <p>Most cold email programs send far less than 5,000 a day, but that is not a free pass. Mailbox providers judge every sender on authentication and complaints, and a cold program that triggers complaints will lose inbox placement long before it reaches any bulk threshold.</p>
+
+  <h3>What Outlook added in 2025</h3>
+  <p>Microsoft announced requirements for high-volume senders to its consumer addresses (Outlook.com, Hotmail.com and Live.com) in 2025, covering domains that send 5,000 or more emails a day. From May 5, 2025, mail that fails SPF, DKIM and DMARC is rejected rather than sent to junk. Together, the three biggest consumer mailbox providers now ask for the same basics.</p>
+
+  <h2>Does cold emailing work for every business?</h2>
+  <p>No. Cold email works best when you can name the buyer, the problem you solve is real and costly, and one new customer is worth enough to justify a researched, personal approach. It works poorly for cheap consumer products, offers nobody can explain in two sentences, and markets where buyers only purchase through tenders or marketplaces.</p>
+  <div class="table-wrap"><table>
+    <caption>Where cold email tends to work, and where it struggles</caption>
+    <thead><tr><th>Usually works</th><th>Usually struggles</th></tr></thead>
+    <tbody>
+      <tr><td>B2B services with a clear buyer, such as founders, heads of sales or practice owners</td><td>Low-priced consumer products bought on impulse</td></tr>
+      <tr><td>Deals worth thousands of dollars or recurring revenue</td><td>Offers with no proof and no clear outcome</td></tr>
+      <tr><td>Platforms recruiting a specific type of user, such as creators or partners</td><td>Markets where every purchase goes through procurement tenders</td></tr>
+      <tr><td>Companies with a trigger to reference: hiring, funding, launches, new locations</td><td>Lists bought with no way to check who is on them</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What is the difference between cold email then and now?</h2>
+  <p>The difference is the unit of work. The old playbook optimized for the number of emails sent. The current one optimizes for the quality of each conversation started.</p>
+
+  <Info eyebrow="Then vs now" title="The old volume playbook against the 2026 playbook" theme="mint">
+    <Versus a="Volume playbook" b="2026 playbook" caption="How a working cold email program has changed" rows={[
+      ['List', 'Bought, large, rarely checked', 'Built from a defined buyer profile, verified, often a few hundred people'],
+      ['Domains', 'The main company domain', 'Separate outreach domains with SPF, DKIM and DMARC'],
+      ['Sending', 'Thousands a day from a few mailboxes', 'Low daily volume spread across warmed mailboxes'],
+      ['Message', 'One template with a first-name merge', 'A real reason to write, one problem, one proof, one ask'],
+      ['Main metric', 'Open rate', 'Positive replies and meetings booked'],
+      ['Follow up', 'Repeated bumps of the same pitch', 'Two or three follow ups that each add something new'],
+    ]} />
+  </Info>
+
+  <h2>How do you set up cold email so it reaches the inbox?</h2>
+  <p>Deliverability is built before the first email is written. The setup we use on every <a href="/cold-email-infrastructure/">cold email project</a> follows the same order:</p>
+  <ol>
+    <li><strong>Separate sending domains.</strong> Register domains close to your brand name and point their websites to your main site. Your main domain stays out of outreach entirely.</li>
+    <li><strong>Authentication.</strong> Publish SPF, DKIM and DMARC for every sending domain and check that they pass and align.</li>
+    <li><strong>Several mailboxes, warmed up.</strong> Spread sending across multiple mailboxes and build their reputation gradually before real campaigns start.</li>
+    <li><strong>Verified lists.</strong> Check every address before sending. Bounces are one of the fastest ways to damage a new domain.</li>
+    <li><strong>Monitoring.</strong> Run inbox placement tests, watch bounces and complaints, and pause a mailbox the moment its numbers move.</li>
+  </ol>
+  <p>If emails from your main domain already land in spam, fix that first with an <a href="/email-deliverability/">email deliverability audit</a>. Outreach sent from a damaged domain makes the problem worse.</p>
+
+  <h2>How do you write a cold email that gets replies?</h2>
+  <p>Write a cold email like a short note from one professional to another: a reason for writing, a problem you can solve, a line of proof and one small ask. Keep it under about 120 words and readable on a phone.</p>
+  <ul>
+    <li><strong>The reason.</strong> Something true about them: a hire, a launch, a page on their site, a post they wrote. It shows the email was meant for them.</li>
+    <li><strong>The problem.</strong> One problem people in their role commonly have, in their words, not yours.</li>
+    <li><strong>The proof.</strong> One result from a similar company, with a number.</li>
+    <li><strong>The ask.</strong> A small question that is easy to answer, such as whether it is worth sending a short breakdown.</li>
+  </ul>
+
+  <h3>How to write cold email subject lines</h3>
+  <p>A cold email subject line should look like it came from a colleague, not a marketing department. Short, specific and plain works better than clever.</p>
+  <div class="table-wrap"><table>
+    <caption>Subject line patterns</caption>
+    <thead><tr><th>Pattern</th><th>Example</th><th>Why it works</th></tr></thead>
+    <tbody>
+      <tr><td>Their trigger</td><td>your new Austin office</td><td>Shows research in three words</td></tr>
+      <tr><td>The problem</td><td>demo no-shows</td><td>Names a pain they recognize</td></tr>
+      <tr><td>A question</td><td>question about onboarding</td><td>Reads like a normal work email</td></tr>
+      <tr><td>Peer proof</td><td>how a similar firm booked 50 calls</td><td>Specific and relevant, if it is true</td></tr>
+    </tbody>
+  </table></div>
+  <p>Avoid fake reply prefixes, all caps, emoji and anything that over-promises. They lower trust and can count as deceptive under CAN-SPAM.</p>
+
+  <h2>How should you follow up a cold email?</h2>
+  <p>Follow up a cold email two or three times, a few days apart, and make every follow up add something the first email did not. Many replies arrive after a follow up, because busy people miss or postpone the first message.</p>
+  <div class="table-wrap"><table>
+    <caption>A simple four-step sequence</caption>
+    <thead><tr><th>Step</th><th>Timing</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Day 1</td><td>Reason, problem, proof, small ask</td></tr>
+      <tr><td>2</td><td>Day 4</td><td>A short, specific result from a similar company</td></tr>
+      <tr><td>3</td><td>Day 8</td><td>A useful resource or idea they can use without replying</td></tr>
+      <tr><td>4</td><td>Day 14</td><td>A polite close: ask whether to stop or reconnect later</td></tr>
+    </tbody>
+  </table></div>
+  <p>Stop the sequence as soon as someone replies, books, or asks to be left alone, and suppress them from every future campaign.</p>
+
+  <h2>Is cold email or LinkedIn outreach better?</h2>
+  <p>Use both. Email reaches people who rarely open LinkedIn, and LinkedIn puts a face and a profile behind the email. When the same decision-maker sees the same clear message in both places, each channel makes the other more credible.</p>
+  <p>That is the approach we used with <a href="/case-studies/scalability/">Scalability</a>, a B2B services firm. Segmented cold email ran alongside personalized LinkedIn outreach and search ads, and the combined system produced 150+ qualified leads a month and 50+ sales consultations in the first three months.</p>
+
+  <h2>What results can cold email still produce?</h2>
+  <p>Done properly, cold email still produces pipeline that would be hard to buy any other way. These are results from our own published case studies, each measured over the period stated on its page.</p>
+
+  <Info eyebrow="From our case studies" title="What outreach produced for three clients" sub="Opens are shown where they were part of the original reporting, but we judge programs by replies, meetings and sign-ups." theme="dark">
+    <Stats items={[
+      { value: 150, suf: '+', label: 'Qualified leads a month', sub: 'Scalability, cold email with LinkedIn and search ads' },
+      { value: 50, suf: '+', label: 'Sales consultations in 3 months', sub: 'Scalability' },
+      { value: 65, pre: '+', suf: '%', label: 'Sign-ups from cold email and LinkedIn', sub: 'Maestro, creator platform' },
+      { value: 35, pre: '+', suf: '%', label: 'Lead to sign-up conversion', sub: 'Soulful Evolution, coaching programs' },
+    ]} />
+  </Info>
+  <p>Read the full stories: <a href="/case-studies/scalability/">Scalability</a>, <a href="/case-studies/maestro/">Maestro</a> and <a href="/case-studies/soulful-evolution/">Soulful Evolution</a>.</p>
+
+  <h2>What does a 2026 outreach system look like?</h2>
+  <p>A working outreach system in 2026 is a small pipeline with clear steps, where people make the judgment calls and software does the repeat work.</p>
+
+  <Info eyebrow="The system" title="From buyer profile to booked meeting" theme="light">
+    <Flow steps={[
+      { t: 'Define the buyer', p: 'Role, company type and the trigger that makes now a good time.' },
+      { t: 'Research and verify', p: 'Build a small list, check every address, note one reason per person.' },
+      { t: 'Send from clean domains', p: 'Authenticated, warmed mailboxes at low daily volume.' },
+      { t: 'Follow up with value', p: 'Two or three steps, plus LinkedIn for the same people.' },
+      { t: 'Hand off and measure', p: 'Replies reach sales fast. Track meetings and revenue, not opens.' },
+    ]} />
+  </Info>
+
+  <p>AI now helps with the research and first drafts, which makes careful personalization affordable at a sensible scale. It does not replace judgment about who to contact or what is worth saying. We cover where that line sits in <a href="/learn/what-are-ai-agents/">our guide to AI agents</a>.</p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://support.google.com/a/answer/81126" rel="noopener">Google: Email sender guidelines</a></li>
+    <li><a href="https://senders.yahooinc.com/best-practices/" rel="noopener">Yahoo: Sender best practices</a></li>
+    <li><a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730" rel="noopener">Microsoft: Outlook's new requirements for high-volume senders</a></li>
+    <li><a href="https://www.spamresource.com/2025/11/google-warns-sender-requirements.html" rel="noopener">Spam Resource: Google warns sender requirements enforcement is ramping up (November 2025)</a></li>
+    <li><a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" rel="noopener">FTC: CAN-SPAM Act compliance guide for business</a></li>
+  </ul>
+</Article>

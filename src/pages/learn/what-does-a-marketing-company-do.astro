@@ -1,0 +1,156 @@
+---
+import Article from '../../layouts/Article.astro';
+import Info from '../../components/info/Info.astro';
+import Flow from '../../components/info/Flow.astro';
+import Versus from '../../components/info/Versus.astro';
+import Stats from '../../components/info/Stats.astro';
+
+const faq: [string, string][] = [
+  ['What is the difference between a marketing company and a marketing department?', 'A marketing department works only for its own business and is paid through salaries. A marketing company is an outside team that works for several clients, brings specialists you would not hire full time, and is paid by project, retainer or results.'],
+  ['How long does it take a marketing company to show results?', 'Fixes to existing funnels, email flows and ad accounts often show within the first 30 to 90 days, because they improve traffic you already have. New channels such as content, SEO or a fresh outbound program usually take a full quarter to read properly.'],
+  ['What should a marketing company report every month?', 'Revenue influenced, new customers, cost per customer and spend by channel, compared against the baseline taken before work started. Clicks, impressions and open rates are useful signals, but they should sit below the money numbers, not replace them.'],
+  ['Is a full service marketing company better than hiring specialists?', 'It depends on how connected your channels are. If ads, email and your sales follow-up need to work as one path, one team that owns the whole path avoids the gaps between suppliers. If you only need one narrow job done, a specialist is fine.'],
+  ['How much should a business spend on marketing?', 'There is no single right number. Gartner found that marketing budgets in large companies averaged 7.7% of company revenue in 2025. Smaller and faster growing businesses often spend more. Set spend by the cost of a customer you can afford, not by a percentage alone.'],
+];
+---
+<Article slug="what-does-a-marketing-company-do"
+  title="What Does a Marketing Company Do? Explained | Grow Revenue"
+  description="What does a marketing company do? The jobs it runs, how it compares with an in-house team, what it costs, and how to judge one by revenue, not by clicks."
+  h1="What does a marketing company do, and how do you judge one?"
+  answer="A marketing company plans, builds and runs the work that brings in customers: ads, social media, content, outreach, email, landing pages and the systems that tie them together. So what does a marketing company do that matters to you? A good one owns a number, usually revenue or cost per customer, measures a baseline before work starts and reports against it every month."
+  query="what does a marketing company do" faq={faq}>
+
+  <p>Most people meet marketing companies through a sales call full of channel names: SEO, paid social, content, funnels. That list tells you what a company can touch. It does not tell you what you will get. This guide explains the jobs a marketing company actually does, how it compares with building your own team, how to measure it, and the questions that separate a partner who grows revenue from one who only produces activity.</p>
+
+  <h2>What does a marketing company do day to day?</h2>
+  <p>Day to day, a marketing company turns a growth goal into weekly work across research, planning, production and measurement. The mix changes by business, but the jobs below show up in almost every engagement.</p>
+  <div class="table-wrap"><table>
+    <caption>The core jobs of a marketing company</caption>
+    <thead><tr><th>Job</th><th>What it involves</th><th>What you should see</th></tr></thead>
+    <tbody>
+      <tr><td>Research</td><td>Who buys, why they buy, what competitors say, where the funnel leaks</td><td>A short written brief and a baseline of your current numbers</td></tr>
+      <tr><td>Planning</td><td>Which channels to run, in what order, with what budget</td><td>A plan ranked by expected revenue, with targets per channel</td></tr>
+      <tr><td>Creative</td><td>Ads, videos, posts, emails, landing pages and sales copy</td><td>Work delivered on a calendar, tested in versions</td></tr>
+      <tr><td>Channel management</td><td>Running ad accounts, social profiles, outreach and email platforms</td><td>Weekly changes based on what the numbers show</td></tr>
+      <tr><td>Systems</td><td>CRM, tracking, automation, forms and follow-up</td><td>Leads that reach a person fast and never fall through gaps</td></tr>
+      <tr><td>Measurement</td><td>Attribution, reporting, budget decisions</td><td>One report that ties spend to customers and revenue</td></tr>
+    </tbody>
+  </table></div>
+  <p>The last row decides whether the other five are worth paying for. Without measurement, a marketing company can be busy for a year and nobody can say whether it worked.</p>
+
+  <h2>Which services does a full service marketing company cover?</h2>
+  <p>A full service marketing company covers every stage between a stranger and a repeat customer, so you do not have to manage five suppliers and stitch their reports together. It helps to group the services by the job they do in that journey.</p>
+
+  <Info eyebrow="The revenue engine" title="Four stages, one path from first look to repeat purchase" sub="Each stage feeds the next. A weak stage caps the result of every stage before it." theme="dark">
+    <Flow steps={[
+      { tag: 'Attract', t: 'Get in front of the right buyers', p: 'Paid ads, social media and content put the offer where buyers already spend time.' },
+      { tag: 'Capture', t: 'Turn attention into leads', p: 'Cold email, LinkedIn outreach and lead magnets start real conversations.' },
+      { tag: 'Convert', t: 'Turn leads into revenue', p: 'Landing pages, funnels and email follow-up move interest to a purchase.' },
+      { tag: 'Scale', t: 'Grow without more headcount', p: 'Automation, AI agents and deliverability keep it running as volume grows.' },
+    ]} />
+  </Info>
+
+  <p>Here is how our own services map to those stages. <strong>Attract:</strong> <a href="/paid-advertising/">paid advertising</a>, <a href="/social-media-marketing/">social media marketing</a> and <a href="/content-creation/">content creation</a>. <strong>Capture:</strong> <a href="/lead-generation/">lead generation</a> and <a href="/cold-email-infrastructure/">cold email</a>. <strong>Convert:</strong> <a href="/funnel-audit/">funnels and conversion</a> and <a href="/email-marketing/">email marketing</a>. <strong>Scale:</strong> <a href="/ai-automation/">AI automation</a> and <a href="/email-deliverability/">email deliverability</a>.</p>
+  <p>The value of covering all four is not the length of the list. It is that one team sees where the path breaks. A cheaper cost per click means little if the landing page loses nine visitors in ten, and a great email flow earns nothing if the signup form never fills.</p>
+
+  <h2>Should you hire a marketing company or build an in-house team?</h2>
+  <p>Hire a marketing company when you need several skills at once, need results inside a quarter, or are not sure yet which channels will work. Build in-house when one channel already works and you need someone living inside your product every day. Many growing businesses do both: a small internal lead plus an outside team for production and specialist work.</p>
+
+  <Info eyebrow="Side by side" title="In-house team or outside marketing company?" theme="mint">
+    <Versus a="In-house team" b="Marketing company" caption="How the two options usually compare for a growing business" rows={[
+      ['Time to start', 'Weeks to months of hiring', 'Days, with a team already working together'],
+      ['Range of skills', 'One to three people, a few skills', 'Ads, creative, email, data and automation in one team'],
+      ['Knowledge of your product', 'Deep and daily', 'Built up over the first weeks'],
+      ['Fixed cost', 'Salaries, benefits, tools, management time', 'A project fee or retainer you can scale up or down'],
+      ['Fresh perspective', 'Can get used to how things are', 'Sees patterns from other accounts and markets'],
+      ['Accountability', 'Shared across the business', 'Written targets in the scope, reviewed monthly'],
+    ]} />
+  </Info>
+
+  <p>The in-house column wins on product knowledge, and that matters. A good outside team closes the gap with a proper onboarding, regular access to your sales calls and customer feedback, and a single point of contact who knows your account.</p>
+  <p>Budgets are under pressure on both sides. <a href="https://www.gartner.com/en/newsroom/press-releases/2025-05-12-gartner-2025-cmo-spend-survey-reveals-marketing-budgets-have-flatlined-at-seven-percent-of-overall-company-revenue" rel="noopener">Gartner's 2025 CMO Spend Survey</a> found marketing budgets flat at 7.7% of company revenue. Flat budgets push teams toward partners who can show exactly what each dollar returned.</p>
+
+  <h2>How do you measure marketing ROI?</h2>
+  <p>Measure marketing ROI by comparing the gross profit marketing produced with what the marketing cost. Revenue alone flatters the result, because it ignores the cost of the product you sold. Four numbers do most of the work:</p>
+  <div class="table-wrap"><table>
+    <caption>The four numbers that tell you if marketing works</caption>
+    <thead><tr><th>Metric</th><th>Formula</th><th>What it tells you</th></tr></thead>
+    <tbody>
+      <tr><td>Customer acquisition cost (CAC)</td><td>Total sales and marketing cost / new customers</td><td>What one new customer costs you</td></tr>
+      <tr><td>Customer lifetime value (LTV)</td><td>Average order value x gross margin x purchases per customer</td><td>What one customer is worth in gross profit</td></tr>
+      <tr><td>LTV to CAC ratio</td><td>LTV / CAC</td><td>Whether growth pays for itself</td></tr>
+      <tr><td>Marketing ROI</td><td>(Gross profit from marketing minus marketing cost) / marketing cost</td><td>The return on each dollar spent</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>A worked example</h3>
+  <p>Take a business that spends $25,000 on marketing in a quarter, ads and fees together, and wins 100 new customers. Its customer acquisition cost is $250. The average order is $300 at a 60% gross margin, so each order earns $180 in gross profit, and the average customer buys five times. Lifetime value is $900 in gross profit.</p>
+  <div class="table-wrap"><table>
+    <caption>Illustrative numbers, not client data</caption>
+    <thead><tr><th>Measure</th><th>Calculation</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>CAC</td><td>$25,000 / 100 customers</td><td>$250</td></tr>
+      <tr><td>Gross profit on first orders</td><td>100 x $180</td><td>$18,000</td></tr>
+      <tr><td>ROI on first orders only</td><td>($18,000 minus $25,000) / $25,000</td><td>minus 28%</td></tr>
+      <tr><td>Lifetime gross profit</td><td>100 x $900</td><td>$90,000</td></tr>
+      <tr><td>ROI over the customer lifetime</td><td>($90,000 minus $25,000) / $25,000</td><td>260%</td></tr>
+      <tr><td>LTV to CAC</td><td>$900 / $250</td><td>3.6 to 1</td></tr>
+    </tbody>
+  </table></div>
+  <p>The same campaign looks like a loss on first orders and a strong win over the customer lifetime. This is why the measurement window has to be agreed before work starts. It is also why email and retention matter so much: they are what turn first orders into the other four purchases.</p>
+
+  <Info eyebrow="Worked example" title="The same spend, read two ways" sub="Illustrative numbers from the example above, not client data." theme="dark">
+    <Stats items={[
+      { value: 250, pre: '$', label: 'Customer acquisition cost', sub: '$25,000 spend for 100 new customers' },
+      { value: 900, pre: '$', label: 'Lifetime value per customer', sub: '5 orders x $180 gross profit' },
+      { value: 3.6, suf: 'x', label: 'LTV to CAC ratio', sub: 'A common rule of thumb is 3x or more' },
+      { value: 260, suf: '%', label: 'Marketing ROI over the lifetime', sub: 'Versus minus 28% on first orders only' },
+    ]} />
+  </Info>
+
+  <h2>Why does customer acquisition cost matter more than clicks?</h2>
+  <p>Customer acquisition cost matters more than clicks because it is the only number that includes every leak between the ad and the sale. A campaign can halve its cost per click and still raise the cost per customer if the new clicks come from people who never buy.</p>
+  <p>Clicks, impressions, followers and open rates are still useful. They tell you where in the path a problem sits. They just should not be the headline of a monthly report. Open rates in particular became unreliable after Apple Mail Privacy Protection started loading email images automatically in 2021, which counts many emails as opened whether or not a person read them.</p>
+
+  <h2>What does a revenue-driven marketing company do differently?</h2>
+  <p>A revenue-driven marketing company picks one money number with you at the start and treats every channel as a way to move it. In practice that changes four things.</p>
+  <ol>
+    <li><strong>A baseline first.</strong> Before any work, we record revenue by channel, cost per customer and conversion rates at each stage, so the result can be measured honestly.</li>
+    <li><strong>One plan across channels.</strong> Ads, content, outreach and email are planned as one path, so each channel hands buyers to the next instead of competing for credit.</li>
+    <li><strong>Budget follows results.</strong> Money moves every month toward the channels that produce customers at the lowest cost, and away from the ones that do not.</li>
+    <li><strong>Reports lead with revenue.</strong> The first line of every report is revenue and cost per customer against the baseline. Channel metrics come after.</li>
+  </ol>
+  <p>This is how we work on every account. At <a href="/case-studies/synaps-dx/">Synaps Dx</a>, rebuilding email flows and campaigns took email from under 5% to over 38% of online revenue, and online revenue grew 40% in the first quarter. At <a href="/case-studies/scalability/">Scalability</a>, joining cold email, LinkedIn and search ads into one system produced 150+ qualified leads a month and 50+ sales consultations in three months.</p>
+
+  <h2>How do you choose the right marketing company?</h2>
+  <p>Choose a marketing company by how it plans to measure success, not by how many channels it lists. These questions do most of the filtering in a single call:</p>
+  <ul>
+    <li><strong>What number will you be judged on?</strong> A good answer names revenue, customers or cost per customer, and explains how it will be tracked.</li>
+    <li><strong>What will you measure before you start?</strong> No baseline means no way to prove a result later.</li>
+    <li><strong>Who owns the ad accounts and data?</strong> You should. Accounts, pixels, lists and creative files should stay in your name.</li>
+    <li><strong>What happens in the first 30 days?</strong> You want a specific list: audit, fixes, first launches, first report.</li>
+    <li><strong>Can I see a case with a baseline?</strong> Look for before and after numbers over a stated period, not only logos.</li>
+  </ul>
+  <p>Treat these as warning signs: promises that results are certain, long lock-in contracts before any proof, reports built only on reach and clicks, and refusal to give you admin access to your own accounts.</p>
+
+  <h2>How much does a marketing company cost?</h2>
+  <p>A marketing company costs anything from a few hundred dollars for a fixed project to several thousand a month for an ongoing team, plus your ad spend. The pricing model matters as much as the price.</p>
+  <div class="table-wrap"><table>
+    <caption>Common pricing models</caption>
+    <thead><tr><th>Model</th><th>How it works</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td>Fixed project</td><td>One scope, one price, one deadline</td><td>Audits, setups, rebuilds and launches</td></tr>
+      <tr><td>Monthly retainer</td><td>A set amount of ongoing work each month</td><td>Running ads, content and email continuously</td></tr>
+      <tr><td>Performance based</td><td>Fees tied to leads, sales or revenue</td><td>Accounts with clean tracking and a proven offer</td></tr>
+      <tr><td>Hybrid</td><td>A lower base fee plus a performance bonus</td><td>Sharing risk once a baseline exists</td></tr>
+    </tbody>
+  </table></div>
+  <p>We publish fixed prices for setup work so you can start small: an <a href="/email-deliverability/">email deliverability audit</a> from $350, a <a href="/funnel-audit/">funnel audit</a> from $500 and a <a href="/cold-email-infrastructure/">cold email setup</a> from $600. Ongoing work is scoped after a free review, with a fixed price in writing before anything starts.</p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://www.gartner.com/en/newsroom/press-releases/2025-05-12-gartner-2025-cmo-spend-survey-reveals-marketing-budgets-have-flatlined-at-seven-percent-of-overall-company-revenue" rel="noopener">Gartner: 2025 CMO Spend Survey, marketing budgets at 7.7% of company revenue</a></li>
+    <li><a href="https://support.apple.com/guide/iphone/use-mail-privacy-protection-iphf084865c7/ios" rel="noopener">Apple: Use Mail Privacy Protection on iPhone</a></li>
+    <li><a href="https://martech.org/study-finds-ios-15-is-inflating-email-open-rates/" rel="noopener">MarTech: Study finds iOS 15 is inflating email open rates</a></li>
+  </ul>
+</Article>
