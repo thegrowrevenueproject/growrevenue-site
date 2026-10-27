@@ -1,21 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, PROOF } from '../data/site';
+import { SITE, PROOF, SERVICES, REVENUE_PROOF } from '../data/site';
 const team = [
-  { name: 'Kunal Arora', role: 'Founder. Runs every deliverability audit, cold email setup and funnel audit.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
-  { name: 'Barbara Arora', role: 'Co-founder. Client strategy and campaign planning.', img: '/img/barbara-arora.webp' },
-  { name: 'Rahul Arora', role: 'Creative director. Email design, landing pages and creative.', img: '/img/rahul-arora.webp' },
+  { name: 'Kunal Arora', role: 'Founder. Leads strategy and runs email, outreach, funnels and automation.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
+  { name: 'Barbara Arora', role: 'Co-founder. Client strategy, social media and campaign planning.', img: '/img/barbara-arora.webp' },
+  { name: 'Rahul Arora', role: 'Creative director. Ad creative, video, design and landing pages.', img: '/img/rahul-arora.webp' },
 ];
 ---
-<Base title="About Us: Email Deliverability Specialists | Grow Revenue"
-  description="The Grow Revenue Company is a London email deliverability, cold email and lifecycle marketing firm founded by Kunal Arora: 123 Upwork jobs, 100% Job Success."
+<Base title="About Us: The Grow Revenue Company Team | Grow Revenue"
+  description="The Grow Revenue Company is a London marketing firm founded by Kunal Arora that grows revenue through ads, social media, content, lead generation and email."
   path="/about/" pageType="trust" crumbs={[{ name: 'About', path: '/about/' }]}>
-  <section class="section" style="padding-top:150px">
+  <section class="phero">
+    <div class="wrap grid">
+      <div>
+        <span class="eyebrow">About us</span>
+        <h1 data-split>We are a marketing company named after the <em>only result</em> that matters.</h1>
+        <p class="lead reveal">The Grow Revenue Company is a London-based marketing firm founded by Kunal Arora. For over eleven years we have grown revenue for businesses through whichever channel earns it best: paid ads, social media, content, lead generation, email marketing, funnels and now AI automation.</p>
+      </div>
+      <img class="ico" src="/img/3d/growth.webp" alt="3D rising bar chart with an arrow and coins representing revenue growth" width="480" height="480" fetchpriority="high" />
+    </div>
+  </section>
+  <section class="section">
     <div class="narrow prose">
-      <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">About us: we fix email that misses the inbox, and build what happens after it lands</h1>
-      <p class="lead">The Grow Revenue Company is a London-based email marketing and deliverability firm founded by Kunal Arora. For over eleven years we have built the systems that turn attention into revenue: deliverability, cold email, lifecycle email, funnels, and now social media and AI automation that tie them together.</p>
+      <h2>Why do we measure everything by revenue?</h2>
+      <p>Because clicks, followers and open rates can all go up while sales stay flat. Every engagement starts with a baseline of your revenue and the numbers that drive it, and every report shows what changed. Our clients' results so far:</p>
+      <ul>{REVENUE_PROOF.map((r) => <li><strong>{r.pre}{r.value}{r.suf}</strong> {r.label}, <a href={'/case-studies/' + r.slug + '/'}>{r.client}</a></li>)}</ul>
       <h2>Who does the work?</h2>
-      <p>A small team, on purpose. Kunal does the technical work himself, so the person who diagnoses your problem is the person who fixes it.</p>
+      <p>A small senior team, on purpose. The people who plan your growth are the people who build and run it.</p>
     </div>
     <div class="wrap grid3" style="margin-top:20px">
       {team.map((t) => (
@@ -27,16 +38,16 @@ const team = [
     </div>
     <div class="narrow prose">
       <h2>What is our track record?</h2>
-      <p>Our public record is on Upwork, where anyone can read every review: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}, with Top Rated Plus status. Client results are on the <a href="/case-studies/">case studies</a> page, each with its baseline and period.</p>
+      <p>Beyond our case studies, our public record is on Upwork, where anyone can read every review: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}, with Top Rated Plus status.</p>
+      <h2>What do we work on?</h2>
+      <ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a>: {s.blurb}</li>)}</ul>
       <h2>How do we work?</h2>
       <ol>
-        <li><strong>Diagnose</strong> with tests and numbers, not opinions.</li>
-        <li><strong>Fix</strong> the cause ourselves, with access you grant and can revoke.</li>
-        <li><strong>Launch</strong> only on infrastructure we have tested.</li>
-        <li><strong>Measure</strong> against the baseline and report in writing.</li>
+        <li><strong>Diagnose</strong> with your numbers, not opinions.</li>
+        <li><strong>Plan</strong> by ranking every channel and fix by expected revenue.</li>
+        <li><strong>Launch</strong> campaigns, content and systems with your approval on anything public.</li>
+        <li><strong>Grow</strong> by moving budget to what earns and cutting what does not.</li>
       </ol>
-      <h2>What do we work on?</h2>
-      <p>Six connected services: <a href="/email-deliverability/">email deliverability</a>, <a href="/cold-email-infrastructure/">cold email infrastructure</a>, <a href="/lifecycle-email-marketing/">lifecycle email</a>, <a href="/funnel-audit/">funnel audits</a>, <a href="/social-media-marketing/">social media marketing</a> and <a href="/ai-automation/">AI automation</a>. We do not do brand identity design or SEO for clients.</p>
       <h2>Company details</h2>
       <p>{SITE.legalName}{SITE.companyNumber ? `, registered in England and Wales, company number ${SITE.companyNumber}` : ''}. Registered address: {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom. Email: <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
     </div>

@@ -7,9 +7,9 @@ import { SITE } from '../data/site';
 interface Crumb { name: string; path: string }
 interface Props {
   title: string; description: string; path: string; pageType: string;
-  crumbs?: Crumb[]; schema?: object[]; noindex?: boolean; ogImage?: string; darkHero?: boolean;
+  crumbs?: Crumb[]; schema?: object[]; noindex?: boolean; ogImage?: string; darkHero?: boolean; query?: string;
 }
-const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png', darkHero = false } = Astro.props;
+const { title, description, path, pageType, crumbs = [], schema = [], noindex = false, ogImage = '/og/default.png', darkHero = false, query = '' } = Astro.props;
 const url = SITE.url + path;
 const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
 const org = {
@@ -37,6 +37,7 @@ const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
   <link rel="canonical" href={url} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="page_type" content={pageType} />
+  {query && <meta name="gr:query" content={query} />}
   <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/instrument-italic.woff2" as="font" type="font/woff2" crossorigin />
   <script is:inline>document.documentElement.classList.add('js')</script>

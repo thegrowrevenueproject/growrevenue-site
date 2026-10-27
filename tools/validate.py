@@ -72,6 +72,20 @@ for path, s in pages.items():
     b = BANNED.findall(full_visible); chk(path, "C-10", "BLOCK", not b, f"banned: {b}")
     if ptype in FLOORS: chk(path, "E-12", "BLOCK", words >= FLOORS[ptype], f"{words} words (floor {FLOORS[ptype]})")
     if ptype == "case": chk(path, "E-12w", "WARN", words >= 400, f"{words} words (target 400)")
+    q = (s.find("meta", attrs={"name": "gr:query"}) or {}).get("content", "").lower()
+    if q:
+        h1t = h1[0].get_text(" ").lower() if h1 else ""
+        lead_el = main.find("p", class_="lead"); lead_t = lead_el.get_text(" ").lower() if lead_el else ""
+        chk(path, "O-06a", "BLOCK", q in head_title.lower(), f"query in title: {q}")
+        chk(path, "O-06b", "BLOCK", q in re.sub(r"\s+", " ", h1t), "query in H1")
+        chk(path, "O-06c", "BLOCK", q in lead_t, "query in answer-first paragraph (first 100 words)")
+        chk(path, "O-06d", "BLOCK", q in desc.lower(), "query in meta description")
+        nh2 = sum(1 for h in h2 if q in h.get_text(" ").lower())
+        chk(path, "P-04a", "BLOCK", nh2 == 1, f"query in {nh2} H2s (exactly 1)")
+        hero = main.find("img", attrs={"fetchpriority": "high"})
+        if hero is not None and hero.get("alt"): chk(path, "O-06e", "BLOCK", q in hero["alt"].lower(), "query in hero alt")
+        reps = len(re.findall(re.escape(q), text.lower())); dens = reps / max(1, words / 250)
+        chk(path, "P-04", "BLOCK", dens <= 1.6, f"exact query {reps}x, {dens:.2f} per 250 words (max 1.6)")
     if ptype in ("service", "home", "article"):
         lead = main.find("p", class_="lead")
         lw = len(lead.get_text().split()) if lead else 999

@@ -248,3 +248,25 @@ button.btn { cursor: pointer; font: inherit; font-weight: 700; }
   .js .reveal, .split .w > span { opacity: 1; transform: none; }
   .cursor-dot, .cursor-ring { display: none; }
 }
+
+/* service stages on home */
+.stage { margin-top: 56px; }
+.stage-head { display: flex; align-items: baseline; gap: 18px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 22px; }
+.stage-head .serif { font-size: clamp(2rem, 4vw, 3rem); color: var(--green); }
+.stage-head p { margin: 0; color: var(--muted); font-weight: 500; }
+.stats .strip li a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; font-size: .85rem; }
+.dark .strip strong { color: var(--yellow); } .dark .strip li { color: #C9D1CC; }
+/* mega menu */
+.has-mega { position: relative; }
+.has-mega > button { all: unset; cursor: pointer; font-weight: 500; font-size: .94rem; display: inline-flex; align-items: center; gap: 6px; }
+.top:not(.scrolled).over-dark .has-mega > button { color: #fff; }
+.has-mega > button::after { content: ''; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+.mega { position: absolute; left: 50%; top: 100%; transform: translate(-50%, 12px); width: min(860px, 92vw); background: #fff; border-radius: 24px; padding: 22px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.4); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; opacity: 0; visibility: hidden; transition: opacity .25s var(--ease), transform .25s var(--ease), visibility .25s; }
+.has-mega:hover .mega, .has-mega:focus-within .mega { opacity: 1; visibility: visible; transform: translate(-50%, 4px); }
+.mega h2 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.35rem; color: var(--green); margin: 0 0 6px; letter-spacing: 0; }
+.mega a { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 12px; color: var(--ink) !important; text-decoration: none; font-weight: 600; font-size: .9rem; }
+.mega a::after { display: none; }
+.mega a img { width: 38px; height: 38px; }
+.mega a:hover { background: var(--mint); }
+.menu-panel .grp { font-family: var(--serif); font-style: italic; color: var(--green); padding: 10px 14px 0; font-size: 1.1rem; }
+.menu[open] .menu-panel { max-height: calc(100svh - 100px); overflow-y: auto; }

@@ -40,7 +40,7 @@ export const CASE_BODY: Record<string, { summary: string; before: string[]; chan
       { h: 'Google Ads and landing pages', p: 'Campaigns on personal growth and mindset coaching searches, sending traffic to landing pages built for conversion with clear calls to action and testimonials.' },
       { h: 'Segmented email nurture', p: 'Lists segmented for professionals and wellness communities, with automated nurture sequences guiding leads to a decision.' },
     ],
-    details: [['Leads per month across channels', '300+'], ['Lead to sign-up conversion', '+35%'], ['LinkedIn acceptance rate', '42%'], ['LinkedIn response rate', '16%'], ['Google Ads click-through rate', '7.2%'], ['Cold email open rate', '46%'], ['Cold email click-through rate', '22%'], ['Consultations and enrollments, first quarter', '70+'], ['Program sign-ups within 3 months', '+60%']],
+    details: [['New annual revenue from additional enrollments', '$500,000'], ['Leads per month across channels', '300+'], ['Lead to sign-up conversion', '+35%'], ['LinkedIn acceptance rate', '42%'], ['LinkedIn response rate', '16%'], ['Google Ads click-through rate', '7.2%'], ['Cold email open rate', '46%'], ['Cold email click-through rate', '22%'], ['Consultations and enrollments, first quarter', '70+'], ['Program sign-ups within 3 months', '+60%']],
   },
   'dimov-associates': {
     summary: 'Dimov Associates, a law firm, wanted predictable, sustainable lead flow without chasing every inquiry by hand. We built one connected system: paid ads, conversion funnels and email nurture sequences that run without manual intervention.',

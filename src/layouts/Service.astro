@@ -16,7 +16,7 @@ const schema: object[] = [{
 }];
 if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
 ---
-<Base title={title} description={description} path={path} pageType="service" crumbs={[{ name: s.nav, path }]} schema={schema}>
+<Base title={title} description={description} path={path} pageType="service" query={s.query} crumbs={[{ name: s.nav, path }]} schema={schema}>
   <section class="phero">
     <div class="wrap grid">
       <div>
@@ -28,7 +28,7 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
           {s.tiers.length > 0 && <a class="btn ghost" href="#pricing">See prices</a>}
         </div>
       </div>
-      <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D illustration representing ${s.nav.toLowerCase()}`} width="480" height="480" fetchpriority="high" data-parallax="0.08" />
+      <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our work as a ${s.query}`} width="480" height="480" fetchpriority="high" data-parallax="0.08" />
     </div>
   </section>
   <section class="section">

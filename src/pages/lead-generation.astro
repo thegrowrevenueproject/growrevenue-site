@@ -1,0 +1,63 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['Do you book the meetings for me?', 'We run outreach and follow-up until a prospect agrees to a call, then hand over the booked meeting with the full conversation history. You or your sales team run the sales call.'],
+  ['Where do the contacts come from?', 'We build lists from business data sources and the company websites themselves, verify every email address before sending, and remove anyone who has opted out. You can supply your own target list too.'],
+  ['Is cold outreach allowed?', 'Business outreach is legal in the US, UK and EU when you follow each region\'s rules: an accurate sender, a working opt-out, and in the UK and EU a legitimate business reason and extra care with sole traders. We build those rules into every campaign.'],
+  ['How fast will leads come in?', 'New sending infrastructure needs about two weeks of warmup, so the first replies usually arrive in weeks three to four. Paid search and lead magnet campaigns can start producing leads in the first week.'],
+];
+---
+<Service slug="lead-generation"
+  title="Lead Generation Agency for B2B and Services | Grow Revenue"
+  description="Lead generation agency combining cold email, LinkedIn outreach, lead magnets and paid search to fill your calendar with qualified buyers every week."
+  h1="Lead generation agency: a full calendar of qualified buyers, every week"
+  answer="We are a lead generation agency that builds one system instead of one tactic. Cold email, LinkedIn outreach, lead magnets and paid search all point at the same buyers, every reply is followed up within minutes, and success is measured by booked meetings and closed revenue, not by the number of names on a list."
+  cases={['scalability', 'soulful-evolution']} serviceType="B2B lead generation" faq={faq}>
+
+  <h2>What does a lead generation agency do?</h2>
+  <p>A lead generation agency finds the businesses or people most likely to buy from you, starts conversations with them, and hands you the ones who are ready to talk. The value is in three things done well at the same time: choosing the right targets, reaching them in a way that gets a reply, and following up fast enough that interest does not go cold.</p>
+
+  <h2>Which lead generation channels work best?</h2>
+  <p>The best channel depends on your average sale and how your buyers make decisions. Most clients use two or three of these together:</p>
+  <div class="table-wrap"><table>
+    <caption>Lead generation channels we run</caption>
+    <thead><tr><th>Channel</th><th>Works best when</th><th>Time to first leads</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/cold-email-infrastructure/">Cold email</a></td><td>You sell to businesses and can name your ideal buyer by title and industry</td><td>3 to 4 weeks (after warmup)</td></tr>
+      <tr><td>LinkedIn outreach</td><td>Your buyers are active on LinkedIn and respond to a personal approach</td><td>1 to 2 weeks</td></tr>
+      <tr><td>Lead magnets with <a href="/paid-advertising/">paid ads</a></td><td>Buyers need to learn before they trust you: coaching, courses, high-ticket services</td><td>1 to 2 weeks</td></tr>
+      <tr><td>Paid search</td><td>Buyers already search for what you sell</td><td>Days</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What counts as a qualified lead?</h2>
+  <p>A qualified lead meets three tests: they fit the profile of your best customers, they have shown interest by replying, downloading or booking, and they can actually buy, meaning the right role, the budget and a need now or soon. We agree the definition with you before launch and report only leads that pass it.</p>
+
+  <h2>What results have our lead generation campaigns produced?</h2>
+  <div class="table-wrap"><table>
+    <caption>Lead generation results from client case studies</caption>
+    <thead><tr><th>Client</th><th>Channels</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/case-studies/scalability/">Scalability</a> (B2B services)</td><td>Cold email, LinkedIn, Google Ads</td><td>150+ qualified leads a month, 40% lead to meeting, 50+ consultations in 3 months</td></tr>
+      <tr><td><a href="/case-studies/soulful-evolution/">Soulful Evolution</a> (coaching)</td><td>LinkedIn, Google Ads, email nurture</td><td>300+ leads a month, 70+ consultations and enrollments in the first quarter, $500K in new annual revenue</td></tr>
+      <tr><td><a href="/case-studies/austere/">Austere</a> (agency)</td><td>Paid ads and landing pages</td><td>450+ qualified leads in one quarter</td></tr>
+      <tr><td><a href="/case-studies/maestro/">Maestro</a> (creator platform)</td><td>Segmented cold email and LinkedIn</td><td>65% more sign-ups, 42% open rate</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How do we keep outreach out of spam?</h2>
+  <p>We keep outreach out of spam by never sending it from your main domain, verifying every address before it is used, keeping daily volumes per mailbox low, and writing short, relevant messages that people reply to. Our <a href="/email-deliverability/">email deliverability</a> work is the foundation under every outbound campaign.</p>
+
+  <h2>What happens in the first 30 days?</h2>
+  <ol>
+    <li><strong>Week 1:</strong> we define your ideal buyer, build and verify the first list, and set up sending infrastructure.</li>
+    <li><strong>Week 2:</strong> messages and follow-ups are written, your approval is collected, and warmup runs in the background.</li>
+    <li><strong>Weeks 3 and 4:</strong> outreach starts at a low volume and steps up; replies are sorted and followed up the same day.</li>
+  </ol>
+
+  <h2>How do we follow up so leads do not go cold?</h2>
+  <p>Every reply is read and answered the same working day, and interested prospects get a booking link straight away. Prospects who say "not now" go into a short nurture sequence and are contacted again when they asked to be. Nobody who showed interest is left without a next step.</p>
+
+  <h2>What do you need from me?</h2>
+  <p>A description of your best three customers, your offer and pricing, access to your calendar for bookings, and one person who can take sales calls. We handle research, writing, sending, follow-up and reporting.</p>
+</Service>

@@ -1,27 +1,39 @@
 ---
 import Logo from './Logo.astro';
+import { SERVICES, GROUPS } from '../data/site';
 const { dark = false } = Astro.props;
-const links = [
-  ['/email-deliverability/', 'Deliverability'],
-  ['/cold-email-infrastructure/', 'Cold email'],
-  ['/lifecycle-email-marketing/', 'Lifecycle'],
-  ['/funnel-audit/', 'Funnels'],
-  ['/social-media-marketing/', 'Social'],
-  ['/ai-automation/', 'AI automation'],
-  ['/case-studies/', 'Results'],
-];
 ---
 <header class={'top' + (dark ? ' over-dark' : '')}>
   <div class="wrap">
     <a class="brand" href="/" aria-label="The Grow Revenue Company home"><Logo size={34} /><span class="bt">The Grow Revenue <em>Company</em></span></a>
     <nav class="nav" aria-label="Main">
-      {links.map(([href, label]) => <a href={href}>{label}</a>)}
+      <div class="has-mega">
+        <button type="button" aria-haspopup="true">Services</button>
+        <div class="mega">
+          {GROUPS.map((g) => (
+            <div>
+              <h2>{g.name}</h2>
+              {SERVICES.filter((s) => s.group === g.name).map((s) => <a href={'/' + s.slug + '/'}><img src={`/img/3d/${s.icon}.webp`} alt="" width="38" height="38" loading="lazy" />{s.nav}</a>)}
+            </div>
+          ))}
+        </div>
+      </div>
+      <a href="/case-studies/">Results</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
     </nav>
-    <a class="btn nav-cta" href="/contact/" style="min-height:46px;padding:5px 18px 5px 5px;font-size:.92rem"><span class="arr" aria-hidden="true" style="width:34px;height:34px">&#8599;</span>Book a call</a>
+    <a class="btn nav-cta" href="/contact/" style="min-height:46px;padding:5px 18px 5px 5px;font-size:.92rem"><span class="arr" aria-hidden="true" style="width:34px;height:34px">&#8599;</span>Book a growth call</a>
     <details class="menu">
       <summary>Menu</summary>
       <div class="menu-panel">
-        {links.map(([href, label]) => <a href={href}>{label}</a>)}
+        {GROUPS.map((g) => (
+          <>
+            <span class="grp">{g.name}</span>
+            {SERVICES.filter((s) => s.group === g.name).map((s) => <a href={'/' + s.slug + '/'}>{s.nav}</a>)}
+          </>
+        ))}
+        <span class="grp">Company</span>
+        <a href="/case-studies/">Results</a>
         <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
       </div>

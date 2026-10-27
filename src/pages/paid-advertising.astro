@@ -1,0 +1,70 @@
+---
+import Service from '../layouts/Service.astro';
+const faq: [string, string][] = [
+  ['Who owns the ad accounts?', 'You do. Campaigns run in your own Google and Meta ad accounts, billed to your card, so you see every cent of spend and keep all the data if we stop working together.'],
+  ['What budget do I need?', 'Enough to get a clear signal within a month. For most service businesses that means enough spend to generate at least 30 to 50 leads a month on one platform. We size the budget from your cost per lead and sale value on the first call.'],
+  ['How soon will I see results?', 'Search campaigns usually produce leads in the first week. Meta and YouTube campaigns need two to four weeks of testing before the winning audiences and creatives are clear.'],
+  ['Do you make the ad creative?', 'Yes. Static ads, short videos, motion graphics and landing pages are produced in-house, so creative testing never waits on another agency.'],
+];
+---
+<Service slug="paid-advertising"
+  title="Paid Advertising Agency for Google and Meta | Grow Revenue"
+  description="Paid advertising agency for Google, Meta, YouTube and LinkedIn ads, managed around cost per customer and revenue, with landing pages and follow-up built in."
+  h1="Paid advertising agency: Google and Meta ads managed for revenue, not clicks"
+  answer="As a paid advertising agency we run Google, Meta, YouTube and LinkedIn campaigns built around one number: what it costs to win a customer. We write the ads, produce the creative, build the landing pages and connect the follow-up, so the money you spend on clicks turns into sales instead of traffic."
+  cases={['austere', 'dimov-associates']} serviceType="Paid advertising management" faq={faq}>
+
+  <h2>What does a paid advertising agency manage for you?</h2>
+  <p>A paid advertising agency should manage everything between the budget and the sale, not just the bids. On every account we run five things together:</p>
+  <ul>
+    <li><strong>Targeting and structure.</strong> Campaigns organised by buyer intent, with search terms and audiences reviewed every week.</li>
+    <li><strong>Creative.</strong> New ads tested every month: static, short video and motion graphics, written for the platform they run on.</li>
+    <li><strong>Landing pages.</strong> One page per offer, matched to the ad that sent the visitor, built to capture the lead.</li>
+    <li><strong>Tracking.</strong> Conversions sent back to Google and Meta from your CRM, so the platforms optimise for buyers, not form fills.</li>
+    <li><strong>Follow-up.</strong> Instant replies, email nurture and retargeting, so leads who do not buy on day one are not wasted.</li>
+  </ul>
+
+  <h2>Which platforms should you advertise on?</h2>
+  <p>The right platform depends on whether your buyers already search for what you sell. People who search are ready to buy; people who scroll need to be persuaded first.</p>
+  <div class="table-wrap"><table>
+    <caption>Where each ad platform fits</caption>
+    <thead><tr><th>Platform</th><th>Buyer state</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td>Google Search</td><td>Actively looking</td><td>Services people search for: legal, accounting, home services, software</td></tr>
+      <tr><td>Meta (Facebook and Instagram)</td><td>Scrolling, not looking</td><td>Ecommerce, coaching, courses, local offers with a strong visual hook</td></tr>
+      <tr><td>YouTube</td><td>Watching and learning</td><td>Higher-priced offers that need explaining, and retargeting</td></tr>
+      <tr><td>LinkedIn</td><td>At work, in role</td><td>B2B offers sold to a specific job title or industry</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Why do most ad accounts lose money after the click?</h2>
+  <p>Most ad accounts lose money after the click because the page, the form or the follow-up was never built for the traffic. The ad does its job, then the visitor lands on a generic home page, meets a long form, or waits a day for a reply. That is why every ad project starts with a <a href="/funnel-audit/">funnel audit</a>: fixing the leak first makes every future dollar of spend worth more.</p>
+
+  <h2>How do we measure paid advertising?</h2>
+  <p>We measure paid advertising by what it earns, using four numbers reported every month:</p>
+  <ul>
+    <li><strong>Cost per lead</strong>: spend divided by new leads.</li>
+    <li><strong>Cost per customer</strong>: spend divided by new paying customers.</li>
+    <li><strong>Return on ad spend (ROAS)</strong>: revenue from ads divided by ad spend.</li>
+    <li><strong>Payback period</strong>: how many months of a customer's revenue it takes to repay what they cost to acquire.</li>
+  </ul>
+  <p>Clicks, impressions and click-through rate are tracked too, but they are diagnostics, not goals.</p>
+
+  <h2>What results have our ad campaigns produced?</h2>
+  <div class="table-wrap"><table>
+    <caption>Paid advertising results from client case studies</caption>
+    <thead><tr><th>Client</th><th>Platforms</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/case-studies/austere/">Austere</a> (agency)</td><td>Google, Meta, TikTok</td><td>3.5x return on ad spend, 18% lower cost per click, 450+ qualified leads in a quarter</td></tr>
+      <tr><td><a href="/case-studies/dimov-associates/">Dimov Associates</a> (legal)</td><td>Paid ads into a new funnel</td><td>3x lead volume at 40% lower cost per acquisition within 90 days</td></tr>
+      <tr><td><a href="/case-studies/soulful-evolution/">Soulful Evolution</a> (coaching)</td><td>Google Ads and LinkedIn</td><td>7.2% click-through rate, 18% lower cost per click, 40% more traffic to program pages</td></tr>
+      <tr><td><a href="/case-studies/scalability/">Scalability</a> (B2B services)</td><td>Google Ads</td><td>6.5% click-through rate, 20% lower cost per click, 50% more landing page traffic</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How often do we change your campaigns?</h2>
+  <p>We review search terms, audiences and spend every week, and launch new creative tests every month. Budget moves toward the campaigns with the lowest cost per customer, and anything that has not produced a sale after a fair test is paused, not left running out of habit.</p>
+
+  <h2>What do you need from me?</h2>
+  <p>Admin access to your ad accounts (or we set them up in your name), access to your website or landing page builder, your CRM or a sales report so we can track real customers, and a clear monthly budget. Everything else, from research to reporting, we handle.</p>
+</Service>

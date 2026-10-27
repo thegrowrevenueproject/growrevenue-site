@@ -3,17 +3,17 @@ import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 ---
 <Base title="Contact Kunal and Book a 20 Minute Fit Call | Grow Revenue"
-  description="Tell us what is happening with your email, outbound or funnel. Kunal replies within one working day with a first read of your DNS records, before any call."
+  description="Tell us your revenue goal and what is holding it back. Kunal replies within one working day with a first read of your marketing, before any call is booked."
   path="/contact/" pageType="trust" crumbs={[{ name: 'Contact', path: '/contact/' }]}>
   <section class="section" style="padding-top:150px">
     <div class="wrap grid2" style="align-items:start">
       <div class="prose">
-        <h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Contact us: tell us what is broken</h1>
+        <h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Contact us: tell us your revenue goal</h1>
         <p class="lead">Kunal reads every message and replies within one working day.</p>
         <h2>What happens next?</h2>
         <ol>
           <li>Kunal reads your message the same day.</li>
-          <li>You get a reply with a first read of your domain's DNS records, checked before we reply.</li>
+          <li>You get a reply with a first read of your marketing: website, ads, email and funnel, checked before we reply.</li>
           <li>If it looks like a fit, you book a 20 minute call from the link in that reply.</li>
         </ol>
         <h2>Other ways to reach us</h2>
@@ -26,10 +26,13 @@ import { SITE } from '../data/site';
         <div class="row"><label for="topic">What is happening?</label>
           <select id="topic" name="topic" required>
             <option value="">Choose one</option>
-            <option>Emails go to spam</option>
-            <option>Cold email gets no replies</option>
-            <option>Email flows are not making money</option>
+            <option>Need more leads</option>
+            <option>Ads are not paying back</option>
+            <option>Social and content are not selling</option>
+            <option>Email is not making money</option>
             <option>Funnel is leaking leads</option>
+            <option>Emails go to spam</option>
+            <option>Want AI automation</option>
             <option>Something else</option>
           </select></div>
         <div class="row"><label for="message">Tell us more</label><textarea id="message" name="message" rows="5"></textarea></div>

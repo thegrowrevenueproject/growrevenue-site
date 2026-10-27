@@ -40,7 +40,7 @@
     const el = e.target, end = parseFloat(el.dataset.count), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
     if (reduce) return;
     const t0 = performance.now(), dur = 1600;
-    const step = (t) => { const p = Math.min(1, (t - t0) / dur), v = end * (1 - Math.pow(1 - p, 3)); el.textContent = pre + Math.round(v).toLocaleString('en-US') + suf; if (p < 1) requestAnimationFrame(step); };
+    const dec = +(el.dataset.dec || 0); const step = (t) => { const p = Math.min(1, (t - t0) / dur), v = end * (1 - Math.pow(1 - p, 3)); el.textContent = pre + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf; if (p < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
   }), { threshold: .4 });
   d.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
