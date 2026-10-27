@@ -248,6 +248,17 @@
   };
   addEventListener('pointermove', (e) => { pts.push({ x: e.clientX, y: e.clientY, t: performance.now() }); if (pts.length > 40) pts.shift(); if (!running) { running = true; requestAnimationFrame(draw); } }, { passive: true });
   d.addEventListener('pointerover', (e) => (hot = !!e.target.closest('a, button, [data-spin], .prism, summary')));
+  // cut-out figures: tilt toward the pointer and drift with scroll
+  const cuts = $$('[data-tilt]');
+  if (cuts.length && !reduce) {
+    if (fine) cuts.forEach((c) => {
+      c.addEventListener('pointermove', (e) => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; c.style.setProperty('--ry', (x * 14).toFixed(2) + 'deg'); c.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg'); });
+      c.addEventListener('pointerleave', () => { c.style.setProperty('--ry', '0deg'); c.style.setProperty('--rx', '0deg'); });
+    });
+    let tq = false;
+    const drift = () => { tq = false; const vh = innerHeight; cuts.forEach((c) => { const r = c.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const p = (r.top + r.height / 2 - vh / 2) / vh; c.style.setProperty('--py', (p * 26).toFixed(1) + 'px'); }); };
+    addEventListener('scroll', () => { if (!tq) { tq = true; requestAnimationFrame(drift); } }, { passive: true }); drift();
+  }
   } catch (err) {
     root.classList.remove('js'); // never leave content hidden if anything above fails
     if (window.console) console.error('motion', err);

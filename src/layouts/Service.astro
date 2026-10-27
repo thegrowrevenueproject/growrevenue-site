@@ -1,6 +1,8 @@
 ---
 import Base from './Base.astro';
 import Ribbon from '../components/Ribbon.astro';
+import Cut from '../components/Cut.astro';
+import { cutFor } from '../data/cuts';
 import { SITE, svc, CASES, usd } from '../data/site';
 interface Props {
   slug: string; title: string; description: string; h1: string; answer: string;
@@ -23,6 +25,7 @@ const people: Record<string, [string, string, string]> = {
 };
 const casePic: Record<string, string> = { 'synaps-dx': 'ecom', 'scalability': 'b2bwindow', 'maestro': 'streamer', 'soulful-evolution': 'coach', 'dimov-associates': 'lawyer', 'austere': 'artist' };
 const [pic, picAlt] = people[slug] ?? people['email-marketing'];
+const cut = cutFor(slug);
 const schema: object[] = [{
   '@type': 'Service', '@id': SITE.url + path + '#service', name: s.nav, serviceType, description,
   provider: { '@id': SITE.url + '/#org' }, areaServed: ['US', 'GB', 'CA', 'EU'], url: SITE.url + path,
@@ -42,10 +45,14 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
           {s.tiers.length > 0 && <a class="btn ghost" href="#pricing">See prices</a>}
         </div>
       </div>
+      {cut ? (
+        <div class="art art-cut"><Cut name={cut.name} ratio={cut.ratio} alt={cut.alt} chips={cut.chips} eager /></div>
+      ) : (
       <div class="art">
         <div class="p" data-wave="12" data-wavevar="--ry"><img src={`/img/cine/${pic}-800.webp`} srcset={`/img/cine/${pic}-800.webp 800w, /img/cine/${pic}-1600.webp 1600w`} sizes="(max-width: 900px) 80vw, 400px" alt={picAlt} width="800" height="600" /></div>
         <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our ${s.query} work`} width="480" height="480" fetchpriority="high" data-wave="30" data-wavevar="--spin" />
       </div>
+      )}
     </div>
   </section>
 
@@ -57,14 +64,6 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="grow" data-grow>
-          <img src={`/img/cine/${pic}-1600.webp`} alt="" width="1600" height="900" loading="lazy" />
-          <p class="cap">Planned, built and run by one team. <em>Measured by revenue.</em></p>
-        </div>
-      </div>
-    </section>
 
     {s.tiers.length > 0 && (
       <section class="section" style="padding-top:0;background:var(--white)">
@@ -108,8 +107,8 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
             {related.map((c) => (
               <div class="fcard" data-cursor="Flip">
                 <div class="fcard-inner">
-                  <div class="fcard-front">
-                    <img src={`/img/cine/${casePic[c.slug]}-800.webp`} alt="" width="800" height="604" loading="lazy" />
+                  <div class="fcard-front typo">
+                    <span class="fbig" aria-hidden="true">{c.results[0].value}</span>
                     <span class="hint" aria-hidden="true">Turn over</span>
                     <div><strong>{c.results[0].value}</strong><p class="what">{c.results[0].metric}</p><div class="who">{c.client}<small>{c.industry}</small></div></div>
                   </div>

@@ -1,10 +1,10 @@
 {
  "/": {
-  "hash": "09410659b0b6fd9f5915046d18390a79afaab8ad4075a6c75f6232d6f3901125",
+  "hash": "7a63d1868d8ded8010647a0f1462f6f30080caa3ff3ff3c7aecbbc1dea26c8b6",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 2634
+  "words": 2861
  },
  "/about/": {
   "hash": "08718e481f38b71080615be8733abeafa011a596542ec098cbd6a00a6ba1bd58",
@@ -14,11 +14,11 @@
   "words": 574
  },
  "/ai-automation/": {
-  "hash": "773bfd7da493393216ea4bb41763bada382274d7f745df73cebba9938cd671a2",
+  "hash": "7ef26c0082813db49aaadbda4450d87d462484a0cce2e8b3188e89e45920a1c5",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1099
+  "words": 1089
  },
  "/case-studies/": {
   "hash": "7614bdf75ba9d60d3ffb09afc0a19b60357af3fb63017b6d4ef4a60ccbd274db",
@@ -70,11 +70,11 @@
   "words": 376
  },
  "/cold-email-infrastructure/": {
-  "hash": "e9ec46d1db447b24a0721d2216d6644f4f4cb17c55c71309ee4bafd015a2e41f",
+  "hash": "82b1ec29825aba50c2a3000dd653d2b46bf661ed87a81e16ed6aa3fbcbad7398",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1103
+  "words": 1095
  },
  "/contact/": {
   "hash": "c66e228e68e71b913f1789489815901aa93ffef06a4ee0c9923fce77eb7d6241",
@@ -84,11 +84,11 @@
   "words": 159
  },
  "/content-creation/": {
-  "hash": "a21595d33a83687abceadb37f6eda223f27143e4769e07fd1b57268e5580f20b",
+  "hash": "0b4fad770637fecc307bb324be62d10c244961b53b099e04892b23926a7639d3",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1034
+  "words": 1026
  },
  "/editorial-policy/": {
   "hash": "15e78cb0aeadae218548af15359ae42f6b5d6ff002deb29174f0c4bacf1fedf4",
@@ -98,25 +98,25 @@
   "words": 228
  },
  "/email-deliverability/": {
-  "hash": "f5be28c0fbb19dfefdbcdccbfe225f187378702d336a2c98c4d7750eba4ad4dd",
+  "hash": "c638831f4cf4dbe6078d4aec90409b3cb56decdf1ab30af773ed7f11d8fe997d",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1190
+  "words": 1182
  },
  "/email-marketing/": {
-  "hash": "e9b2d81c5e1153638253522e50b039ff31735df5877fb15b316474b6a12f3d47",
+  "hash": "a397b7be371236c7b9e583fca22cdcd6f573a474b311f24311fa369bb912a663",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1101
+  "words": 1093
  },
  "/funnel-audit/": {
-  "hash": "9d161016cab1b77e65cd4c1f6761e2cb37cdfae66b3470908d4d11b4d65ca0cc",
+  "hash": "341781b665655b0f4a0dae61303dce0ac8a2fb5b56b414dfe0d0c881c110d8d5",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1039
+  "words": 1031
  },
  "/kunal-arora/": {
   "hash": "2ce190f3c4e02e41ae980b1ee8a43668125438970e789592717cfaca9a6c26ae",
@@ -126,11 +126,11 @@
   "words": 99
  },
  "/lead-generation/": {
-  "hash": "0585c98b016e7d20959659c9ba80dc5894461fbdc84623138f4b320afa38ec5b",
+  "hash": "b8b66e5b111b40cb23888596b2c8ac9e2ada83d0727803125dfb0cefee10d836",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1037
+  "words": 1039
  },
  "/learn/": {
   "hash": "614edf570147dc0ea5515523d34faf5af8dc073ec8c6418a0d37aa65f9200e31",
@@ -146,11 +146,11 @@
   "words": 902
  },
  "/paid-advertising/": {
-  "hash": "0d0ea1b9454351054f6ae3d7d18d8a5919786b8a057bfe18590e10f9dfca3fb2",
+  "hash": "493ac500414957df63fb628db460bee4a35487ea625ab19e13fd08b3723fa1b9",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1058
+  "words": 1062
  },
  "/privacy/": {
   "hash": "f9e9b0ee6613cb55baa0fbeee02b1903b6827a1451bee4696a8c8af9cd5e3696",
@@ -160,11 +160,11 @@
   "words": 336
  },
  "/social-media-marketing/": {
-  "hash": "cee13eff970863eaa45d0b61590509f28ff4363b6119c85304dc585ed4da1d69",
+  "hash": "f1f1cb722aa9650b4c61c2aea8475d721d76d40703436a529b12bc128f7ed2bc",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1010
+  "words": 1000
  },
  "/terms/": {
   "hash": "836c3c3754cf23659387ff647cde43b396a5cdeaf2447466470c9a1003d3bef2",

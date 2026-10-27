@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Ribbon from '../components/Ribbon.astro';
 import { SERVICES, GROUPS, CASES, REVENUE_PROOF, usd } from '../data/site';
+import Info from '../components/info/Info.astro';
 import { CASE_BODY } from '../data/cases';
 const Q = 'marketing company';
 const faq: [string, string][] = [
@@ -236,6 +237,16 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
       </table></div>
     </div>
   </section>
+
+  <!-- 6b. Education band: plain answers that link into the Learn guides -->
+  <Info eyebrow="Learn" title="Marketing, explained in plain English" sub="The parts of marketing that changed the most, answered in a paragraph each. Every answer links to a full guide." theme="dark" level={2}>
+    <ul class="edu" data-stagger="90">
+      <li data-r="up"><span class="edu-t">Basics</span><h3>What does a marketing company do?</h3><p>It plans and runs the work that brings customers in: ads, social media, content, outreach, email and the pages they all point to. A good one reports what that work earned, not how busy it was.</p><a href="/learn/what-does-a-marketing-company-do/">Read the guide <i aria-hidden="true">&#8599;</i></a></li>
+      <li data-r="up"><span class="edu-t">Outreach</span><h3>Does cold email still work?</h3><p>Yes, when lists are small and researched and the sending domains are set up properly. Since 2024, Gmail and Yahoo filter bulk mail that is not authenticated or that people mark as spam, so blasting a big list now ends in the spam folder.</p><a href="/learn/does-cold-email-still-work/">Read the guide <i aria-hidden="true">&#8599;</i></a></li>
+      <li data-r="up"><span class="edu-t">AI</span><h3>What are AI agents?</h3><p>Software that is given a goal, decides its own next step and uses tools to act: research a prospect, draft a reply, update the CRM. A fixed automation follows the same path every time; an agent adapts. We keep a person approving what goes out.</p><a href="/learn/what-are-ai-agents/">Read the guide <i aria-hidden="true">&#8599;</i></a></li>
+      <li data-r="up"><span class="edu-t">Automation</span><h3>What is marketing automation?</h3><p>Rules that do marketing work the moment something happens. A sign-up starts a welcome series, an abandoned cart sends a reminder, a booked call updates the CRM. It makes sure every lead gets the same fast follow-up.</p><a href="/learn/what-is-marketing-automation/">Read the guide <i aria-hidden="true">&#8599;</i></a></li>
+    </ul>
+  </Info>
 
   <!-- 7. Curated 2x2 + sidebar -->
   <div class="wrap cur">
