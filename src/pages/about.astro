@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, PROOF, SERVICES, REVENUE_PROOF } from '../data/site';
+import { SITE, PROOF, SERVICES, REVENUE_PROOF, CASES } from '../data/site';
+import Cut from '../components/Cut.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Versus from '../components/info/Versus.astro';
 const team = [
   { name: 'Kunal Arora', role: 'Founder. Leads strategy and runs email, outreach, funnels and automation.', img: '/img/kunal-arora.webp', href: '/kunal-arora/' },
   { name: 'Barbara Arora', role: 'Co-founder. Client strategy, social media and campaign planning.', img: '/img/barbara-arora.webp' },
@@ -17,10 +22,7 @@ const team = [
         <h1 data-split>We are a revenue-driven marketing company named after the <em>only result</em> that matters.</h1>
         <p class="lead reveal">The Grow Revenue Company is a London-based, revenue-driven marketing company founded by Kunal Arora. For over eleven years we have grown revenue for businesses through whichever channel earns it best: paid ads, social media, content, lead generation, email marketing, funnels and now AI automation.</p>
       </div>
-      <div class="art">
-        <div class="p" data-wave="12" data-wavevar="--ry"><img src="/img/cine/pointing-800.webp" alt="Team reviewing a rising revenue chart on a screen at night" width="800" height="448" /></div>
-        <img class="ico" src="/img/3d/growth.webp" alt="3D rising bar chart with an arrow and coins representing revenue growth" width="480" height="480" fetchpriority="high" />
-      </div>
+      <div class="art art-cut"><Cut name="arrow" ratio={0.848} alt="Two people carrying a giant green arrow pointing upward together" chips={[{ v: '123', l: 'projects delivered', p: 'tl' }, { v: '11+', l: 'years in marketing', p: 'br' }]} priority /></div>
     </div>
   </section>
   <div class="over">
@@ -47,15 +49,32 @@ const team = [
     <div class="narrow prose">
       <h2>What is our track record?</h2>
       <p>Beyond the published case studies: {PROOF.map((p) => `${p.value} ${p.label}`).join(', ')}. Every project is scoped in writing and measured against the number agreed at the start.</p>
+      <Info eyebrow="Track record" title="The numbers behind the name" theme="dark">
+        <Stats items={[{ value: 123, label: 'projects delivered', sub: 'For businesses in the US, UK, Canada and Europe' }, { value: 8700, suf: '+', label: 'hours of client work', sub: 'Planning, building and running campaigns' }, { value: 11, suf: '+', label: 'years in marketing', sub: 'Across ads, email, outreach, funnels and automation' }, { value: 6, label: 'published case studies', sub: 'Each with a baseline and a measured result' }]} />
+      </Info>
+      <h2>What does a revenue-driven marketing company do differently?</h2>
+      <p>Most marketing suppliers are paid for activity: posts published, ads launched, emails sent. That makes their reports easy to fill and hard to judge. We work the other way round. Before anything is built, we write down where your revenue comes from today, what a customer costs you, and which step between first click and purchase loses the most people. Then we fix the biggest leak first, even when that is less exciting than a new campaign.</p>
+      <p>It also means we will tell you when a channel is not worth your money. A social account that grows followers but never sends a buyer to your site gets cut back, and the budget moves to whatever is earning. If you want the longer version, read our plain guide to <a href="/learn/what-does-a-marketing-company-do/">what a marketing company does</a> and how to judge one.</p>
+      <Info eyebrow="The difference" title="Activity reporting versus revenue reporting" theme="mint">
+        <Versus a="Paid for activity" b="Paid to grow revenue" caption="How a revenue-driven marketing company reports" rows={[['First line of the report', 'Posts, impressions, clicks', 'Revenue and cost per customer'], ['Starting point', 'A content calendar', 'A baseline of your numbers'], ['What happens to a weak channel', 'It keeps running', 'Budget moves to what earns'], ['Who owns accounts and data', 'Often the supplier', 'You, always']]} />
+      </Info>
+      <h2>Who do we work with?</h2>
+      <p>Businesses that already sell something people want and need more of the right buyers, faster. Our published case studies cover {[...new Set(CASES.map((c) => c.industry.toLowerCase()))].join(', ')}. Most clients are in the US, UK, Canada and Europe, and we work in their time zones.</p>
+      <p>We are a good fit when you can share your real numbers and make decisions quickly. We are a poor fit when the goal is vanity reach with no link to sales, because we would end up reporting numbers neither of us believes in.</p>
       <h2>What do we work on?</h2>
       <ul>{SERVICES.map((s) => <li><a href={'/' + s.slug + '/'}>{s.nav}</a>: {s.blurb}</li>)}</ul>
       <h2>How do we work?</h2>
-      <ol>
-        <li><strong>Diagnose</strong> with your numbers, not opinions.</li>
-        <li><strong>Plan</strong> by ranking every channel and fix by expected revenue.</li>
-        <li><strong>Launch</strong> campaigns, content and systems with your approval on anything public.</li>
-        <li><strong>Grow</strong> by moving budget to what earns and cutting what does not.</li>
-      </ol>
+      <p>Every engagement follows the same four steps, whether it is a single funnel audit or a full marketing program.</p>
+      <Info eyebrow="Process" title="Four steps from baseline to growth" theme="dark">
+        <Flow steps={[
+          { tag: 'Week 1', t: 'Diagnose', p: 'We read your analytics, ad accounts, email platform and CRM, and write down the baseline: revenue, cost per lead, cost per customer.' },
+          { t: 'Plan', p: 'Every possible fix and channel is ranked by expected revenue and effort. You get the plan in writing, with what we will stop doing.' },
+          { t: 'Launch', p: 'We build and run the campaigns, pages, flows and automations. Anything public goes out with your approval.' },
+          { t: 'Grow', p: 'Weekly numbers against the baseline. Budget moves to what earns, and what does not earn is cut.' },
+        ]} />
+      </Info>
+      <h2>How do we use AI?</h2>
+      <p>We use AI where it makes the work faster without making it worse: researching prospects, drafting first versions, sorting replies, tagging leads and building reports. A person on our team reviews anything that reaches your customers. If you want to understand the difference between simple automation and AI agents, our guides on <a href="/learn/what-is-marketing-automation/">marketing automation</a> and <a href="/learn/what-are-ai-agents/">AI agents</a> explain both in plain English.</p>
       <h2>Company details</h2>
       <p>{SITE.legalName}{SITE.companyNumber ? `, registered in England and Wales, company number ${SITE.companyNumber}` : ''}. Registered address: {SITE.address.street}, {SITE.address.city} {SITE.address.postcode}, United Kingdom. Email: <a href={'mailto:' + SITE.email}>{SITE.email}</a>.</p>
     </div>
