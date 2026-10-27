@@ -1,9 +1,15 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Loop from '../components/info/Loop.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['Which tools do you build with?', 'n8n, Make and Zapier for workflows; OpenAI and Claude models for reading, writing and classifying; Airtable, Google Sheets or your CRM as the record; and Telegram or Slack for approvals and alerts.'],
   ['Will AI send things to my customers on its own?', 'Only if you want it to. By default anything that leaves your business, such as an email, a post or a quote, waits for a person to approve it. Internal work like tagging, routing and reporting runs on its own.'],
   ['Is my data safe?', 'We use business API accounts that do not train models on your data, keep credentials in your own accounts, log every action the automation takes, and give you a switch to pause any workflow.'],
+  ['What is the difference between an AI agent and a chatbot?', 'A chatbot answers questions inside one conversation. An AI agent works toward a goal across tools: it can look something up, decide the next step, update a record and draft a message, then check the result. We give agents narrow jobs and clear limits so their work is easy to review.'],
+  ['Do I need to self-host n8n?', 'No. n8n offers a hosted cloud version as well as self-hosting. Self-hosting suits teams that want data on their own server or run very high volumes. If nobody on your side wants to maintain a server, the cloud version or Make is usually the better choice.'],
   ['How is AI automation priced?', 'Each automation is scoped and priced as a fixed project after a free call where we map the process. Running costs, such as the AI model and workflow tool, are billed to your own accounts so you see them directly.'],
 ];
 ---
@@ -29,22 +35,93 @@ const faq: [string, string][] = [
     </tbody>
   </table></div>
 
+  <h2>What is AI workflow automation?</h2>
+  <p>AI workflow automation is a chain of steps that runs on its own when something happens, with an AI model handling the steps that need reading, writing or judgment. A normal automation can move data from a form to a spreadsheet. An AI workflow can also read the message in that form, decide whether it is a sales lead, a support question or spam, write a first reply in your tone, and route it to the right person.</p>
+  <p>Every workflow has the same shape. A trigger starts it, such as a new form entry, a reply in the inbox or a scheduled time. Steps then fetch data, call an AI model with clear instructions, check the result against rules, and take an action in another tool. The rules matter as much as the model: they are what stop a draft with a wrong price or a missing link from going anywhere.</p>
+  <p>The value is in the dull, frequent work. A task that takes five minutes and happens forty times a week costs more than three hours of someone's week. Automating it frees that time for work that needs a person.</p>
+
+  <h2>AI agents, RPA or simple automation: what is the difference?</h2>
+  <p>The three are often mixed up, but they solve different problems. Pick the simplest one that does the job.</p>
+  <div class="table-wrap"><table>
+    <caption>Three kinds of automation compared</caption>
+    <thead><tr><th>Type</th><th>How it works</th><th>Good for</th><th>Weak spot</th></tr></thead>
+    <tbody>
+      <tr><td>Simple automation</td><td>Fixed if this, then that steps between apps through their APIs</td><td>Moving data, notifications, scheduled tasks</td><td>Cannot read or judge free text</td></tr>
+      <tr><td>Robotic process automation (RPA)</td><td>Software robots that click and type through screens the way a person would</td><td>Old systems with no API</td><td>Breaks when a screen layout changes</td></tr>
+      <tr><td>AI agent</td><td>A model that works toward a goal, chooses the next step and uses tools</td><td>Research, triage, drafting, messy inputs</td><td>Needs limits, checks and review</td></tr>
+    </tbody>
+  </table></div>
+  <p>Most of what we build is a mix: simple automation for the plumbing, and an AI step or a small agent only where reading or judgment is needed. That keeps running costs low and makes every step easy to test.</p>
+
+  <Info eyebrow="How an agent works" title="An AI agent runs a loop, and a person signs off the result" sub="Each pass through the loop is logged. Anything that reaches a customer waits for approval until the agent has a clean record." theme="dark">
+    <Loop center="AI agent" centerSub="with a person approving" nodes={[
+      { t: 'Goal', p: 'A narrow job, for example qualify every new inbound lead.' },
+      { t: 'Gather', p: 'Reads the form, the website and the CRM history.' },
+      { t: 'Decide', p: 'Scores the lead and picks the next step.' },
+      { t: 'Act', p: 'Drafts the reply and updates the CRM record.' },
+      { t: 'Check', p: 'Rules and a person review it before it goes out.' },
+    ]} />
+  </Info>
+
   <h2>How do we keep AI from making mistakes in front of customers?</h2>
   <p>We keep AI from making mistakes in front of customers with three rules built into every workflow. First, a person approves anything that leaves the business until the automation has earned trust. Second, every output is checked against hard rules, such as word limits, banned claims and required links, before it reaches the approval step. Third, every action is logged, so you can see what ran, when and why.</p>
 
   <h2>We run our own business on these systems</h2>
   <p>Our own blog publishing runs on an AI pipeline that drafts each article, checks it against more than 150 written rules, and sends it to Telegram where a person approves or rejects it. We build for clients the same way we build for ourselves.</p>
 
-  <h2>How do our AI automation services run as a project?</h2>
-  <ol>
-    <li><strong>Map the process.</strong> On a call we walk through the work as it happens today, step by step, and pick the steps worth automating.</li>
-    <li><strong>Build a pilot.</strong> We build the automation on a small slice of real work, with approvals switched on.</li>
-    <li><strong>Measure.</strong> We compare time spent and error rate against the manual baseline for two to four weeks.</li>
-    <li><strong>Hand over.</strong> You get the workflow in your own accounts, written documentation and a short video walkthrough.</li>
-  </ol>
+  <h2>Where does a person stay in the loop?</h2>
+  <p>A person stays in the loop wherever a mistake would cost money, trust or a customer. Internal work can run on its own from day one, because an error there is cheap to fix. Anything external starts with approval switched on and loses it only when the record justifies it.</p>
+  <div class="table-wrap"><table>
+    <caption>Default approval rules we start from</caption>
+    <thead><tr><th>Work</th><th>Runs on its own?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Tagging, routing, CRM field updates</td><td>Yes</td><td>Internal and easy to correct</td></tr>
+      <tr><td>Daily and weekly reports</td><td>Yes</td><td>Read by your team, not customers</td></tr>
+      <tr><td>Replies to leads and customers</td><td>After approval</td><td>Tone and promises matter</td></tr>
+      <tr><td>Published posts and articles</td><td>After approval</td><td>Public and permanent</td></tr>
+      <tr><td>Quotes, refunds, anything with a price</td><td>Always a person</td><td>Money and legal terms</td></tr>
+    </tbody>
+  </table></div>
+  <p>Approvals happen where your team already works. A draft arrives in Slack or Telegram with approve and reject buttons, and the decision is logged next to the draft.</p>
 
-  <h2>Which tool should you use: n8n, Make or Zapier?</h2>
-  <p>The right workflow tool depends on volume, budget and who maintains it. Zapier is the easiest for non-technical teams. Make handles more complex branching at a lower price. n8n can be self-hosted, which keeps data on your own server and keeps costs flat as volume grows. We build in whichever you already use, and recommend one only when you are starting fresh.</p>
+  <h2>How do our AI automation services run as a project?</h2>
+  <p>Every project follows four steps, with a working pilot early so you judge real output rather than a plan.</p>
+  <Info eyebrow="Project steps" title="From a mapped process to a workflow you own" theme="light">
+    <Flow steps={[
+      { tag: 'Map', t: 'Map the process', p: 'On a call we walk through the work as it happens today and pick the steps worth automating.' },
+      { tag: 'Pilot', t: 'Build on real work', p: 'The automation runs on a small slice of real work, with approvals switched on.' },
+      { tag: 'Measure', t: 'Compare to the baseline', p: 'Time spent and error rate against the manual way, for two to four weeks.' },
+      { tag: 'Hand over', t: 'You own it', p: 'The workflow lives in your accounts, with written documentation and a video walkthrough.' },
+    ]} />
+  </Info>
+
+  <h2>What is n8n, and how does it compare with Zapier and Make?</h2>
+  <p>n8n is a workflow automation tool you can run on its hosted cloud or on your own server. It connects apps with visual building blocks, lets developers drop in code where a block does not exist, and has built-in steps for AI models and agents. Because it can be self-hosted, the data your workflows touch can stay on infrastructure you control.</p>
+  <p>The right tool depends on volume, budget and who maintains it. Zapier is the easiest for non-technical teams. Make handles more complex branching visually. n8n suits high volumes and teams that want control. The billing unit matters more than the headline price, because it decides how cost grows as you automate more.</p>
+  <div class="table-wrap"><table>
+    <caption>n8n, Make and Zapier at a glance</caption>
+    <thead><tr><th>Tool</th><th>Best fit</th><th>How usage is counted</th><th>Hosting</th></tr></thead>
+    <tbody>
+      <tr><td>Zapier</td><td>Non-technical teams, simple app-to-app steps</td><td>Tasks: each completed action step</td><td>Cloud only</td></tr>
+      <tr><td>Make</td><td>Visual, branching scenarios at moderate volume</td><td>Credits, which replaced operations in 2025</td><td>Cloud only</td></tr>
+      <tr><td>n8n</td><td>High volume, custom code, data control</td><td>Workflow executions on the cloud plans</td><td>Cloud or self-hosted</td></tr>
+    </tbody>
+  </table></div>
+  <p>We build in whichever you already use, and recommend one only when you are starting fresh. Pricing changes often, so check <a href="https://zapier.com/pricing" rel="noopener">Zapier</a>, <a href="https://www.make.com/en/pricing" rel="noopener">Make</a> and <a href="https://n8n.io/pricing/" rel="noopener">n8n</a> before you commit.</p>
+
+  <h2>What is business process automation, and where does marketing fit?</h2>
+  <p>Business process automation means taking a repeatable process that crosses several people or tools, and making software run the steps that do not need a person. Marketing and sales are full of these processes: a lead fills a form, someone checks it, someone adds it to the CRM, someone replies, someone books a call, someone reports on it every Friday.</p>
+  <p>We map the whole chain first, because automating one step in the middle often just moves the bottleneck. When the full path from form to booked call runs in one workflow, the gains add up: leads get a reply in minutes instead of hours, nobody retypes data, and the report builds itself from the same records.</p>
+  <Info eyebrow="Rules or reasoning" title="When a fixed rule is enough, and when an agent earns its cost" theme="mint">
+    <Versus a="Rules-based automation" b="AI agent" caption="Choosing between a fixed workflow and an AI agent"
+      rows={[
+        ['Input', 'Structured fields, fixed formats', 'Free text, websites, messy replies'],
+        ['Decision', 'If this, then that', 'Weighs context, picks the next step'],
+        ['Running cost', 'Very low per run', 'Higher, pays per model call'],
+        ['Testing', 'Same input, same output', 'Needs rule checks and review'],
+        ['Use it for', 'Data moves, alerts, schedules', 'Research, triage, first drafts'],
+      ]} />
+  </Info>
 
   <h2>Which processes should you automate first?</h2>
   <p>Automate first the processes that happen often, follow the same steps each time, and hurt when they are slow. A useful test is to count how many times a week a task happens and how many minutes it takes; multiply the two, and start with the biggest number. Tasks that need judgment about money, legal terms or a sensitive customer conversation stay with people, with AI preparing the material for them.</p>

@@ -1,9 +1,14 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Timeline from '../components/info/Timeline.astro';
 const faq: [string, string][] = [
   ['How long does it take to get out of spam?', 'DNS and authentication fixes take effect within hours. Reputation takes longer: after a fix, mailbox providers usually need two to six weeks of clean, consistent sending before placement fully recovers. We re-test placement at the end of each package so you see where you stand.'],
   ['Do you need access to my DNS?', 'Yes, or to the person who manages it. On the Audit package we only read your records, which are public. On the fix packages we either make the changes ourselves with access you grant, or hand your DNS manager the exact records to paste.'],
   ['Can you guarantee inbox placement?', 'No one can, and anyone who promises it is guessing. Filtering is decided by Gmail, Microsoft and Yahoo. What we guarantee is that every technical fault we find is fixed and re-tested, and that you get the before and after placement results in writing.'],
+  ['Should my DMARC policy be p=reject?', 'Eventually, yes, for most domains. Start at p=none, read the reports until every service that sends as your domain passes, then move to quarantine and finally reject. Jumping straight to reject can block your own invoices or support emails if one sender was missed.'],
+  ['Is cold email affected by these rules?', 'Yes. The rules apply to anyone who sends mail to Gmail, Yahoo or Outlook.com users, so cold outreach needs the same authentication, low complaint rates and easy unsubscribing. We usually send cold email from separate domains so any problem cannot reach your main domain.'],
   ['Do you work with my email platform?', 'Yes for Klaviyo, HubSpot, ActiveCampaign, Mailchimp, SendGrid, Google Workspace, Microsoft 365, Instantly, Smartlead and most others. Authentication works the same way on all of them; only the screens differ.'],
 ];
 ---
@@ -35,6 +40,34 @@ const faq: [string, string][] = [
     </tbody>
   </table></div>
 
+  <h2>What do SPF, DKIM and DMARC do, in plain English?</h2>
+  <p>SPF, DKIM and DMARC are three DNS records that prove an email really came from you. Mailbox providers check them on every message, and a domain that fails them looks like a forger.</p>
+  <div class="table-wrap"><table>
+    <caption>The three authentication records, explained simply</caption>
+    <thead><tr><th>Record</th><th>Plain English</th><th>What it proves</th></tr></thead>
+    <tbody>
+      <tr><td>SPF</td><td>A guest list of the servers allowed to send for your domain</td><td>The sending server is on your list</td></tr>
+      <tr><td>DKIM</td><td>A tamper-proof seal added to every message</td><td>The message was signed by your domain and not changed on the way</td></tr>
+      <tr><td>DMARC</td><td>Your instructions for mail that fails, plus a reporting address</td><td>The domain in the From line matches a domain that passed SPF or DKIM</td></tr>
+    </tbody>
+  </table></div>
+  <p>SPF has a hard limit worth knowing: the record may trigger no more than 10 DNS lookups. Every service you add with an include counts toward that, and a record over the limit fails even though it looks correct. Long-running businesses hit this often, because old tools are never removed from the record.</p>
+
+  <h2>What is a DMARC record?</h2>
+  <p>A DMARC record is a short line of text published in your DNS at _dmarc.yourdomain.com. It tells mailbox providers what to do with mail that claims to be from your domain but fails authentication, and where to send daily reports about everything sent in your name. A typical starting record looks like this:</p>
+  <p><code>v=DMARC1; p=none; rua=mailto:reports@yourdomain.com</code></p>
+  <p>The p tag is the policy. At none, failing mail is delivered as normal and you only receive reports. At quarantine, failing mail goes to spam. At reject, it is refused. The rua tag is where aggregate reports go. Those reports list every server sending as your domain, which is how forgotten tools and spoofers are found.</p>
+  <p>DMARC at p=none is the minimum the large providers ask bulk senders for. It is a starting point, not a finish line: a domain left at none for years protects nobody. We move domains up in stages, so legitimate mail is never blocked along the way.</p>
+  <Info eyebrow="DMARC rollout" title="How we move a domain from monitoring to full protection" sub="Each stage waits until the reports show every legitimate sender passing." theme="light">
+    <Flow steps={[
+      { tag: 'Stage 1', t: 'Publish p=none', p: 'Start receiving daily aggregate reports without changing delivery.' },
+      { tag: 'Stage 2', t: 'Read the reports', p: 'List every service sending as your domain: CRM, billing, support, newsletters.' },
+      { tag: 'Stage 3', t: 'Fix each sender', p: 'Add SPF includes and DKIM keys until every legitimate source aligns.' },
+      { tag: 'Stage 4', t: 'Quarantine', p: 'Failing mail now goes to spam. Watch for anything legitimate caught.' },
+      { tag: 'Stage 5', t: 'Reject', p: 'Spoofed mail is refused. Reports keep running to catch new tools.' },
+    ]} />
+  </Info>
+
   <h2>Why do emails go to spam even with SPF and DKIM set up?</h2>
   <p>SPF and DKIM passing is not the same as being trusted. The most common reasons we find on domains that look correctly set up are:</p>
   <ul>
@@ -46,19 +79,64 @@ const faq: [string, string][] = [
     <li><strong>Blocklisted link domains.</strong> A tracking or shortener domain in your links can be listed even when your own domain is clean.</li>
   </ul>
 
+  <h2>How do you avoid emails going to spam?</h2>
+  <p>You avoid the spam folder by proving who you are, sending only to people who want your mail, and making it easy to leave. In practice that means a short list of habits:</p>
+  <ul>
+    <li><strong>Authenticate every sending service.</strong> SPF, DKIM and DMARC, aligned with the domain in your From line.</li>
+    <li><strong>Send to people who opted in.</strong> Never buy lists. Verify addresses before importing an old list.</li>
+    <li><strong>Remove people who stop engaging.</strong> A sunset rule that suppresses subscribers inactive for months keeps complaints and bounces low.</li>
+    <li><strong>Make unsubscribing one click.</strong> A visible link plus the List-Unsubscribe header. A person who cannot leave will press spam instead.</li>
+    <li><strong>Grow volume gradually.</strong> New domains and sudden spikes look suspicious. Raise daily volume in steps.</li>
+    <li><strong>Watch complaint rates weekly.</strong> Google Postmaster Tools shows your Gmail spam rate. Act before it nears the limits below.</li>
+    <li><strong>Keep cold outreach separate.</strong> Send it from its own domains so it can never damage the domain your customers and invoices rely on.</li>
+  </ul>
+
+  <h2>How do you run an email deliverability check yourself?</h2>
+  <p>You can run a basic email deliverability check in under an hour with free tools. It will not replace a full audit, but it shows whether you have a problem worth paying to fix.</p>
+  <ol>
+    <li><strong>Look up your records.</strong> Use a public DNS checker to confirm you have exactly one SPF record, a DKIM record for each sending service, and a DMARC record.</li>
+    <li><strong>Read a real message header.</strong> Send an email to a Gmail account, open it, choose Show original, and check that SPF, DKIM and DMARC all say PASS.</li>
+    <li><strong>Check blocklists.</strong> Run your domain and sending IP through a multi-list checker.</li>
+    <li><strong>Open Google Postmaster Tools.</strong> Verify your domain and review spam rate and authentication results over the last weeks.</li>
+    <li><strong>Run a seed test.</strong> Send a real campaign to a set of test inboxes across Gmail, Outlook and Yahoo and see where it lands.</li>
+  </ol>
+  <p>If any step fails, or the results disagree with what your platform reports, that is the point to bring in an email deliverability consultant rather than guessing.</p>
+
+  <h2>Which email deliverability tools do we use?</h2>
+  <p>We use the providers' own data first, because it shows what the mailbox actually decided, then independent tools to test and monitor.</p>
+  <div class="table-wrap"><table>
+    <caption>Deliverability tools and what each one tells you</caption>
+    <thead><tr><th>Tool</th><th>What it shows</th></tr></thead>
+    <tbody>
+      <tr><td>Google Postmaster Tools</td><td>Gmail spam rate, authentication results and compliance status for your domain</td></tr>
+      <tr><td>Microsoft SNDS</td><td>How Outlook.com sees traffic from your sending IPs</td></tr>
+      <tr><td>DMARC report analyzer</td><td>Every source sending as your domain, and whether it passes</td></tr>
+      <tr><td>Seed testing tool</td><td>Inbox, Promotions or spam placement across providers</td></tr>
+      <tr><td>DNS and blocklist checkers</td><td>Record syntax, lookup counts and blocklist listings</td></tr>
+    </tbody>
+  </table></div>
+
   <h2>What are the Google, Yahoo and Microsoft sender requirements?</h2>
-  <p>As of October 26, 2026, all three large mailbox providers require bulk senders to authenticate and to make unsubscribing easy. A bulk sender is anyone sending about 5,000 or more messages a day to that provider's users.</p>
+  <p>As of October 26, 2026, all three large mailbox providers require bulk senders to authenticate and to make unsubscribing easy. A bulk sender is anyone sending about 5,000 or more messages a day to that provider's users. The rules arrived in stages, and enforcement has only become stricter.</p>
+  <Info eyebrow="How the rules tightened" title="From guidelines to rejected mail in under two years" theme="dark" note="Sources: Google email sender guidelines and FAQ, Yahoo sender best practices, Microsoft Outlook announcement for high-volume senders.">
+    <Timeline items={[
+      { when: 'February 2024', t: 'Gmail and Yahoo', p: 'Bulk senders must authenticate with SPF, DKIM and DMARC, keep spam complaints low and support easy unsubscribing.' },
+      { when: 'June 1, 2024', t: 'One-click unsubscribe', p: 'Gmail deadline for one-click unsubscribe on all commercial and promotional mail.' },
+      { when: 'May 5, 2025', t: 'Microsoft Outlook.com', p: 'High-volume senders must pass SPF and DKIM, publish DMARC and align. Non-compliant mail faces rejection.' },
+      { when: 'November 2025', t: 'Gmail enforcement', p: 'Gmail ramps up enforcement, with temporary and permanent rejections for mail that fails the requirements.' },
+    ]} />
+  </Info>
   <div class="table-wrap"><table>
     <caption>Bulk sender requirements by provider, as of October 26, 2026</caption>
     <thead><tr><th>Requirement</th><th>Google (Gmail)</th><th>Yahoo</th><th>Microsoft (Outlook.com)</th></tr></thead>
     <tbody>
       <tr><td>SPF and DKIM</td><td>Both</td><td>Both</td><td>Both</td></tr>
       <tr><td>DMARC</td><td>At least p=none, aligned</td><td>At least p=none, must pass</td><td>At least p=none, aligned</td></tr>
-      <tr><td>One-click unsubscribe</td><td>Required on marketing mail</td><td>Required, processed within 2 days</td><td>Recommended</td></tr>
+      <tr><td>One-click unsubscribe</td><td>Required on marketing mail</td><td>Required, processed within 2 days</td><td>Easy, visible unsubscribe expected</td></tr>
       <tr><td>Spam rate</td><td>Under 0.1%, never 0.3%</td><td>Under 0.3%</td><td>Not published</td></tr>
     </tbody>
   </table></div>
-  <p class="note">Sources: <a href="https://support.google.com/a/answer/81126" rel="noopener">Google email sender guidelines</a>, <a href="https://senders.yahooinc.com/best-practices" rel="noopener">Yahoo sender best practices</a>, <a href="https://techcommunity.microsoft.com/blog/outlook/strengthening-email-security-outlook-new-requirements-for-high-volume-senders/4399730" rel="noopener">Microsoft Outlook high-volume sender requirements</a>.</p>
+  <p class="note">Sources: <a href="https://support.google.com/a/answer/81126" rel="noopener">Google email sender guidelines</a>, <a href="https://support.google.com/a/answer/14229414" rel="noopener">Google sender guidelines FAQ</a>, <a href="https://senders.yahooinc.com/best-practices" rel="noopener">Yahoo sender best practices</a>, <a href="https://techcommunity.microsoft.com/blog/outlook/strengthening-email-security-outlook-new-requirements-for-high-volume-senders/4399730" rel="noopener">Microsoft Outlook high-volume sender requirements</a>.</p>
 
   <h2>What do you need from me?</h2>
   <p>Four things: your sending domains, the name of your email platform, DNS access or the contact of the person who manages DNS, and one recent campaign report so we can see bounce and complaint numbers.</p>
