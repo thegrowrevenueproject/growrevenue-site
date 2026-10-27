@@ -1,0 +1,10 @@
+---
+interface Item { when: string; t: string; p: string }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<ol class="itl" data-r="up">
+  {items.map((x, i) => (
+    <li style={`--d:${(i * 0.12).toFixed(2)}s`}><span class="itl-w">{x.when}</span><strong>{x.t}</strong><p>{x.p}</p></li>
+  ))}
+</ol>

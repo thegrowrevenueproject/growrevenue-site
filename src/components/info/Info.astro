@@ -1,0 +1,18 @@
+---
+// Full-bleed infographic band. Breaks out of any centered column to the full page width.
+interface Props { eyebrow?: string; title: string; sub?: string; theme?: 'dark' | 'light' | 'mint'; level?: 2 | 3; note?: string; id?: string }
+const { eyebrow, title, sub, theme = 'dark', level = 3, note, id } = Astro.props;
+const H = level === 2 ? 'h2' : 'h3';
+---
+<section class={`info info-${theme}`} id={id}>
+  <div class="info-bg" aria-hidden="true"><i></i><i></i></div>
+  <div class="info-in">
+    <header class="info-hd" data-r="up">
+      {eyebrow && <span class="info-eb">{eyebrow}</span>}
+      <H class="info-t">{title}</H>
+      {sub && <p class="info-sub">{sub}</p>}
+    </header>
+    <slot />
+    {note && <p class="info-note">{note}</p>}
+  </div>
+</section>

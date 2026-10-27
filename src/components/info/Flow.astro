@@ -1,0 +1,16 @@
+---
+// Numbered left-to-right process with an animated connector. Stacks vertically on phones.
+interface Step { t: string; p: string; tag?: string }
+interface Props { steps: Step[] }
+const { steps } = Astro.props;
+---
+<ol class="iflow" data-r="up" style={`--n:${steps.length}`}>
+  {steps.map((s, i) => (
+    <li style={`--d:${(i * 0.14).toFixed(2)}s`}>
+      <span class="iflow-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      {s.tag && <span class="iflow-tag">{s.tag}</span>}
+      <strong>{s.t}</strong>
+      <p>{s.p}</p>
+    </li>
+  ))}
+</ol>

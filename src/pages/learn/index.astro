@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import Info from '../../components/info/Info.astro';
+import Flow from '../../components/info/Flow.astro';
+import { LEARN } from '../../data/learn';
+---
+<Base title="Marketing Guides: Cold Email, AI Agents | Grow Revenue"
+  description="Plain guides to how marketing works now: what a marketing company does, whether cold email still works, what AI agents are and how automation grows revenue."
+  path="/learn/" pageType="hub" crumbs={[{ name: 'Learn', path: '/learn/' }]}>
+  <section class="art-hd" style="padding-bottom:70px">
+    <div class="wrap">
+      <span class="eyebrow">Learn</span>
+      <h1 data-split style="max-width:16ch">Marketing, explained without the jargon</h1>
+      <p class="lead">Short, practical guides to the parts of marketing that changed the most: outreach, AI agents and automation, and how to judge any marketing partner by the revenue it brings in.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:60px">
+    <div class="wrap">
+      <ul class="learn-grid" data-stagger="90">
+        {LEARN.map((l, i) => (
+          <li data-r="up"><a href={'/learn/' + l.slug + '/'}>
+            <span class="lg-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="lg-t">{l.tag} &middot; {l.minutes} min</span>
+            <h2>{l.title}</h2>
+            <p>{l.blurb}</p>
+            <span class="lg-go">Read the guide <i aria-hidden="true">&#8599;</i></span>
+          </a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <Info eyebrow="How the guides fit together" title="Every guide maps to one stage of the revenue engine" theme="dark" level={2}>
+    <Flow steps={[
+      { tag: 'Attract', t: 'Get seen by the right buyers', p: 'Paid ads, social media and content put the offer in front of people who can buy it.' },
+      { tag: 'Capture', t: 'Turn attention into leads', p: 'Cold email, LinkedIn and lead magnets start conversations with named prospects.' },
+      { tag: 'Convert', t: 'Turn leads into revenue', p: 'Funnels, follow-up and email flows move a lead from interest to purchase.' },
+      { tag: 'Scale', t: 'Grow without more headcount', p: 'Automation and AI agents run the repeat work, with a person approving what goes out.' },
+    ]} />
+  </Info>
+</Base>

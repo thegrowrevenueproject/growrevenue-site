@@ -1,0 +1,17 @@
+---
+// Circular cycle (for example an AI agent loop). Nodes sit around a rotating dashed ring; a list on phones.
+interface Node { t: string; p: string }
+interface Props { nodes: Node[]; center: string; centerSub?: string }
+const { nodes, center, centerSub } = Astro.props;
+const n = nodes.length;
+---
+<div class="iloop" data-r="up" style={`--n:${n}`}>
+  <div class="iloop-ring" aria-hidden="true"><svg viewBox="0 0 400 400"><circle cx="200" cy="200" r="150" /></svg></div>
+  <div class="iloop-c"><strong>{center}</strong>{centerSub && <span>{centerSub}</span>}</div>
+  <ol>
+    {nodes.map((x, i) => {
+      const a = (i / n) * 2 * Math.PI - Math.PI / 2;
+      return <li style={`--x:${(50 + 37.5 * Math.cos(a)).toFixed(2)}%;--y:${(50 + 37.5 * Math.sin(a)).toFixed(2)}%;--d:${(i * 0.15).toFixed(2)}s`}><span class="iloop-n">{i + 1}</span><strong>{x.t}</strong><p>{x.p}</p></li>;
+    })}
+  </ol>
+</div>

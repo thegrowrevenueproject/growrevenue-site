@@ -1,0 +1,18 @@
+---
+// Before/after bars. Values are numbers on the same scale; `show` overrides the printed label.
+interface Row { label: string; before: number; after: number; showBefore?: string; showAfter?: string; max?: number }
+interface Props { rows: Row[]; unit?: string; beforeLabel?: string; afterLabel?: string; caption?: string }
+const { rows, unit = '', beforeLabel = 'Before', afterLabel = 'After', caption } = Astro.props;
+const pct = (v: number, m: number) => Math.max(1.5, Math.min(100, (v / m) * 100)).toFixed(1) + '%';
+---
+<figure class="ib" data-r="up">
+  <div class="ib-key" aria-hidden="true"><span class="k0">{beforeLabel}</span><span class="k1">{afterLabel}</span></div>
+  {rows.map((r, i) => { const m = r.max ?? Math.max(r.before, r.after) * 1.05; return (
+    <div class="ib-row" style={`--d:${(i * 0.12).toFixed(2)}s`}>
+      <p class="ib-l">{r.label}</p>
+      <div class="ib-track"><span class="bar b0"><i style={`--v:${pct(r.before, m)}`}></i></span><b>{r.showBefore ?? r.before + unit}</b></div>
+      <div class="ib-track"><span class="bar b1"><i style={`--v:${pct(r.after, m)}`}></i></span><b>{r.showAfter ?? r.after + unit}</b></div>
+    </div>
+  ); })}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

@@ -1,0 +1,12 @@
+---
+// Two-way comparison as a real table (readable by search and AI engines), styled as two columns.
+interface Props { a: string; b: string; rows: [string, string, string][]; caption: string; win?: 'a' | 'b' }
+const { a, b, rows, caption, win = 'b' } = Astro.props;
+---
+<div class="ivs-wrap" data-r="up">
+  <table class={`ivs win-${win}`}>
+    <caption>{caption}</caption>
+    <thead><tr><th scope="col"><span class="sr">Question</span></th><th scope="col">{a}</th><th scope="col">{b}</th></tr></thead>
+    <tbody>{rows.map(([l, x, y], i) => <tr style={`--d:${(i * 0.07).toFixed(2)}s`}><th scope="row">{l}</th><td>{x}</td><td>{y}</td></tr>)}</tbody>
+  </table>
+</div>

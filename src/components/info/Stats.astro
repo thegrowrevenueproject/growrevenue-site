@@ -1,0 +1,15 @@
+---
+// Big animated numbers. value is the number counted to; pre/suf wrap it.
+interface Item { value: number; pre?: string; suf?: string; label: string; sub?: string }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<ul class="istats" data-r="up">
+  {items.map((x, i) => (
+    <li style={`--d:${(i * 0.1).toFixed(2)}s`}>
+      <strong data-count={x.value} data-pre={x.pre ?? ''} data-suf={x.suf ?? ''} data-dec={String(x.value).includes('.') ? '1' : '0'}>{x.pre ?? ''}{x.value}{x.suf ?? ''}</strong>
+      <span>{x.label}</span>
+      {x.sub && <small>{x.sub}</small>}
+    </li>
+  ))}
+</ul>

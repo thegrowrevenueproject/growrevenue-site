@@ -1,0 +1,44 @@
+---
+import Base from './Base.astro';
+import { SITE } from '../data/site';
+import { LEARN } from '../data/learn';
+interface Props { slug: string; title: string; description: string; h1: string; answer: string; query: string; faq?: [string, string][]; updated?: string; figure?: string; figureAlt?: string }
+const { slug, title, description, h1, answer, query, faq = [], updated = '2026-10-27', figure, figureAlt } = Astro.props;
+const path = '/learn/' + slug + '/';
+const me = LEARN.find((l) => l.slug === slug);
+const more = LEARN.filter((l) => l.slug !== slug);
+const schema: object[] = [{
+  '@type': 'Article', '@id': SITE.url + path + '#article', headline: h1, description, datePublished: updated, dateModified: updated,
+  author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true,
+}];
+if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+const nice = new Date(updated + 'T12:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base title={title} description={description} path={path} pageType="article" query={query} crumbs={[{ name: 'Learn', path: '/learn/' }, { name: me?.tag ?? 'Article', path }]} schema={schema}>
+  <article class="art">
+    <header class="art-hd">
+      <div class="narrow">
+        <span class="eyebrow">{me?.tag ?? 'Learn'} &middot; {me?.minutes ?? 8} minute read</span>
+        <h1 data-split>{h1}</h1>
+        <p class="lead">{answer}</p>
+        <p class="byline">By <a href="/kunal-arora/">Kunal Arora</a>, founder &middot; Updated <time datetime={updated}>{nice}</time></p>
+      </div>
+      {figure && <div class="art-fig" aria-hidden={figureAlt ? undefined : 'true'}><slot name="figure" /></div>}
+    </header>
+    <div class="narrow prose art-body">
+      <slot />
+      {faq.length > 0 && (<>
+        <h2>Frequently asked questions</h2>
+        <div class="art-faq">{faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}</div>
+      </>)}
+      <div class="art-cta">
+        <p><strong>Want this applied to your numbers?</strong> Send us your site and goal. You get a written first read within one working day, before any call.</p>
+        <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Get a free first read</a>
+      </div>
+    </div>
+    <nav class="wrap art-more" aria-label="More from Learn">
+      <p class="art-more-h">Keep reading</p>
+      <ul>{more.map((l) => <li><a href={'/learn/' + l.slug + '/'}><span>{l.tag}</span><b>{l.title}</b><small>{l.blurb}</small></a></li>)}</ul>
+    </nav>
+  </article>
+</Base>

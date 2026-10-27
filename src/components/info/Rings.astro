@@ -1,0 +1,19 @@
+---
+// Percentage rings (0 to 100). Optional `from` draws the starting value as a faint arc.
+interface Ring { value: number; from?: number; label: string; show?: string; showFrom?: string }
+interface Props { rings: Ring[] }
+const { rings } = Astro.props;
+const C = 2 * Math.PI * 52;
+---
+<ul class="irings" data-r="up">
+  {rings.map((r, i) => (
+    <li style={`--d:${(i * 0.15).toFixed(2)}s`}>
+      <div class="ir-c"><svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="rt" cx="60" cy="60" r="52" />
+        {r.from !== undefined && <circle class="rf" cx="60" cy="60" r="52" style={`--o:${(C * (1 - r.from / 100)).toFixed(1)}`} stroke-dasharray={C.toFixed(1)} />}
+        <circle class="rv" cx="60" cy="60" r="52" style={`--o:${(C * (1 - r.value / 100)).toFixed(1)}`} stroke-dasharray={C.toFixed(1)} />
+      </svg><div class="ir-v"><strong>{r.show ?? r.value + '%'}</strong>{r.from !== undefined && <small>from {r.showFrom ?? r.from + '%'}</small>}</div></div>
+      <span>{r.label}</span>
+    </li>
+  ))}
+</ul>
