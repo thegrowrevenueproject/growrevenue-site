@@ -36,27 +36,27 @@ export const GROUPS = [
 // Prices match the Upwork project catalog (checklist C-02). Order = the revenue engine, left to right.
 export const SERVICES: Service[] = [
   {
-    slug: 'paid-advertising', icon: 'ads', group: 'Attract', query: 'paid advertising agency', isNew: true, nav: 'Paid advertising', card: 'Paid ads on Google and Meta',
+    slug: 'paid-advertising', icon: 'ads', group: 'Attract', query: 'ppc management services', isNew: true, nav: 'Paid advertising', card: 'Paid ads on Google and Meta',
     blurb: 'Google, Meta, YouTube and LinkedIn campaigns built around the cost of a customer, not the cost of a click, with landing pages and follow-up that turn the spend into revenue.',
     from: null, tiers: [],
   },
   {
-    slug: 'social-media-marketing', icon: 'social', group: 'Attract', query: 'social media marketing agency', nav: 'Social media marketing', card: 'Social media marketing',
+    slug: 'social-media-marketing', icon: 'social', group: 'Attract', query: 'social media marketing services', nav: 'Social media marketing', card: 'Social media marketing',
     blurb: 'Strategy, short-form video, posting and community for Instagram, TikTok, LinkedIn, Facebook and YouTube, connected to email so followers become subscribers and buyers.',
     from: null, tiers: [],
   },
   {
-    slug: 'content-creation', icon: 'content', group: 'Attract', query: 'content creation agency', isNew: true, nav: 'Content creation', card: 'Content creation',
+    slug: 'content-creation', icon: 'content', group: 'Attract', query: 'content creation company', isNew: true, nav: 'Content creation', card: 'Content creation',
     blurb: 'Short-form video, motion graphics, carousels, articles and email content produced every month from one plan, built to earn attention and lead to a sale.',
     from: null, tiers: [],
   },
   {
-    slug: 'lead-generation', icon: 'magnet', group: 'Capture', query: 'lead generation agency', isNew: true, nav: 'Lead generation', card: 'B2B lead generation',
+    slug: 'lead-generation', icon: 'magnet', group: 'Capture', query: 'lead generation company', isNew: true, nav: 'Lead generation', card: 'B2B lead generation',
     blurb: 'Cold email, LinkedIn outreach, lead magnets and paid search working as one system, so your sales calendar fills with qualified buyers every week.',
     from: null, tiers: [],
   },
   {
-    slug: 'cold-email-infrastructure', icon: 'plane', group: 'Capture', query: 'cold email agency', nav: 'Cold email', card: 'Cold email outreach',
+    slug: 'cold-email-infrastructure', icon: 'plane', group: 'Capture', query: 'cold email services', nav: 'Cold email', card: 'Cold email outreach',
     blurb: 'Separate sending domains, mailboxes, authentication and warmup set up properly, then sequences written and launched that start real conversations.',
     from: 600,
     tiers: [
@@ -81,7 +81,7 @@ export const SERVICES: Service[] = [
     from: null, tiers: [],
   },
   {
-    slug: 'ai-automation', icon: 'ai', group: 'Scale', query: 'ai automation agency', isNew: true, nav: 'AI automation', card: 'AI automation',
+    slug: 'ai-automation', icon: 'ai', group: 'Scale', query: 'ai automation services', isNew: true, nav: 'AI automation', card: 'AI automation',
     blurb: 'AI agents and workflows in n8n, Make and Zapier that research leads, sort replies, publish content, update the CRM and report, with a person approving what goes out.',
     from: null, tiers: [],
   },
@@ -130,7 +130,7 @@ export const CASES: Case[] = [
     headline: '3x lead volume for a law firm at 40% lower cost per acquisition', period: '90 days',
     results: [ { metric: 'Lead volume', value: '3x' }, { metric: 'Cost per acquisition', value: '40% lower' }, { metric: 'Time to scale the system', value: '90 days' } ],
     quote: { text: 'We knew marketing was powerful, but we struggled to find a partner who could address our unique pain points and help us scale sustainably. Both Barbara and Kunal simply nailed it.', who: 'Debra Becker, Founder and CEO, Dimov Associates' } },
-  { slug: 'austere', seoTitle: 'Austere Case Study: 3.5x Return on Ad Spend', client: 'Austere', industry: 'Agency', service: 'paid-advertising',
+  { slug: 'austere', seoTitle: 'Austere Case Study: 3.5x Return on Ad Spend', client: 'Austere', industry: 'Marketing services', service: 'paid-advertising',
     headline: '3.5x return on ad spend and 450+ qualified leads in a quarter', period: 'one quarter',
     results: [ { metric: 'Return on ad spend', value: '3.5x' }, { metric: 'Qualified leads', value: '450+' }, { metric: 'Lead conversion growth', value: '380%' } ] },
 ];

@@ -70,7 +70,7 @@ xml.append("</urlset>")
 order = ["/", "/paid-advertising/", "/social-media-marketing/", "/content-creation/", "/lead-generation/", "/cold-email-infrastructure/", "/funnel-audit/", "/email-marketing/", "/ai-automation/", "/email-deliverability/", "/case-studies/", "/about/", "/kunal-arora/", "/contact/"]
 by = {p: m for p, m, _ in entries}
 llms = ["# The Grow Revenue Company", "",
-        "> Growth marketing agency that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 Upwork jobs, 100% Job Success, Top Rated Plus). London, UK; clients in the US, UK, Canada and Europe.", "",
+        "> Growth company (digital marketing) that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 Upwork jobs, 100% Job Success, Top Rated Plus). London, UK; clients in the US, UK, Canada and Europe.", "",
         "## Services and company"]
 for p in order:
     if p in by: llms.append(f"- [{html.unescape(by[p].title.split(' | ')[0])}]({SITE}{p}): {html.unescape(by[p].meta.get('description', ''))}")
@@ -85,7 +85,7 @@ llms += ["", "## Contact", "- kunal@growrevenue.co", f"- {SITE}/contact/"]
 (DIST / "llms.txt").write_text("\n".join(llms) + "\n")
 
 rss = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', "<title>The Grow Revenue Company blog</title>", f"<link>{SITE}/</link>",
-       "<description>Email deliverability, cold email and funnel articles by Kunal Arora.</description>", "<language>en-us</language>"]
+       "<description>Growth marketing articles by Kunal Arora.</description>", "<language>en-us</language>"]
 for p, m, s in sorted(arts, key=lambda x: x[2]["published"], reverse=True):
     rss.append(f"<item><title>{html.escape(html.unescape(m.title))}</title><link>{SITE}{p}</link><guid>{SITE}{p}</guid><pubDate>{datetime.datetime.fromisoformat(s['published']).strftime('%a, %d %b %Y 00:00:00 +0000')}</pubDate><description>{html.escape(html.unescape(m.meta.get('description', '')))}</description></item>")
 rss.append("</channel></rss>")

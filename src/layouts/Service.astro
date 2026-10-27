@@ -1,14 +1,27 @@
 ---
 import Base from './Base.astro';
+import Ribbon from '../components/Ribbon.astro';
 import { SITE, svc, CASES, usd } from '../data/site';
 interface Props {
   slug: string; title: string; description: string; h1: string; answer: string;
   mock?: string; cases: string[]; serviceType: string; faq?: [string, string][];
 }
-const { slug, title, description, h1, answer, mock, cases, serviceType, faq = [] } = Astro.props;
+const { slug, title, description, h1, answer, cases, serviceType, faq = [] } = Astro.props;
 const s = svc(slug);
 const path = '/' + slug + '/';
 const related = CASES.filter((c) => cases.includes(c.slug));
+const people: Record<string, [string, string]> = {
+  'paid-advertising': ['team-tablet', 'Marketing team reviewing ad performance together on a tablet'],
+  'social-media-marketing': ['creator-man', 'Creator filming a social video in front of a ring light'],
+  'content-creation': ['creator-woman', 'Creator setting up a camera and ring light for a shoot'],
+  'lead-generation': ['team-trio', 'Three colleagues reviewing outreach replies together on a laptop'],
+  'cold-email-infrastructure': ['team-desk', 'Marketer setting up an outreach campaign at an office desk'],
+  'funnel-audit': ['team-strategy', 'Team mapping funnel numbers around a meeting table'],
+  'email-marketing': ['team-laptop', 'Team planning an email campaign around a laptop'],
+  'ai-automation': ['team-late', 'Team reviewing automated reports together in the evening'],
+  'email-deliverability': ['team-planning', 'Team discussing inbox placement results in a bright office'],
+};
+const [pic, picAlt] = people[slug] ?? people['email-marketing'];
 const schema: object[] = [{
   '@type': 'Service', '@id': SITE.url + path + '#service', name: s.nav, serviceType, description,
   provider: { '@id': SITE.url + '/#org' }, areaServed: ['US', 'GB', 'CA', 'EU'], url: SITE.url + path,
@@ -17,70 +30,109 @@ const schema: object[] = [{
 if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
 ---
 <Base title={title} description={description} path={path} pageType="service" query={s.query} crumbs={[{ name: s.nav, path }]} schema={schema}>
-  <section class="phero">
-    <div class="wrap grid">
+  <section class="sh" data-pin-hero>
+    <div class="wrap inner grid">
       <div>
-        <span class="eyebrow">{s.from ? `From ${usd(s.from)}` : 'Scoped to your account'}</span>
+        <span class="eyebrow">{s.group} &middot; {s.from ? `From ${usd(s.from)}` : 'Scoped to your account'}</span>
         <h1 data-split>{h1}</h1>
-        <p class="lead reveal">{answer}</p>
+        <p class="lead">{answer}</p>
         <div class="btns reveal">
           <a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a>
           {s.tiers.length > 0 && <a class="btn ghost" href="#pricing">See prices</a>}
         </div>
       </div>
-      <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our work as a ${s.query}`} width="480" height="480" fetchpriority="high" data-parallax="0.08" />
-    </div>
-  </section>
-  <section class="section">
-    <div class="narrow prose">
-      <slot />
-      {s.tiers.length > 0 && (
-        <>
-          <h2 id="pricing">How much does it cost?</h2>
-          <p>Three fixed-price packages, the same as our Upwork project catalog. Prices are in US dollars, as of October 26, 2026.</p>
-        </>
-      )}
-    </div>
-    {s.tiers.length > 0 && (
-      <div class="wrap tiers" style="margin-top:12px">
-        {s.tiers.map((t, i) => (
-          <div class={'tier' + (i === 1 ? ' mid' : '')}>
-            <h3>{t.name}</h3>
-            <p class="price">{usd(t.price)} <small>{t.days} days</small></p>
-            <p>{t.items}</p>
-          </div>
-        ))}
+      <div class="art">
+        <div class="p" data-parallax="0.05"><img src={`/img/people/${pic}-720.webp`} srcset={`/img/people/${pic}-720.webp 720w, /img/people/${pic}-1400.webp 1400w`} sizes="(max-width: 900px) 80vw, 400px" alt={picAlt} width="720" height="480" /></div>
+        <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our ${s.query} work`} width="480" height="480" fetchpriority="high" />
       </div>
-    )}
-    <div class="narrow prose">
-      <slot name="after" />
-      {faq.length > 0 && (<><h2>Common questions</h2><dl class="faq">{faq.map(([q, a]) => <><dt>{q}</dt><dd>{a}</dd></>)}</dl></>)}
     </div>
   </section>
-  {related.length > 0 && (
+
+  <div class="over">
+    <Ribbon />
+    <section class="section">
+      <div class="narrow prose">
+        <slot />
+      </div>
+    </section>
+
     <section class="section" style="padding-top:0">
       <div class="wrap">
-        <h2 class="center">Results from this kind of work</h2>
-        <div class="grid2" style="margin-top:28px">
-          {related.map((c) => (
-            <article class="card case reveal">
-              <span class="tag">{c.client} &middot; {c.industry}</span>
-              <h3><a href={'/case-studies/' + c.slug + '/'}>{c.headline}</a></h3>
-              <ul class="nums">{c.results.slice(0, 3).map((r) => <li>{r.metric}: <strong>{r.value}</strong></li>)}</ul>
-            </article>
-          ))}
+        <div class="grow" data-grow>
+          <img src={`/img/people/${pic}-1400.webp`} alt="" width="1400" height="933" loading="lazy" />
+          <p class="cap">Planned, built and run by one team. <em>Measured by revenue.</em></p>
         </div>
       </div>
     </section>
-  )}
-  <section class="section" style="padding-top:0">
-    <div class="wrap">
-      <div class="cta reveal">
-        <h2>Tell us what is happening. <em>We reply in a day.</em></h2>
-        <p>You get a reply within one working day with a first read of your setup, before any call.</p>
-        <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a></div>
-        <img class="ico" src={`/img/3d/${s.icon}.webp`} alt="" width="480" height="480" loading="lazy" data-parallax="0.1" />
+
+    {s.tiers.length > 0 && (
+      <section class="section" style="padding-top:0;background:var(--white)">
+        <div class="narrow prose">
+          <h2 id="pricing">How much does it cost?</h2>
+          <p>Three fixed-price packages, the same as our Upwork project catalog. Prices are in US dollars, as of October 26, 2026.</p>
+        </div>
+        <div class="wrap tstack" data-stack>
+          {s.tiers.map((t, i) => (
+            <div class={'tier' + (i === 1 ? ' mid' : '')} style={`--i:${i}`}>
+              <h3>{t.name}</h3>
+              <p class="price">{usd(t.price)} <small>{t.days} days</small></p>
+              <p>{t.items}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="section" style="padding-top:0">
+      <div class="narrow prose"><slot name="after" /></div>
+      {faq.length > 0 && (
+        <div class="wrap">
+          <h2 class="center" data-split>Common <em>questions</em></h2>
+          <div class="faqp" data-faq>
+            <div class="fqs">{faq.map(([q], i) => <button class="fq" type="button" aria-controls={'fa' + i} aria-expanded={i === 0 ? 'true' : 'false'}>{q}</button>)}</div>
+            <div class="fas">
+              {faq.map(([q, a], i) => <div class={'fa' + (i === 0 ? ' on' : '')} id={'fa' + i}><h3>{q}</h3><p>{a}</p></div>)}
+              <a class="btn dark" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Ask us something else</a>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+
+    {related.length > 0 && (
+      <section class="section" style="background:var(--cream)">
+        <div class="wrap">
+          <h2 class="center" data-split>Results from this <em>kind of work</em></h2>
+          <div class="flipzone" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+            {related.map((c) => (
+              <div class="fcard" data-cursor="Flip">
+                <div class="fcard-inner">
+                  <div class="fcard-front">
+                    <span class="av" aria-hidden="true">{c.client[0]}</span>
+                    <div><strong>{c.results[0].value}</strong><p style="margin:6px 0 0">{c.results[0].metric}</p></div>
+                    <div class="who">{c.client}<small>{c.industry}</small></div>
+                  </div>
+                  <div class="fcard-back">
+                    {c.quote ? <><p>"{c.quote.text}"</p><small>{c.quote.who}</small></> : <p>{c.headline}.</p>}
+                    <a href={'/case-studies/' + c.slug + '/'} style="margin-top:14px">Read the {c.client} case study &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta reveal">
+          <h2>Tell us what is happening. <em>We reply in a day.</em></h2>
+          <p>You get a reply within one working day with a first read of your setup, before any call.</p>
+          <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&#8599;</span>Book a 20 minute fit call</a></div>
+          <img class="ico" src={`/img/3d/${s.icon}.webp`} alt="" width="480" height="480" loading="lazy" data-parallax="0.1" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </Base>

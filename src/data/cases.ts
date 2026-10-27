@@ -53,7 +53,7 @@ export const CASE_BODY: Record<string, { summary: string; before: string[]; chan
     details: [['Lead volume', '3x'], ['Cost per acquisition', '40% lower'], ['Time to scale the system', '90 days']],
   },
   austere: {
-    summary: 'Austere is a social media agency for artists. Thousands of people searched for Instagram growth every month, but few turned into leads on its microsites, and paid campaigns were not paying back. We matched ads to pages and tested our way up.',
+    summary: 'Austere is a social media marketing firm for artists. Thousands of people searched for Instagram growth every month, but few turned into leads on its microsites, and paid campaigns were not paying back. We matched ads to pages and tested our way up.',
     before: ['Search traffic did not match what visitors found on the microsites.', 'Visitors rarely became leads despite consistent traffic.', 'Paid campaigns were not returning their cost.'],
     changes: [
       { h: 'Behavior segmentation', p: 'Visitor behavior analysis to sharpen the audience personas and the motivations behind each search.' },
