@@ -1,5 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Info from '../../components/info/Info.astro';
+import Flow from '../../components/info/Flow.astro';
+import Stats from '../../components/info/Stats.astro';
+import Bars from '../../components/info/Bars.astro';
+import Versus from '../../components/info/Versus.astro';
 import { SITE, CASES, svc } from '../../data/site';
 import { CASE_BODY } from '../../data/cases';
 export function getStaticPaths() { return CASES.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
@@ -11,7 +16,12 @@ const title = `${c.client} Case Study: ${c.headline}`;
 const fit = (t: string, max: number) => (t.length <= max ? t : t.slice(0, t.lastIndexOf(' ', max - 1)));
 const metaTitle = c.seoTitle + ' | Grow Revenue';
 const desc = fit(`${c.client} case study: ${c.headline.charAt(0).toLowerCase() + c.headline.slice(1)} (${c.period}). The starting point, what we changed and every measured result, with the period.`, 160);
-const schema = [{ '@type': 'Article', '@id': SITE.url + path + '#article', headline: title, description: desc, author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' }, about: { '@type': 'Organization', name: c.client }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true }];
+const others = CASES.filter((x) => x.slug !== c.slug).slice(0, 3);
+const schema: object[] = [
+  { '@type': 'Article', '@id': SITE.url + path + '#article', headline: title, description: desc, author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' }, about: { '@type': 'Organization', name: c.client }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true },
+  { '@type': 'FAQPage', '@id': SITE.url + path + '#faq', mainEntity: b.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 ---
 <Base title={metaTitle} description={desc} path={path} pageType="case" schema={schema}
   crumbs={[{ name: 'Case studies', path: '/case-studies/' }, { name: c.client, path }]}>
@@ -20,20 +30,64 @@ const schema = [{ '@type': 'Article', '@id': SITE.url + path + '#article', headl
       <span class="eyebrow">{c.industry} &middot; {s.nav}</span>
       <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">{c.client}: {c.headline}</h1>
       <p class="lead">{b.summary}</p>
+
+      <h2>Who is {c.client}, and what market do they sell in?</h2>
+      {b.market.map((p) => <p>{p}</p>)}
+
       <h2>Where did {c.client} start?</h2>
+      {b.start.map((p) => <p>{p}</p>)}
+      <p><strong>The starting point in short:</strong></p>
       <ul>{b.before.map((x) => <li>{x}</li>)}</ul>
-      <h2>What did we change?</h2>
-      {b.changes.map((x) => <><h3>{x.h}</h3><p>{x.p}</p></>)}
+
+      <Info eyebrow={`${c.client} · the plan`} title={b.flowTitle} theme="dark">
+        <Flow steps={b.flow} />
+      </Info>
+
+      <h2>What did we change, and why?</h2>
+      {b.changes.map((x) => <><h3>{x.h}</h3><p>{x.p}</p><p>{x.more}</p></>)}
+
+      {b.versus && (
+        <Info eyebrow={`${c.client} · side by side`} title={b.versus.title} theme="mint">
+          <Versus a={b.versus.a} b={b.versus.b} rows={b.versus.rows} caption={b.versus.caption} win={b.versus.win ?? 'b'} />
+        </Info>
+      )}
+
       <h2>What were the results?</h2>
+      <p>Every number below was measured for {c.client} over the {c.period}, as reported in the original case study.</p>
       <div class="table-wrap"><table>
         <caption>{c.client} results, measured over the {c.period}</caption>
         <thead><tr><th>Metric</th><th>Result</th></tr></thead>
         <tbody>{b.details.map(([m, v]) => <tr><td>{m}</td><td><strong>{v}</strong></td></tr>)}</tbody>
       </table></div>
+
+      <Info eyebrow={`${c.client} · results`} title={b.statsTitle} theme="dark" note={`Measured over the ${c.period}.`}>
+        <Stats items={b.stats} />
+      </Info>
+
+      {b.bars && (
+        <Info eyebrow={`${c.client} · before and after`} title={b.bars.title} sub={b.bars.sub} theme="light">
+          <Bars rows={b.bars.rows} unit={b.bars.unit ?? ''} beforeLabel="Before" afterLabel="After" />
+        </Info>
+      )}
+
       {c.quote && (<blockquote class="card" style="margin:28px 0"><p class="quote">"{c.quote.text}"</p><p>{c.quote.who}</p></blockquote>)}
+
+      <h2>Why did it work?</h2>
+      {b.why.map((p) => <p>{p}</p>)}
+
+      <h2>What can other {b.industryNoun} businesses learn from this?</h2>
+      {b.lessons.map((x) => <><h3>{x.h}</h3><p>{x.p}</p></>)}
+
       <h2>Which service produced this result?</h2>
       <p>This project used our <a href={'/' + s.slug + '/'}>{s.nav.toLowerCase()}</a> work. {s.blurb}</p>
+
+      <h2>Frequently asked questions about this case</h2>
+      {b.faq.map(([q, a]) => <><h3>{q}</h3><p>{a}</p></>)}
+
       <p class="note">Results are as reported for this client over the period shown. Results for your business depend on your offer, list and market.</p>
+
+      <h2>Which other case studies are worth reading?</h2>
+      <ul>{others.map((o) => <li><a href={'/case-studies/' + o.slug + '/'}>{o.client}</a>: {lc(o.headline)}.</li>)}</ul>
       <div class="btns"><a class="btn" href="/contact/"><span class="arr" aria-hidden="true">&raquo;</span>Book a 20 minute fit call</a><a class="btn ghost" href="/case-studies/">All case studies</a></div>
     </div>
   </article>
