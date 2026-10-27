@@ -251,17 +251,17 @@ a:hover .roll > span + span, button:hover .roll > span + span { transform: trans
 @keyframes cue2 { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); opacity: 1; } 100% { opacity: 0; } }
 
 .prismzone { position: relative; display: grid; justify-items: center; gap: 22px; transition: transform .2s linear, opacity .2s linear; }
-.prism { --w: min(210px, 34vw); --h: min(330px, 52vw); --r: calc(var(--w) * .866); width: calc(var(--r) * 2.1); height: calc(var(--h) + 60px); perspective: 1700px; display: grid; place-items: center; touch-action: pan-y; cursor: grab; }
+.prism { --w: 210px; --h: 330px; width: 400px; height: 390px; max-width: 100%; perspective: 1700px; display: grid; place-items: center; touch-action: pan-y; cursor: grab; }
 .prism.grabbing { cursor: grabbing; }
 .prism .p3d { position: relative; width: var(--w); height: var(--h); transform-style: preserve-3d; will-change: transform; }
-.prism .pf { position: absolute; inset: 0; border-radius: 6px; overflow: hidden; background: var(--g2); transform: rotateY(calc(var(--k) * 60deg)) translateZ(var(--r)); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.prism .pf { position: absolute; inset: 0; border-radius: 6px; overflow: hidden; background: var(--g2); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .prism .pf video, .prism .pf img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 .prism .pf .shade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
 .prism .pf .tag { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(7,17,12,.78); color: #fff; font-size: .74rem; font-weight: 700; border-radius: 10px; padding: 8px 10px; }
 .prism .pf .tag b { color: var(--g8); font-weight: 800; }
-.prism .cap { position: absolute; left: 50%; top: 50%; width: calc(var(--w) * 2); height: calc(var(--w) * 1.732); margin: calc(var(--w) * -.866) 0 0 calc(var(--w) * -1); clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); background: radial-gradient(circle, var(--g4), var(--g1)); display: grid; place-items: center; }
-.prism .cap.t { transform: rotateX(90deg) translateZ(calc(var(--h) / 2)); }
-.prism .cap.b { transform: rotateX(-90deg) translateZ(calc(var(--h) / 2)); }
+.prism .cap { position: absolute; left: 50%; top: 50%; width: 420px; height: 364px; margin: -182px 0 0 -210px; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); background: radial-gradient(circle, var(--g4), var(--g1)); display: grid; place-items: center; }
+.prism .cap.t { transform: rotateX(90deg) translateZ(165px); }
+.prism .cap.b { transform: rotateX(-90deg) translateZ(165px); }
 .prism .cap svg { width: 30%; }
 .prism-floor { width: 70%; height: 26px; border-radius: 50%; background: radial-gradient(closest-side, rgba(11,61,46,.3), transparent); margin-top: -10px; }
 .chan { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; list-style: none; padding: 0; margin: 0; }
@@ -382,16 +382,17 @@ a:hover .roll > span + span, button:hover .roll > span + span { transform: trans
 .gb .consent { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; font-size: .78rem; font-weight: 500; color: var(--g2); } .gb .msg { grid-column: 1 / -1; font-weight: 700; font-size: .9rem; margin: 0; }
 @media (max-width: 860px) { .subd .top2 { grid-template-columns: 1fr; } .gb { grid-template-columns: 1fr; padding: 22px; } .gb form { flex-wrap: wrap; } .gb input[type=email] { width: 100%; flex: 1; } }
 .deck { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; max-width: 1080px; margin: 60px auto 0; padding: 20px 0; }
-.deck .dc { display: block; background: #fff; color: var(--ink); border-radius: 16px; padding: 12px; box-shadow: 0 40px 60px -30px rgba(0,0,0,.7); transition: transform .8s var(--ease), opacity .6s, box-shadow .4s; transition-delay: var(--dd, 0s); opacity: 0; text-decoration: none; }
+.deck .dc { display: block; background: #fff; color: var(--ink); border-radius: 16px; padding: 12px; box-shadow: 0 40px 60px -30px rgba(0,0,0,.7); transition: transform .8s var(--ease), opacity .6s, box-shadow .4s; transition-delay: var(--dd, 0s); text-decoration: none; }
+.js .deck:not(.in) .dc { opacity: 0; }
 .deck .dc .im { position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; } .deck .dc .im img { width: 100%; height: 100%; object-fit: cover; }
 .deck .dc .im span { position: absolute; left: 10px; top: 10px; background: rgba(7,17,12,.8); color: var(--g8); font-size: .66rem; font-weight: 800; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; }
 .deck .dc strong { display: block; font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--g3); margin: 12px 4px 0; line-height: 1; }
 .deck .dc h4 { font-size: 1rem; line-height: 1.35; margin: 8px 4px 14px; font-weight: 600; }
 .deck .dc .rm { display: inline-flex; gap: 8px; background: var(--g1); color: #fff; font-size: .8rem; font-weight: 700; padding: 8px 14px; border-radius: 8px; margin: 0 4px 4px; }
-.deck .dc.p1 { --rot: -2.5deg; --dd: .08s; transform: translateY(60px) rotate(-8deg); }
-.deck .dc.p0 { --rot: 0deg; --dd: 0s; transform: translateY(60px); }
-.deck .dc.p2 { --rot: 2.5deg; --dd: .16s; transform: translateY(60px) rotate(8deg); }
-.deck.in .dc { opacity: 1; transform: translateY(0) rotate(var(--rot)); }
+.deck .dc.p1 { --rot: -2.5deg; --dd: .08s; } .js .deck:not(.in) .dc.p1 { transform: translateY(60px) rotate(-8deg); }
+.deck .dc.p0 { --rot: 0deg; --dd: 0s; } .js .deck:not(.in) .dc.p0 { transform: translateY(60px); }
+.deck .dc.p2 { --rot: 2.5deg; --dd: .16s; } .js .deck:not(.in) .dc.p2 { transform: translateY(60px) rotate(8deg); }
+.deck.in .dc { transform: translateY(0) rotate(var(--rot)); }
 .deck.in .dc.p0 { transform: translateY(-14px); }
 .deck.in .dc:hover, .deck.in .dc:focus-visible { transform: translateY(-20px) rotate(0); box-shadow: 0 50px 70px -30px rgba(67,196,131,.35); }
 @media (max-width: 900px) { .deck { grid-template-columns: minmax(0, 420px); justify-content: center; gap: 22px; } .deck .dc, .deck.in .dc, .deck.in .dc.p0 { --rot: 0deg; } .deck.in .dc.p0 { transform: none; } }
@@ -463,3 +464,17 @@ main, .foot { overflow-x: clip; }
 /* carousel: outgoing text clears before incoming text appears, so two headlines never share the card */
 .feat .slide .card > * { opacity: 0; transition: opacity .2s; }
 .feat .slide.on .card > * { opacity: 1; transition: opacity .45s .4s; }
+
+/* prism geometry in plain px (WebKit flattens translateZ built from calc/var/min) */
+.prism .pf.k0 { transform: rotateY(0deg) translateZ(182px); } .prism .pf.k1 { transform: rotateY(60deg) translateZ(182px); } .prism .pf.k2 { transform: rotateY(120deg) translateZ(182px); } .prism .pf.k3 { transform: rotateY(180deg) translateZ(182px); } .prism .pf.k4 { transform: rotateY(240deg) translateZ(182px); } .prism .pf.k5 { transform: rotateY(300deg) translateZ(182px); }
+@media (max-width: 620px) {
+  .prism { --w: 132px; --h: 206px; width: 260px; height: 266px; }
+  .prism .pf.k0 { transform: rotateY(0deg) translateZ(115px); } .prism .pf.k1 { transform: rotateY(60deg) translateZ(115px); } .prism .pf.k2 { transform: rotateY(120deg) translateZ(115px); } .prism .pf.k3 { transform: rotateY(180deg) translateZ(115px); } .prism .pf.k4 { transform: rotateY(240deg) translateZ(115px); } .prism .pf.k5 { transform: rotateY(300deg) translateZ(115px); }
+  .prism .cap { width: 264px; height: 229px; margin: -114.5px 0 0 -132px; }
+  .prism .cap.t { transform: rotateX(90deg) translateZ(103px); } .prism .cap.b { transform: rotateX(-90deg) translateZ(103px); }
+}
+/* flip cards: the hidden side is transparent, swapped at the half turn, so no engine can show mirrored text through the front */
+.fcard-front { opacity: 1; transition: opacity 0s .4s; } .fcard-back { opacity: 0; transition: opacity 0s .4s; }
+.fcard:hover .fcard-front, .fcard:focus-within .fcard-front, .fcard.flipped .fcard-front { opacity: 0; }
+.fcard:hover .fcard-back, .fcard:focus-within .fcard-back, .fcard.flipped .fcard-back { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .fcard-front, .fcard-back { transition: none; } }

@@ -74,7 +74,7 @@ const first = (s: string) => s.split('. ')[0].replace(/\.?$/, '.');
           <div class="prism" data-cursor="Drag" role="img" aria-label="The revenue flywheel: six short films, one per channel, paid ads, social, content, lead generation, email and AI automation, turning as you scroll">
             <div class="p3d">
               {faces.map((f, k) => (
-                <div class="pf" style={`--k:${k}`}>
+                <div class={`pf k${k}`}>
                   <video autoplay muted loop playsinline preload="metadata" poster={`/video/pf-${f.vid}.webp`} aria-hidden="true"><source src={`/video/pf-${f.vid}.webm`} type="video/webm" /><source src={`/video/pf-${f.vid}.mp4`} type="video/mp4" /></video>
                   <span class="shade"></span>
                   <span class="tag">{f.name}<b>{f.tag}</b></span>

@@ -4,7 +4,8 @@
 // Time-linked: typewriter, featured carousel, ticker (CSS), deck fan.
 (() => {
   const d = document, root = d.documentElement, $$ = (s, c = d) => [...c.querySelectorAll(s)];
-  root.classList.add('js');
+  if (window.__grm) window.__grm(); // tell the page guard we are running before anything can throw
+  try {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -146,8 +147,12 @@
       prism.addEventListener('pointermove', (e) => { if (on) { drag += (e.clientX - lx) * .4; lx = e.clientX; } });
       const up = () => { on = false; prism.classList.remove('grabbing'); }; prism.addEventListener('pointerup', up); prism.addEventListener('pointercancel', up);
     }
+    // pinned only when the stage really is sticky (desktop); phones stack the hero and spin it on a timer
+    const stage = pinw.querySelector('.pinstage');
+    let pinned = false;
+    const measure = () => { pinned = !!stage && getComputedStyle(stage).position === 'sticky' && pinw.offsetHeight > innerHeight * 1.2; };
+    measure(); addEventListener('resize', measure, { passive: true });
     return (now) => {
-      const pinned = pinw.offsetHeight > innerHeight * 1.5;
       const r = pinw.getBoundingClientRect(), p = pinned ? clamp(-r.top / (r.height - innerHeight)) : 0;
       const dt = Math.min(.05, (now - last) / 1000); last = now;
       if (!pinned && !reduce) auto += dt * 20;
@@ -243,4 +248,8 @@
   };
   addEventListener('pointermove', (e) => { pts.push({ x: e.clientX, y: e.clientY, t: performance.now() }); if (pts.length > 40) pts.shift(); if (!running) { running = true; requestAnimationFrame(draw); } }, { passive: true });
   d.addEventListener('pointerover', (e) => (hot = !!e.target.closest('a, button, [data-spin], .prism, summary')));
+  } catch (err) {
+    root.classList.remove('js'); // never leave content hidden if anything above fails
+    if (window.console) console.error('motion', err);
+  }
 })();

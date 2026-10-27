@@ -4,6 +4,10 @@ import '../styles/v2.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../data/site';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+// content hash of the motion script: a new build can never run against an old cached copy
+const mv = createHash('sha1').update(readFileSync(new URL('../../public/js/motion.js', import.meta.url))).digest('hex').slice(0, 10);
 
 interface Crumb { name: string; path: string }
 interface Props {
@@ -44,8 +48,19 @@ const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
   {query && <meta name="gr:query" content={query} />}
   <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/instrument-italic.woff2" as="font" type="font/woff2" crossorigin />
-  <script is:inline>document.documentElement.classList.add('js')</script>
-  <script defer src="/js/motion.js"></script>
+  <script is:inline>
+    /* Content is hidden for entrance animations only while the motion script is confirmed running.
+       If it fails to load, errors, or is late, everything is shown immediately. */
+    (function (r) {
+      var ok = 0, off = function () { if (!ok) r.classList.remove('js'); };
+      r.classList.add('js');
+      window.__grm = function () { ok = 1; };
+      document.addEventListener('DOMContentLoaded', off);
+      setTimeout(off, 5000);
+      window.addEventListener('error', function (e) { var t = e.target; if ((t && t.tagName === 'SCRIPT') || (e.filename && e.filename.indexOf('/js/motion.js') > -1)) r.classList.remove('js'); }, true);
+    })(document.documentElement);
+  </script>
+  <script defer src={`/js/motion.js?v=${mv}`}></script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
