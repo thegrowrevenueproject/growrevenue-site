@@ -2,11 +2,16 @@
 @font-face { font-family: 'Instrument'; src: url('/fonts/instrument-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: 'Instrument'; src: url('/fonts/instrument.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 
+/* metric-matched fallbacks: the page lays out identically before and after the web fonts load (no layout shift) */
+@font-face { font-family: 'Bricolage Fallback'; src: local('Arial'), local('ArialMT'), local('Helvetica'), local('Liberation Sans'), local('Roboto'); font-weight: 100 549; size-adjust: 104.9%; ascent-override: 88.6%; descent-override: 25.7%; line-gap-override: 0%; }
+@font-face { font-family: 'Bricolage Fallback'; src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Roboto Bold'); font-weight: 550 900; size-adjust: 101.8%; ascent-override: 91.4%; descent-override: 26.5%; line-gap-override: 0%; }
+@font-face { font-family: 'Instrument Fallback'; src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Times Italic'), local('Liberation Serif Italic'), local('Georgia Italic'); font-style: italic; size-adjust: 89.4%; ascent-override: 110.7%; descent-override: 34.7%; line-gap-override: 0%; }
+
 :root {
   --white: #FFFFFF; --paper: #F1F6F2; --ink: #0B1510; --muted: #46524B; --black: #07110C;
   --green: #0B3D2E; --green-2: #12573F; --green-3: #1E7A58; --mint: #E9F2EC; --line: #E2E6E1;
   --accent: #43C483; --accent-2: #2B8A5C; --pale: #A6F2C8; --radius: 26px;
-  --display: 'Bricolage', 'Segoe UI', system-ui, sans-serif; --serif: 'Instrument', Georgia, serif;
+  --display: 'Bricolage', 'Bricolage Fallback', 'Segoe UI', system-ui, sans-serif; --serif: 'Instrument', 'Instrument Fallback', Georgia, serif;
   --ease: cubic-bezier(.2,.7,.2,1);
 }
 *, *::before, *::after { box-sizing: border-box; }

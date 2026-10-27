@@ -110,8 +110,14 @@
     $$('.next', c).forEach((b) => b.addEventListener('click', () => show(k + 1)));
     c.addEventListener('pointerenter', () => (paused = true)); c.addEventListener('pointerleave', () => { paused = false; t0 = performance.now(); });
     if (reduce) return;
-    const tick = (now) => { if (!paused) { const p = (now - t0) / dur; if (fill) fill.style.width = clamp(p) * 100 + '%'; if (p >= 1) show(k + 1); } requestAnimationFrame(tick); };
-    requestAnimationFrame(tick);
+    // runs only while the carousel is on screen; the bar uses transform, so no layout work per frame
+    let vis = false, rafId = 0, pausedAt = 0;
+    const tick = (now) => { if (!paused) { const p = (now - t0) / dur; if (fill) fill.style.transform = `scaleX(${clamp(p).toFixed(4)})`; if (p >= 1) show(k + 1); } rafId = vis ? requestAnimationFrame(tick) : 0; };
+    new IntersectionObserver(([e]) => {
+      vis = e.isIntersecting;
+      if (vis && !rafId) { if (pausedAt) { t0 += performance.now() - pausedAt; pausedAt = 0; } rafId = requestAnimationFrame(tick); }
+      if (!vis) pausedAt = performance.now();
+    }).observe(c);
   });
 
   // card deck: fans in from a pile on enter, folds back on exit (CSS); fixed slots, no overlap
@@ -152,16 +158,19 @@
     let pinned = false;
     const measure = () => { pinned = !!stage && getComputedStyle(stage).position === 'sticky' && pinw.offsetHeight > innerHeight * 1.2; };
     measure(); addEventListener('resize', measure, { passive: true });
+    let lastShade = [];
     return (now) => {
-      const r = pinw.getBoundingClientRect(), p = pinned ? clamp(-r.top / (r.height - innerHeight)) : 0;
+      const r = pinw.getBoundingClientRect();
       const dt = Math.min(.05, (now - last) / 1000); last = now;
+      if (r.bottom < 0 || r.top > innerHeight) return; // hero off screen: no style writes at all
+      const p = pinned ? clamp(-r.top / (r.height - innerHeight)) : 0;
       if (!pinned && !reduce) auto += dt * 20;
       drag *= .95;
       const turn = pinned ? clamp(p / .82) * 300 : auto % 360;
       const wob = reduce ? 0 : Math.sin(now / 1400) * 4;
       const ry = -(turn + drag) + wob;
       if (p3) p3.style.transform = `rotateX(-9deg) rotateY(${ry.toFixed(2)}deg)`;
-      faces.forEach((f, k) => { const a = (ry + k * 60) * Math.PI / 180; shades[k].style.opacity = clamp((1 - Math.cos(a)) * .32, 0, .6).toFixed(2); });
+      faces.forEach((f, k) => { const a = (ry + k * 60) * Math.PI / 180, o = clamp((1 - Math.cos(a)) * .32, 0, .6).toFixed(2); if (o !== lastShade[k]) { shades[k].style.opacity = o; lastShade[k] = o; } });
       setActive(((Math.round((turn + drag) / 60) % 6) + 6) % 6);
       if (zone) { const ex = clamp((p - .86) / .14); zone.style.transform = `translateX(${(ex * 110).toFixed(1)}px) scale(${(1 - ex * .1).toFixed(3)})`; zone.style.opacity = (1 - ex).toFixed(3); }
     };

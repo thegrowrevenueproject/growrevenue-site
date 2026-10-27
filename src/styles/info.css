@@ -5,7 +5,7 @@
 .info-light { --ink2: var(--ink); --mut2: var(--muted); --line2: rgba(11,61,46,.12); --card2: #fff; --acc2: var(--g5); background: var(--paper) linear-gradient(rgba(11,61,46,.05) 1px, transparent 1px) 0 0 / 100% 56px; }
 .info-mint { --ink2: var(--g1); --mut2: #2F4A3C; --line2: rgba(11,61,46,.16); --card2: rgba(255,255,255,.55); --acc2: var(--g4); background: var(--g9) linear-gradient(rgba(11,61,46,.06) 1px, transparent 1px) 0 0 / 100% 56px; }
 .info-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.info-bg i { position: absolute; width: 46vw; height: 46vw; max-width: 640px; max-height: 640px; border-radius: 50%; filter: blur(80px); opacity: .32; background: var(--g5); top: -18%; right: -10%; animation: ifloat 18s ease-in-out infinite alternate; }
+.info-bg i { will-change: transform; position: absolute; width: 46vw; height: 46vw; max-width: 640px; max-height: 640px; border-radius: 50%; filter: blur(80px); opacity: .32; background: var(--g5); top: -18%; right: -10%; animation: ifloat 18s ease-in-out infinite alternate; }
 .info-bg i + i { background: var(--g7); opacity: .18; top: auto; bottom: -25%; right: auto; left: -12%; animation-duration: 23s; }
 .info-light .info-bg i, .info-mint .info-bg i { opacity: .16; }
 @keyframes ifloat { to { transform: translate(-8vw, 6vw) scale(1.15); } }
@@ -169,7 +169,7 @@
   background: radial-gradient(120% 90% at 50% 100%, var(--g3), var(--g1) 70%); }
 .cut-mint { background: radial-gradient(120% 90% at 50% 100%, #CFEBDB, var(--g9) 70%); }
 .cut-bright { background: radial-gradient(120% 90% at 50% 100%, var(--g5), var(--g3) 75%); }
-.cut-blob { position: absolute; left: 50%; top: 46%; width: 74%; aspect-ratio: 1; translate: -50% -50%; background: var(--g7); border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; animation: blob 14s ease-in-out infinite alternate, spin 40s linear infinite; z-index: -1; }
+.cut-blob { position: absolute; left: 50%; top: 46%; width: 74%; aspect-ratio: 1; translate: -50% -50%; background: var(--g7); border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; animation: blob 16s ease-in-out infinite alternate; z-index: -1; }
 .cut-mint .cut-blob { background: var(--g6); } .cut-bright .cut-blob { background: var(--g8); }
 .cut-ring { position: absolute; left: 50%; top: 46%; width: 92%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; border: 2px dashed rgba(166,242,200,.35); animation: spin 50s linear infinite reverse; z-index: -1; }
 .cut-mint .cut-ring { border-color: rgba(11,61,46,.25); }
@@ -184,7 +184,8 @@
 .cut-sm { aspect-ratio: 1; border-radius: 22px; } .cut-sm .cut-img { height: 96%; } .cut-sm .cut-blob { width: 80%; top: 50%; }
 .js .cut .cut-chip { transition: opacity .6s, scale .6s var(--ease); }
 .js [data-r]:not(.in) .cut-chip { opacity: 0; scale: .8; }
-@keyframes blob { 50% { border-radius: 58% 42% 38% 62% / 55% 61% 39% 45%; } 100% { border-radius: 36% 64% 52% 48% / 62% 37% 63% 38%; } }
+/* transform-only (compositor) so dozens of blobs cost no repaints */
+@keyframes blob { 0% { transform: rotate(0deg) scale(1, 1); } 50% { transform: rotate(160deg) scale(1.06, .94); } 100% { transform: rotate(320deg) scale(.95, 1.05); } }
 @keyframes spin { to { rotate: 360deg; } }
 @keyframes bob { 50% { translate: -50% calc(var(--py) - 10px); } }
 @keyframes chip { 50% { transform: translateY(-8px); } }
@@ -252,3 +253,5 @@
 .js .panel.on { transition: opacity .45s .22s, transform .7s var(--ease); }
 .feat .slide .fart > * { opacity: 0; transition: opacity .2s; }
 .feat .slide.on .fart > * { opacity: 1; transition: opacity .45s .4s; }
+/* skip style, layout, paint and animation work for sections far off screen (huge saving on long pages) */
+main > section:not(:first-of-type):not(.pin):not(.subd), main > .info, main > div.wrap.cur, main .art-body > .info, .foot { content-visibility: auto; contain-intrinsic-size: auto 900px; }
