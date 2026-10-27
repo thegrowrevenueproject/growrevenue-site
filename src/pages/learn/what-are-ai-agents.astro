@@ -1,0 +1,156 @@
+---
+import Article from '../../layouts/Article.astro';
+import Info from '../../components/info/Info.astro';
+import Loop from '../../components/info/Loop.astro';
+import Versus from '../../components/info/Versus.astro';
+import Flow from '../../components/info/Flow.astro';
+import Stats from '../../components/info/Stats.astro';
+
+const faq: [string, string][] = [
+  ['Is ChatGPT an AI agent?', 'A chat assistant on its own answers what you ask, one turn at a time. It becomes agent-like when it is given a goal and tools, such as web browsing, files or other software, and decides by itself which steps to take to reach the goal.'],
+  ['Can AI agents replace a sales team?', 'Not in any business we work with. Agents are good at research, first drafts, sorting replies and keeping records up to date. Judging fit, handling objections and closing still need people, and agents that send outreach with no review tend to damage reputation and deliverability.'],
+  ['Are AI agents safe to use with customer data?', 'They can be, with the same care as any software that touches customer data: give each agent access only to what its job needs, keep logs of what it did, check where the model provider processes and stores data, and keep a person approving anything that leaves the business.'],
+  ['How much does it cost to run an AI agent?', 'Costs come from the model usage, the automation platform and the time to build and maintain it. A narrow agent that handles one repeat task is usually cheap to run. Costs rise with long, open-ended tasks, so start narrow and measure the time or revenue it returns.'],
+  ['What is the difference between agentic AI and generative AI?', 'Generative AI produces content such as text or images in response to a prompt. Agentic AI uses that ability inside a loop with goals and tools, so the system can decide on and take actions, not only produce an answer.'],
+];
+---
+<Article slug="what-are-ai-agents"
+  title="What Are AI Agents? Uses in Marketing | Grow Revenue"
+  description="What are AI agents? A plain guide to how they work, how they differ from chatbots and automations, real marketing and sales examples, and the risks to avoid."
+  h1="What are AI agents, and what can they do in marketing?"
+  answer="What are AI agents? They are software that pursues a goal by choosing its own next steps: it gathers information, plans, uses tools such as a browser, CRM or inbox, checks the result and adjusts. A chatbot answers questions and an automation follows fixed rules; an agent decides what to do. In marketing, the useful ones research, draft and update records while a person approves what goes out."
+  query="what are ai agents" faq={faq}>
+
+  <p>"AI agent" became one of the most used phrases in software in under two years, and one of the least precise. Some products sold as agents are simple chatbots. Some are rule-based automations with a new label. A few are genuinely new: systems that can take a goal, work out the steps and carry them out across several tools. This guide explains the difference in plain English, shows where agents earn their keep in marketing and sales, and covers the risks that make many projects fail.</p>
+
+  <h2>What are AI agents, in plain English?</h2>
+  <p>An AI agent is a large language model given three extra things: a goal, a set of tools it is allowed to use, and a loop that lets it act, look at what happened and decide what to do next. The model supplies the reasoning. The tools supply the reach. The loop supplies the persistence.</p>
+  <p>Anthropic, which builds the Claude models, draws a useful line in its guide to building agents. Workflows are systems where models and tools follow predefined code paths. Agents are systems where the model dynamically directs its own process and tool use. The guide also recommends starting with the simplest solution and only adding agent behavior when a task truly needs it. That advice saves most businesses a lot of money.</p>
+
+  <h2>What does agentic AI mean?</h2>
+  <p>Agentic AI means AI that can act, not only answer. The word "agentic" describes how much the system decides by itself: which step comes next, which tool to call, when the job is done. A system can be a little agentic, choosing between two paths, or very agentic, planning a long task with dozens of steps.</p>
+  <p>In practice, more autonomy is not automatically better. Every decision you hand to a model is a decision that can go wrong without anyone noticing. The best business agents are agentic where judgment saves time, such as reading a website and summarizing what a company does, and tightly controlled where mistakes are expensive, such as sending an email or changing a price.</p>
+
+  <h2>How does an AI agent work?</h2>
+  <p>An AI agent works in a cycle. It starts from a goal, collects what it needs to know, plans a step, takes it with a tool, checks the result, and repeats until the goal is met or a limit is reached.</p>
+
+  <Info eyebrow="The agent loop" title="Five steps that repeat until the job is done" sub="Example goal: prepare a researched first email for each new lead in the CRM." theme="dark">
+    <Loop center="AI agent" centerSub="with a person approving what goes out" nodes={[
+      { t: 'Goal', p: 'Prepare a first email for each new lead.' },
+      { t: 'Gather', p: 'Reads the lead record, website and recent news.' },
+      { t: 'Plan', p: 'Picks the problem most likely to matter to them.' },
+      { t: 'Act', p: 'Drafts the email and notes in the CRM.' },
+      { t: 'Check', p: 'Tests the draft against rules, flags doubts.' },
+    ]} />
+  </Info>
+
+  <p>Under the hood, most agents share the same building blocks:</p>
+  <ul>
+    <li><strong>A model</strong> that reads, reasons and writes.</li>
+    <li><strong>Instructions</strong> that set the goal, the rules and the tone.</li>
+    <li><strong>Tools</strong> it can call: search, a browser, the CRM, a spreadsheet, an email draft folder.</li>
+    <li><strong>Memory</strong> of what it has done in this task, and sometimes notes from earlier tasks.</li>
+    <li><strong>Guardrails</strong>: limits on spend and steps, permissions, and points where a person must approve.</li>
+  </ul>
+
+  <h2>How is an AI agent different from a chatbot or an automation?</h2>
+  <p>A chatbot responds, an automation follows a fixed recipe, and an agent decides. The table shows the practical difference.</p>
+  <div class="table-wrap"><table>
+    <caption>Chatbot, automation and AI agent compared</caption>
+    <thead><tr><th>Question</th><th>Chatbot</th><th>Automation</th><th>AI agent</th></tr></thead>
+    <tbody>
+      <tr><td>What starts it?</td><td>A person asks something</td><td>A trigger, such as a form submission</td><td>A goal, from a person or a trigger</td></tr>
+      <tr><td>Who decides the steps?</td><td>The person, one message at a time</td><td>Whoever built the workflow, in advance</td><td>The model, within limits you set</td></tr>
+      <tr><td>Can it use other software?</td><td>Rarely</td><td>Yes, in fixed steps</td><td>Yes, choosing which tool to use and when</td></tr>
+      <tr><td>Handles messy inputs?</td><td>Answers them</td><td>Breaks or skips them</td><td>Works through them</td></tr>
+      <tr><td>Predictability</td><td>Medium</td><td>High</td><td>Lower, so it needs checks</td></tr>
+    </tbody>
+  </table></div>
+
+  <Info eyebrow="Choosing the right tool" title="Use an automation when the steps are known. Use an agent when they are not." theme="mint">
+    <Versus a="Rule-based automation" b="AI agent" caption="When each approach fits" rows={[
+      ['Best for', 'Repeat tasks with clear rules', 'Tasks that need reading, judgment or research'],
+      ['Example', 'New form lead goes to the CRM and gets a welcome email', 'New lead is researched and a tailored first email is drafted'],
+      ['Cost to run', 'Very low per run', 'Higher, depends on model usage'],
+      ['Failure mode', 'Stops when data does not match', 'Can be confidently wrong'],
+      ['Control needed', 'Test once, monitor', 'Approval steps, logs and limits'],
+    ]} />
+  </Info>
+
+  <p>Most good systems combine both. An automation handles the fixed path, for example moving a lead between tools, and calls an agent only for the one step that needs judgment. You can read more about the fixed-path side in <a href="/learn/what-is-marketing-automation/">our guide to marketing automation</a>.</p>
+
+  <h2>What are the types of AI agents?</h2>
+  <p>The classic textbook types of AI agents describe how an agent makes decisions. They are still a useful way to think about what you are buying.</p>
+  <div class="table-wrap"><table>
+    <caption>Five classic types of AI agents</caption>
+    <thead><tr><th>Type</th><th>How it decides</th><th>Marketing example</th></tr></thead>
+    <tbody>
+      <tr><td>Simple reflex</td><td>If this, then that</td><td>Tag every reply containing "unsubscribe"</td></tr>
+      <tr><td>Model-based</td><td>Keeps track of what it has seen</td><td>Remembers which leads were already contacted</td></tr>
+      <tr><td>Goal-based</td><td>Chooses steps that reach a goal</td><td>Finds the right contact at each target company</td></tr>
+      <tr><td>Utility-based</td><td>Weighs options by expected value</td><td>Ranks leads by likely deal size and fit</td></tr>
+      <tr><td>Learning</td><td>Improves from feedback</td><td>Adjusts drafts based on which ones people approved</td></tr>
+    </tbody>
+  </table></div>
+  <p>In day-to-day business, a simpler split is more useful: single-task agents that do one job well, multi-step agents that run a whole process, and multi-agent setups where several agents hand work to each other. Start with a single-task agent. It is the easiest to test and the easiest to trust.</p>
+
+  <h2>Where do AI agents help in marketing and sales?</h2>
+  <p>AI agents help most in the slow, repetitive middle of marketing and sales: research, preparation and record keeping. These are the jobs where a person spends hours and the output is easy to check.</p>
+
+  <Info eyebrow="Where agents earn their keep" title="Six jobs agents can take off a growth team" theme="dark">
+    <Flow steps={[
+      { t: 'Account research', p: 'Summarize what a company does, who buys and what changed recently.' },
+      { t: 'Lead enrichment', p: 'Fill gaps in CRM records and score fit against your buyer profile.' },
+      { t: 'First drafts', p: 'Write tailored openers and follow ups for a person to approve.' },
+      { t: 'Reply sorting', p: 'Label replies as interested, not now, referral or opt-out, and route them.' },
+      { t: 'Content repurposing', p: 'Turn one long video or article into posts, emails and captions.' },
+      { t: 'Reporting', p: 'Pull numbers from each tool into one weekly summary with notes.' },
+    ]} />
+  </Info>
+
+  <h3>AI sales agents and AI SDRs</h3>
+  <p>An AI sales agent, often sold as an AI SDR (sales development representative), promises to find prospects, write to them and book meetings with no person involved. The research and drafting parts work well. The fully autonomous sending part is where most of the risk sits: generic messages at volume trigger complaints, complaints hurt domain reputation, and a damaged domain hurts every email you send, including invoices and support.</p>
+  <p>Our approach is to let the agent prepare and the person decide. The agent researches each account and drafts the message. A person reviews a batch in minutes, edits what is off and approves the rest. You keep most of the time saving and almost none of the reputation risk.</p>
+
+  <h2>Why do so many AI agent projects fail?</h2>
+  <p>Many fail because they start too broad, cost more than expected and never prove a clear business result. Gartner predicted in June 2025 that over 40% of agentic AI projects will be canceled by the end of 2027, citing rising costs, unclear business value and weak risk controls. It also warned about "agent washing", where existing assistants, RPA tools and chatbots are relabeled as agents, and estimated that only about 130 of the thousands of vendors claiming agentic AI actually offer it.</p>
+
+  <Info eyebrow="Gartner, June 2025" title="Big expectations, and a high failure rate" theme="light" note="Source: Gartner press release, June 25, 2025. Predictions, not measured results.">
+    <Stats items={[
+      { value: 40, suf: '%+', label: 'of agentic AI projects predicted to be canceled by end of 2027' },
+      { value: 130, pre: '~', label: 'vendors Gartner estimates offer real agentic AI' },
+      { value: 15, suf: '%', label: 'of day-to-day work decisions predicted to be made autonomously by 2028' },
+      { value: 33, suf: '%', label: 'of enterprise software apps predicted to include agentic AI by 2028' },
+    ]} />
+  </Info>
+
+  <p>The common failure pattern is easy to avoid once you see it: a vague goal, broad permissions, no baseline and no person checking the output. The fix is the opposite of each.</p>
+  <ul>
+    <li><strong>Wrong answers stated confidently.</strong> Keep a person approving anything customer-facing.</li>
+    <li><strong>Runaway costs.</strong> Cap steps and spend per task, and log every run.</li>
+    <li><strong>Too much access.</strong> Give each agent only the tools and data its job needs.</li>
+    <li><strong>Instructions hidden in content.</strong> Web pages and emails can contain text meant to steer an agent. Treat everything an agent reads as information, never as orders.</li>
+  </ul>
+
+  <h2>How do you create an AI agent for your business?</h2>
+  <p>Create an AI agent the same way you would hire for a new role: define one job, write down what good looks like, give limited access, and review the work before trusting it with more.</p>
+  <ol>
+    <li><strong>Pick one narrow, repeat task.</strong> Something done weekly, slow for people and easy to check, such as researching new leads.</li>
+    <li><strong>Write the instructions.</strong> The goal, the rules, examples of good and bad output, and when to stop and ask.</li>
+    <li><strong>Connect the minimum tools.</strong> Read access where possible, and drafts instead of sends.</li>
+    <li><strong>Run it in draft mode.</strong> A person approves every output for the first weeks, and you record the time saved.</li>
+    <li><strong>Measure and widen slowly.</strong> Only remove checks where the error rate is proven low and the cost of a mistake is small.</li>
+  </ol>
+  <p>Tools such as n8n now include an AI Agent node that plugs a model and its tools into an ordinary workflow, which makes this kind of controlled agent practical without a custom software project.</p>
+
+  <h2>How do we use AI agents at Grow Revenue?</h2>
+  <p>We build agents into the systems we already run for clients, never as a standalone experiment. Typical jobs are researching leads, sorting replies, preparing content from long recordings, updating the CRM and assembling weekly reports, built in n8n, Make or Zapier. In every case a person approves what goes out to customers. If that sounds useful, see our <a href="/ai-automation/">AI automation service</a> or the <a href="/lead-generation/">lead generation</a> work it usually supports.</p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://www.anthropic.com/research/building-effective-agents" rel="noopener">Anthropic: Building effective agents</a></li>
+    <li><a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027" rel="noopener">Gartner: Over 40% of agentic AI projects will be canceled by end of 2027</a></li>
+    <li><a href="https://www.ibm.com/think/topics/ai-agents" rel="noopener">IBM: What are AI agents?</a></li>
+    <li><a href="https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/" rel="noopener">n8n documentation: AI Agent node</a></li>
+  </ul>
+</Article>
