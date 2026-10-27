@@ -1,10 +1,16 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Timeline from '../components/info/Timeline.astro';
 const faq: [string, string][] = [
   ['Who owns the domains and mailboxes?', 'You do. Domains are registered in your name and mailboxes are created in your Google Workspace or Microsoft 365 account. If we stop working together, everything keeps running without us.'],
   ['How long before we can start sending?', 'New mailboxes need about two weeks of gradual warmup before full volume. Setup itself takes 5 to 14 days depending on the package, and warmup starts on day one.'],
   ['Do you provide the lead list?', 'We review and clean the list you have, and can advise on sources. Building lists is a separate job, quoted on its own.'],
   ['Which sending tool do you use?', 'Instantly or Smartlead in most setups, because both handle mailbox rotation and warmup well. If you already pay for another tool we set that one up instead.'],
+  ['Do the Gmail and Yahoo sender rules apply to cold email?', 'The strictest rules apply to bulk senders, around 5,000 messages a day to personal Gmail accounts, but the basics apply to everyone: authenticate with SPF and DKIM, publish DMARC, and keep complaints low. We set every domain up to the bulk standard so growth never breaks it.'],
+  ['How many follow-ups should a cold email get?', 'Two or three follow-ups, spaced a few days apart, is enough for most offers. Each one should add something new: a different angle, a short proof point or a simpler question. After that, stop and move the contact to a later list.'],
 ];
 ---
 <Service slug="cold-email-infrastructure"
@@ -16,6 +22,19 @@ const faq: [string, string][] = [
 
   <h2>Why should cold email never go out from your main domain?</h2>
   <p>Cold email should never go out from your main domain because one bad campaign can damage that domain's reputation for weeks. When that happens, your invoices, proposals and client replies start landing in spam too. Separate sending domains, such as tryacme.com for acme.com, keep that risk away from the address your business runs on.</p>
+
+  <h2>How has cold emailing changed since 2024?</h2>
+  <p>Cold emailing changed from a volume game into a reputation game. In February 2024 Google and Yahoo started enforcing new requirements for anyone sending close to 5,000 messages a day to their users, and in May 2025 Microsoft followed for Outlook.com, Hotmail and Live addresses. Senders who skip authentication or collect too many spam complaints now get filtered or rejected, not just slowed down.</p>
+  <p>For a cold email program, three things matter most. Every sending domain needs SPF, DKIM and a DMARC record. The spam complaint rate has to stay low: Google asks senders to keep it below 0.1% and never reach 0.3%. And because complaints are now measured so closely, sending fewer, better targeted emails beats sending more.</p>
+
+  <Info eyebrow="What changed" title="How the inbox rules tightened between 2024 and 2025" sub="Dates and thresholds from Google's and Microsoft's published sender requirements." theme="dark">
+    <Timeline items={[
+      { when: 'Feb 2024', t: 'Gmail and Yahoo raise the bar', p: 'Bulk senders must pass SPF and DKIM, publish DMARC and keep spam complaints low.' },
+      { when: 'Jun 2024', t: 'One-click unsubscribe and 0.3%', p: 'Promotional mail needs one-click unsubscribe; senders above a 0.3% spam rate lose mitigation.' },
+      { when: 'May 2025', t: 'Outlook starts rejecting', p: 'Microsoft rejects non-compliant mail from senders of 5,000+ messages a day to its consumer inboxes.' },
+      { when: 'Nov 2025', t: 'Gmail enforcement ramps up', p: 'Google steps up enforcement on traffic that still does not meet the requirements.' },
+    ]} />
+  </Info>
 
   <h2>How many domains and mailboxes do you need?</h2>
   <p>You need enough mailboxes that none of them sends more than about 30 cold emails a day. That is the per-mailbox ceiling we work to, and the sizing below follows from it.</p>
@@ -30,7 +49,18 @@ const faq: [string, string][] = [
   </table></div>
   <p>Follow-ups count toward the daily total, so a three-step sequence to 100 new contacts a day settles at roughly 300 sends a day once all steps are running.</p>
 
-  <h2>What does a cold email that gets replies look like?</h2>
+  <Info eyebrow="The setup" title="From empty domain to first reply in six steps" theme="mint">
+    <Flow steps={[
+      { t: 'Buy domains', p: 'Lookalike sending domains, registered in your name.' },
+      { t: 'Authenticate', p: 'SPF, DKIM and DMARC published and tested on every domain.' },
+      { t: 'Warm up', p: 'About two weeks of gradual, low-volume sending.' },
+      { t: 'Verify the list', p: 'Every address checked; risky ones removed.' },
+      { t: 'Launch slowly', p: 'Low daily volume, stepped up as placement holds.' },
+      { t: 'Monitor', p: 'Bounces, replies and placement checked every week.' },
+    ]} />
+  </Info>
+
+  <h2>How do you write a cold email that gets replies?</h2>
   <p>A cold email that gets replies is short, about one specific problem, and asks one easy question. Ours follow four rules:</p>
   <ol>
     <li><strong>A reason for writing to this person.</strong> Something observable about their business, not a compliment.</li>
@@ -39,6 +69,34 @@ const faq: [string, string][] = [
     <li><strong>A question they can answer in one word.</strong> "Worth a look?" beats "Can we book 30 minutes?"</li>
   </ol>
   <p>No images, no attachments, one link at most, plain text. Open and click tracking stays off in most setups because tracking pixels and redirected links are themselves spam signals.</p>
+  <p>Length matters too. If the email needs scrolling on a phone, it is too long. Most of ours land between 50 and 120 words, because the only job of the first email is to earn a reply, not to close the sale.</p>
+
+  <h2>What makes a good cold email subject line?</h2>
+  <p>A good cold email subject line looks like it came from a colleague, not a campaign. It is short, specific and lower case, and it hints at the reason for writing without overselling it.</p>
+  <div class="table-wrap"><table>
+    <caption>Subject line patterns we use and avoid</caption>
+    <thead><tr><th>Pattern</th><th>Example</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Their trigger</td><td>new clinic in leeds</td><td>Shows you noticed something real</td></tr>
+      <tr><td>The problem</td><td>no-shows on booked calls</td><td>Names the pain in their words</td></tr>
+      <tr><td>A peer result</td><td>how a law firm tripled leads</td><td>Earns curiosity with proof</td></tr>
+      <tr><td>Avoid: hype</td><td>Quick question!!! Huge opportunity</td><td>Reads as spam to people and filters</td></tr>
+      <tr><td>Avoid: fake reply</td><td>Re: our call</td><td>Breaks trust the moment it is opened</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How should you follow up a cold email?</h2>
+  <p>You should follow up a cold email two or three times, and every follow-up should add something new. Most replies arrive after the first email, not on it, so stopping after one message leaves most of the result on the table. Sending the same message again with "just bumping this" does the opposite: it adds annoyance without adding a reason to answer.</p>
+  <div class="table-wrap"><table>
+    <caption>A three-step follow-up sequence</caption>
+    <thead><tr><th>Step</th><th>When</th><th>What it adds</th></tr></thead>
+    <tbody>
+      <tr><td>Email 1</td><td>Day 1</td><td>The reason for writing, the problem and one easy question</td></tr>
+      <tr><td>Follow-up 1</td><td>Day 3 or 4</td><td>A short proof point from a similar company</td></tr>
+      <tr><td>Follow-up 2</td><td>Day 7 or 8</td><td>A different angle on the same problem</td></tr>
+      <tr><td>Follow-up 3</td><td>Day 12 to 14</td><td>A polite close: is this a priority, or should I stop?</td></tr>
+    </tbody>
+  </table></div>
 
   <h2>What do our cold email services set up in the first 30 days?</h2>
   <p>The first 30 days move from setup to full sending volume in four stages. Nothing goes out at volume until the checks in stage two pass.</p>
@@ -54,8 +112,34 @@ const faq: [string, string][] = [
   </table></div>
   <p>The list is verified before every launch. Sending to addresses that bounce is the fastest way to burn a new domain, so any list with a bounce risk above 2% is cleaned before it is loaded.</p>
 
+  <h2>Which cold email software do we use?</h2>
+  <p>We use Instantly or Smartlead in most setups. Cold email software does a different job from a newsletter tool: it sends one-to-one plain text emails from many mailboxes, spreads volume across them, stops a sequence the moment someone replies, and pulls every reply into one inbox. Newsletter tools like Mailchimp or Klaviyo are built for opted-in lists and are the wrong tool for outreach.</p>
+  <p>The software matters less than how it is configured. Daily limits per mailbox, gaps between sends, reply detection and a clean unsubscribe path decide more of the outcome than the brand of the tool.</p>
+
+  <h2>How do you test cold email deliverability?</h2>
+  <p>You test cold email deliverability by checking each piece of the chain before and during sending, not by waiting for replies to drop. We run four checks:</p>
+  <ul>
+    <li><strong>Authentication check.</strong> SPF, DKIM and DMARC pass on every sending domain, and the domains align with the From address.</li>
+    <li><strong>Placement test.</strong> Test emails sent to seed inboxes at Gmail, Outlook and other providers show whether mail lands in the inbox, a tab or spam.</li>
+    <li><strong>Blacklist check.</strong> Sending domains and IPs are checked against the major blocklists.</li>
+    <li><strong>Bounce and reply watch.</strong> A rising bounce rate or a sudden drop in replies is often the first sign of a problem, so we track both weekly.</li>
+  </ul>
+  <p>For a full review of an existing setup, see our <a href="/email-deliverability/">email deliverability</a> service.</p>
+
+  <Info eyebrow="Measured results" title="What well-built outreach produced for three clients" sub="Numbers from the Scalability, Maestro and Soulful Evolution case studies, measured on those campaigns." note="Your results depend on your list, offer and market.">
+    <Stats items={[
+      { value: 45, suf: '%', label: 'cold email open rate', sub: 'Scalability, B2B services' },
+      { value: 42, suf: '%', label: 'open rate on segmented campaigns', sub: 'Maestro, creator platform' },
+      { value: 65, pre: '+', suf: '%', label: 'sign-ups from cold email and LinkedIn', sub: 'Maestro' },
+      { value: 46, suf: '%', label: 'cold email open rate', sub: 'Soulful Evolution, coaching' },
+    ]} />
+  </Info>
+
+  <p>See the full stories in the <a href="/case-studies/scalability/">Scalability</a>, <a href="/case-studies/maestro/">Maestro</a> and <a href="/case-studies/soulful-evolution/">Soulful Evolution</a> case studies.</p>
+
   <h2>Is cold email legal in the US, UK and EU?</h2>
   <p>Cold email to businesses is legal in the US, UK and EU when you follow each region's rules. In the US, the <a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" rel="noopener">CAN-SPAM Act</a> requires an accurate sender, a physical address and a working opt-out. In the UK, <a href="https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/" rel="noopener">PECR</a> allows unsolicited email to corporate addresses but treats sole traders and some partnerships as individuals who must consent first. In the EU, GDPR allows business outreach under legitimate interest if you can justify it and honor objections. This is a summary, not legal advice.</p>
+  <p>Sources for the sender rules above: <a href="https://support.google.com/a/answer/14229414" rel="noopener">Google's email sender guidelines FAQ</a> and <a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730" rel="noopener">Microsoft's requirements for high-volume senders</a>.</p>
 
   <p>We also build and maintain OutPumper, an Outlook add-in for sending outreach from your own Microsoft 365 mailboxes. If your team lives in Outlook, ask about it on the call.</p>
 </Service>

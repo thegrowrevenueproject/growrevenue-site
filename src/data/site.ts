@@ -64,7 +64,7 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    slug: 'funnel-audit', icon: 'funnel', group: 'Convert', query: 'funnel audit', nav: 'Funnels and conversion', card: 'Funnels and conversion',
+    slug: 'funnel-audit', icon: 'funnel', group: 'Convert', query: 'conversion rate optimization services', nav: 'Funnels and conversion', card: 'Funnels and conversion',
     blurb: 'We measure drop-off at every step from first click to purchase, then rebuild the pages, forms, follow-up and automation that leak revenue.',
     from: 500,
     tiers: [

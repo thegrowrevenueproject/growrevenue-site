@@ -1,10 +1,16 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Stats from '../components/info/Stats.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['Do you book the meetings for me?', 'We run outreach and follow-up until a prospect agrees to a call, then hand over the booked meeting with the full conversation history. You or your sales team run the sales call.'],
   ['Where do the contacts come from?', 'We build lists from business data sources and the company websites themselves, verify every email address before sending, and remove anyone who has opted out. You can supply your own target list too.'],
   ['Is cold outreach allowed?', 'Business outreach is legal in the US, UK and EU when you follow each region\'s rules: an accurate sender, a working opt-out, and in the UK and EU a legitimate business reason and extra care with sole traders. We build those rules into every campaign.'],
   ['How fast will leads come in?', 'New sending infrastructure needs about two weeks of warmup, so the first replies usually arrive in weeks three to four. Paid search and lead magnet campaigns can start producing leads in the first week.'],
+  ['Do you charge per lead?', 'No. Pay per lead rewards volume, not quality, so the incentive is to count weak contacts as leads. We agree a scope and a definition of a qualified lead up front, and report against booked meetings and revenue.'],
+  ['Can you work alongside our sales team?', 'Yes. Most clients keep their own closers. We fill their calendars, pass every conversation into the CRM, and meet with the sales lead each week to hear which meetings turned into deals so targeting keeps improving.'],
 ];
 ---
 <Service slug="lead-generation"
@@ -14,8 +20,31 @@ const faq: [string, string][] = [
   answer="We are a lead generation company that builds one system instead of one tactic. Cold email, LinkedIn outreach, lead magnets and paid search all point at the same buyers, every reply is followed up within minutes, and success is measured by booked meetings and closed revenue, not by the number of names on a list."
   cases={['scalability', 'soulful-evolution']} serviceType="B2B lead generation" faq={faq}>
 
+  <h2>What is lead generation?</h2>
+  <p>Lead generation is the work of finding people who could buy from you and getting them to raise their hand: reply to a message, download a guide, book a call or ask for a quote. A lead is a named person with a way to contact them and a sign of interest. Traffic, followers and impressions are not leads until someone takes that step.</p>
+  <p>There are two broad ways to do it. Inbound lead generation attracts people who are already looking, through search, content and ads. Outbound lead generation starts the conversation yourself, through cold email, LinkedIn and calls. Most businesses that grow steadily run both, because inbound is cheaper per lead once it works and outbound lets you choose exactly who you talk to.</p>
+
   <h2>What does a lead generation company do?</h2>
   <p>A good lead generation partner finds the businesses or people most likely to buy from you, starts conversations with them, and hands you the ones who are ready to talk. The value is in three things done well at the same time: choosing the right targets, reaching them in a way that gets a reply, and following up fast enough that interest does not go cold.</p>
+
+  <Info eyebrow="The system" title="How one lead moves from a name on a list to a meeting in your calendar" sub="Every campaign we run follows the same six steps. A miss at any one of them costs more than a weak message.">
+    <Flow steps={[
+      { tag: 'Target', t: 'Define the buyer', p: 'Title, industry, company size and the trigger that makes now a good time.' },
+      { tag: 'Build', t: 'Build and verify the list', p: 'Every address checked before it is used, opt-outs removed.' },
+      { tag: 'Reach', t: 'Start the conversation', p: 'Cold email and LinkedIn with one message, plus search and ads for people already looking.' },
+      { tag: 'Reply', t: 'Answer the same day', p: 'Interested replies get a booking link within working hours.' },
+      { tag: 'Qualify', t: 'Check fit and timing', p: 'Only leads that pass the agreed definition are counted.' },
+      { tag: 'Book', t: 'Hand over the meeting', p: 'Booked in your calendar with the full conversation attached.' },
+    ]} />
+  </Info>
+
+  <h2>How is B2B lead generation different?</h2>
+  <p>B2B lead generation sells to a business, so you are rarely persuading one person. A typical deal involves someone who feels the problem, someone who owns the budget and someone who has to approve the change. That changes the work in three ways.</p>
+  <ul>
+    <li><strong>Targeting is by role and company, not by interest.</strong> We can name the exact people we want to reach, which is why outbound works so well for B2B.</li>
+    <li><strong>The message has to survive being forwarded.</strong> The person who replies often passes it to a colleague, so the email has to make sense without you there to explain it.</li>
+    <li><strong>The sale takes longer.</strong> A lead who says "not this quarter" is still worth a planned follow-up, so nurture matters as much as the first message.</li>
+  </ul>
 
   <h2>Which lead generation channels work best?</h2>
   <p>The best channel depends on your average sale and how your buyers make decisions. Most clients use two or three of these together:</p>
@@ -30,8 +59,35 @@ const faq: [string, string][] = [
     </tbody>
   </table></div>
 
+  <h2>When does outbound lead generation beat inbound?</h2>
+  <p>Outbound lead generation wins when your buyers are easy to name but hard to attract: a narrow market, a high price, or a service people do not search for because they do not know it exists yet. Inbound wins when demand already exists and people search for the answer. The comparison below is how we decide where a budget goes first.</p>
+
+  <Info eyebrow="Inbound vs outbound" title="Two ways to fill a pipeline, and when each one wins" theme="mint">
+    <Versus a="Inbound" b="Outbound" caption="How inbound and outbound lead generation compare" win="b" rows={[
+      ['Who starts it?', 'The buyer, by searching, reading or clicking an ad', 'You, by reaching a named person first'],
+      ['Control over who you talk to', 'Low: anyone who finds you', 'High: you choose every company and role'],
+      ['Speed to first leads', 'Days for paid search, months for SEO', 'Three to four weeks including mailbox warmup'],
+      ['Best for', 'Products people already search for', 'Narrow markets, high-value deals, new categories'],
+      ['Main risk', 'Paying for clicks that never convert', 'Hurting your domain with careless sending'],
+    ]} />
+  </Info>
+
+  <h2>Which lead generation strategies work in 2026?</h2>
+  <p>The strategies that keep working are the ones that make each message more relevant, not the ones that send more of them. These are the five we use most:</p>
+  <ol>
+    <li><strong>Trigger-based targeting.</strong> Reach companies when something just changed: a new hire in the buying role, a funding round, a new location, a product launch. A reason to write today beats a perfect list from last year.</li>
+    <li><strong>One message across channels.</strong> The same offer by email, on LinkedIn and in retargeting ads, so a prospect meets you more than once with a consistent story.</li>
+    <li><strong>A lead magnet worth the email address.</strong> A checklist, calculator or short audit that solves part of the problem and shows how you think.</li>
+    <li><strong>Fast, human follow-up.</strong> Most interest fades within a day. Replies answered within working hours convert far better than replies answered next week.</li>
+    <li><strong>A feedback loop from sales.</strong> Every closed deal and every lost one goes back into targeting, so the list gets better each month.</li>
+  </ol>
+
   <h2>What counts as a qualified lead?</h2>
   <p>A qualified lead meets three tests: they fit the profile of your best customers, they have shown interest by replying, downloading or booking, and they can actually buy, meaning the right role, the budget and a need now or soon. We agree the definition with you before launch and report only leads that pass it.</p>
+
+  <h2>Do you offer appointment setting services?</h2>
+  <p>Yes, appointment setting is built into every outbound campaign rather than sold as an extra. When a prospect shows interest, we answer their questions, confirm they fit, and book a time directly in your calendar. Before the call they get a confirmation and reminders, and you get a short brief: who they are, what they said, and why they agreed to talk.</p>
+  <p>What we do not do is pretend to be your sales team on the call itself. The person who can answer pricing and scope questions should run the meeting. Our job is to make sure that person spends their week talking to buyers, not chasing them.</p>
 
   <h2>What results have our lead generation campaigns produced?</h2>
   <div class="table-wrap"><table>
@@ -44,6 +100,19 @@ const faq: [string, string][] = [
       <tr><td><a href="/case-studies/maestro/">Maestro</a> (creator platform)</td><td>Segmented cold email and LinkedIn</td><td>65% more sign-ups, 42% open rate</td></tr>
     </tbody>
   </table></div>
+
+  <Info eyebrow="Measured results" title="What one connected lead system produced for two clients" sub="Numbers from the Scalability and Soulful Evolution case studies, over the periods stated on each case page." note="Results depend on your offer, market and sales follow-up.">
+    <Stats items={[
+      { value: 150, suf: '+', label: 'qualified leads a month', sub: 'Scalability, B2B services' },
+      { value: 40, suf: '%', label: 'of leads became meetings', sub: 'Scalability' },
+      { value: 300, suf: '+', label: 'leads a month across channels', sub: 'Soulful Evolution, coaching' },
+      { value: 500, pre: '$', suf: 'K', label: 'new annual revenue from enrollments', sub: 'Soulful Evolution' },
+    ]} />
+  </Info>
+
+  <h2>What does a lead generation example look like?</h2>
+  <p>Here is how a campaign is put together, using <a href="/case-studies/scalability/">Scalability</a> as the example. They needed meetings with decision-makers and their outreach ran in separate channels with no shared message. We wrote cold email sequences per segment, each with a relevant case study and one clear ask. The same decision-makers received personal LinkedIn connection requests and follow-ups, so they met the message twice. Google Ads captured people already searching, sending them to landing pages that matched each ad. The result was 150+ qualified leads a month and 50+ consultations booked in the first three months.</p>
+  <p>The lesson from that example applies almost everywhere: the channels were ordinary. What changed the numbers was that they finally said the same thing to the same people, and every reply had an owner.</p>
 
   <h2>How do we keep outreach out of spam?</h2>
   <p>We keep outreach out of spam by never sending it from your main domain, verifying every address before it is used, keeping daily volumes per mailbox low, and writing short, relevant messages that people reply to. Our <a href="/email-deliverability/">email deliverability</a> work is the foundation under every outbound campaign.</p>
