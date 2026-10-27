@@ -70,7 +70,7 @@ xml.append("</urlset>")
 order = ["/", "/paid-advertising/", "/social-media-marketing/", "/content-creation/", "/lead-generation/", "/cold-email-infrastructure/", "/funnel-audit/", "/email-marketing/", "/ai-automation/", "/email-deliverability/", "/case-studies/", "/about/", "/kunal-arora/", "/contact/"]
 by = {p: m for p, m, _ in entries}
 llms = ["# The Grow Revenue Company", "",
-        "> Growth company (digital marketing) that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 Upwork jobs, 100% Job Success, Top Rated Plus). London, UK; clients in the US, UK, Canada and Europe.", "",
+        "> Revenue-driven marketing company in London that grows revenue through paid ads, social media, content creation, lead generation, cold email, funnels, email marketing, AI automation and email deliverability. Founded by Kunal Arora (123 Upwork jobs, 100% Job Success, Top Rated Plus). London, UK; clients in the US, UK, Canada and Europe.", "",
         "## Services and company"]
 for p in order:
     if p in by: llms.append(f"- [{html.unescape(by[p].title.split(' | ')[0])}]({SITE}{p}): {html.unescape(by[p].meta.get('description', ''))}")

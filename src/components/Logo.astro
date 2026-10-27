@@ -1,8 +1,10 @@
 ---
+// Mark: three quarter-discs, each growing from the last (compounding revenue). Abstract, reads at 16px.
 const { size = 30 } = Astro.props;
 ---
-<svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-  <rect width="32" height="32" rx="9" fill="#0B3D2E" />
-  <path d="M8 21.5 L13.5 15.5 L17.5 19 L24 11" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M19.5 11 H24 V15.5" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" focusable="false" class="mark">
+  <rect width="64" height="64" rx="16" fill="#07110C" />
+  <path d="M13 51A7 7 0 0 1 20 44V51Z" fill="#2B8A5C" />
+  <path d="M20 44A12 12 0 0 1 32 32V44Z" fill="#43C483" />
+  <path d="M32 32A19 19 0 0 1 51 13V32Z" fill="#A6F2C8" />
 </svg>

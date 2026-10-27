@@ -1,17 +1,17 @@
 {
  "/": {
-  "hash": "e81d72d25f68c4fc99bb1b5874d681f88fe81ed87aacb1c2dddb0c751ccc4e2b",
+  "hash": "cf9c9d3d68a2798a967ceb7aea7ee7c708e1f67bbc70f4b9c1f424cd3577b990",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 2864
+  "words": 2987
  },
  "/about/": {
-  "hash": "560f036e169261eb12700681fa9e75bb00b4fc4471336814881a47f3d68aef4a",
+  "hash": "1354dd61d81d3d0c03874953fe816ff63fcf1dfb90c956f61ab80ad87ef790dc",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 575
+  "words": 577
  },
  "/ai-automation/": {
   "hash": "773bfd7da493393216ea4bb41763bada382274d7f745df73cebba9938cd671a2",
@@ -70,11 +70,11 @@
   "words": 376
  },
  "/cold-email-infrastructure/": {
-  "hash": "5bc1226cf1796c4e85ef20e261e5a029a425ff07e169da665ad9f24bf771f5df",
+  "hash": "4677b8d541bc4ba362099d49cc593b9f1e4828512932c6eed9bd1f212de9e3b1",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1101
+  "words": 1103
  },
  "/contact/": {
   "hash": "a399b9bc6f8fdf1bdb23129103e8806079554a9b648e6b037c87fe91fa776c92",
@@ -84,11 +84,11 @@
   "words": 159
  },
  "/content-creation/": {
-  "hash": "5375443b1a4bf5654f0490c597bfe761fc4e5304577fadf54cc896056907404a",
+  "hash": "a21595d33a83687abceadb37f6eda223f27143e4769e07fd1b57268e5580f20b",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1032
+  "words": 1034
  },
  "/editorial-policy/": {
   "hash": "41062df168d520be36dae3af0ac68bb1fb59609598651226fdb5ee20e40a89a3",
@@ -97,25 +97,25 @@
   "words": 228
  },
  "/email-deliverability/": {
-  "hash": "71a49d5f2924ce34201ab7836e13e5b1eeb450279ca6c7715fe4819fb7f4ff5b",
+  "hash": "03f56cf8e8886ec4287bfd614f17814e2916c5fe4f6d273c5c58cf3d05ce8aa7",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1188
+  "words": 1190
  },
  "/email-marketing/": {
-  "hash": "68c8adba85b892ebf7b6eeb1619907a7edbb7e01010dbb43b72fcec6fc818988",
+  "hash": "e9b2d81c5e1153638253522e50b039ff31735df5877fb15b316474b6a12f3d47",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1099
+  "words": 1101
  },
  "/funnel-audit/": {
-  "hash": "f7e0d9ec7723468561ba108c29716405d1949fb062aea3c03dcd84e13b4a969e",
+  "hash": "2410accef99152a9a8d6b4b421b0e574680cab358b41eb92ad7ffedd7c70c793",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-26",
-  "words": 1037
+  "words": 1039
  },
  "/kunal-arora/": {
   "hash": "0a5d930af7541e6cf3a452f7f674ecf09501d7d6c60561f2f80669d06cc5aaca",
@@ -125,11 +125,11 @@
   "words": 106
  },
  "/lead-generation/": {
-  "hash": "40766f6cad0fb5f064808ac7b13003b4027ae419e2f8d5e4c2e2d05a6418aeb0",
+  "hash": "0585c98b016e7d20959659c9ba80dc5894461fbdc84623138f4b320afa38ec5b",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1035
+  "words": 1037
  },
  "/lifecycle-email-marketing/": {
   "hash": "b1993b85114f6af06819d478e0521ed3d92e5ca7c62dd4f8e257767aea33134a",
@@ -139,11 +139,11 @@
   "words": 902
  },
  "/paid-advertising/": {
-  "hash": "97555fb57303dbe4a5c2f3ef9c721988f532164f97c71b2f0b83ff989a6bacd9",
+  "hash": "0d0ea1b9454351054f6ae3d7d18d8a5919786b8a057bfe18590e10f9dfca3fb2",
   "material": "2026-10-27",
   "modified": "2026-10-27",
   "published": "2026-10-27",
-  "words": 1056
+  "words": 1058
  },
  "/privacy/": {
   "hash": "76f83ece99bf50f8c871a190defcd81799a776c0ef147c6e22726476166de869",

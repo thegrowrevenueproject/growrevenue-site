@@ -121,6 +121,9 @@
   const pins = $$('[data-pin-steps]').map((p) => ({ p, steps: $$('[data-step]', p), navs: $$('[data-step-nav]', p), fill: p.querySelector('.pin-fill') }));
   const hs = $$('[data-hscroll]').map((h) => ({ h, track: h.querySelector('.htrack') }));
   const grow = $$('[data-grow]'), zoom = $$('[data-zoom]'), px = $$('[data-parallax]');
+  const waves = $$('[data-wave]'), cards3 = $$('.hcard');
+  // scroll progress of an element through the viewport, 0 entering at the bottom, 1 leaving at the top
+  const prog = (el) => { const r = el.getBoundingClientRect(); return clamp((innerHeight - r.top) / (innerHeight + r.height)); };
 
   const sizeH = () => hs.forEach(({ h, track }) => {
     if (innerWidth < 700) { h.style.height = ''; return; }
@@ -148,6 +151,8 @@
       const r = c.getBoundingClientRect(), n = next.getBoundingClientRect();
       const cover = clamp(1 - (n.top - r.top) / Math.max(1, r.height));
       c.style.setProperty('--cover', cover.toFixed(3));
+      const stuck = r.top <= (parseFloat(getComputedStyle(c).top) || 0) + 2;
+      c.style.setProperty('--fade', stuck ? clamp((r.bottom - n.top + 120) / 180).toFixed(3) : '0');
     }));
 
     pins.forEach(({ p, steps, navs, fill }) => {
@@ -157,6 +162,7 @@
       steps.forEach((s, j) => s.classList.toggle('on', j === k));
       navs.forEach((s, j) => { s.classList.toggle('on', j === k); s.classList.toggle('done', j < k); });
       if (fill) fill.style.transform = `scaleY(${prog.toFixed(3)})`;
+      p.style.setProperty('--spin', (Math.sin(prog * Math.PI * 4) * 28).toFixed(1) + 'deg');
     });
 
     if (innerWidth >= 700) hs.forEach(({ h, track }) => {
@@ -174,6 +180,18 @@
       const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
       el.style.setProperty('--z', clamp((vh - r.top) / (vh + r.height)).toFixed(3));
     });
+    // coverflow: strip cards turn toward the centre of the screen
+    if (innerWidth >= 700) cards3.forEach((c) => {
+      const r = c.getBoundingClientRect(); if (r.right < -100 || r.left > innerWidth + 100) return;
+      const k = clamp(((r.left + r.width / 2) - innerWidth / 2) / (innerWidth / 2), -1, 1);
+      c.style.setProperty('--ry', (k * -32).toFixed(1) + 'deg'); c.style.setProperty('--sc', (1 - Math.abs(k) * .08).toFixed(3));
+    });
+    // gentle Y-rotation wave tied to vertical position (testimonials, team, icons)
+    waves.forEach((el) => {
+      const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
+      const k = clamp(((r.top + r.height / 2) - vh / 2) / vh, -1, 1), amp = parseFloat(el.dataset.wave) || 10;
+      el.style.setProperty(el.dataset.wavevar || '--wave', (k * amp).toFixed(2) + 'deg');
+    });
     px.forEach((el) => {
       const r = el.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
       const s = parseFloat(el.dataset.parallax) || 0.15, c = r.top + r.height / 2 - vh / 2;
@@ -189,20 +207,37 @@
 
   if (reduce) return;
 
-  // draggable 3D cube (JiroNews): auto-rotates, drag to spin
-  $$('.cube').forEach((cube) => {
-    let rx = -18, ry = 30, vx = 0, vy = .18, drag = false, lx = 0, ly = 0;
-    cube.addEventListener('pointerdown', (e) => { drag = true; lx = e.clientX; ly = e.clientY; cube.setPointerCapture(e.pointerId); cube.classList.add('grabbing'); });
-    cube.addEventListener('pointermove', (e) => { if (!drag) return; vy = (e.clientX - lx) * .35; vx = -(e.clientY - ly) * .35; ry += vy; rx += vx; lx = e.clientX; ly = e.clientY; });
-    const up = () => { drag = false; cube.classList.remove('grabbing'); };
-    cube.addEventListener('pointerup', up); cube.addEventListener('pointercancel', up);
-    const spin = () => {
-      if (!drag) { vy += (.18 - vy) * .03; vx *= .94; ry += vy; rx = clamp(rx + vx, -60, 60); }
-      cube.firstElementChild.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-      requestAnimationFrame(spin);
-    };
-    spin();
+  // scroll-driven 3D objects: data-spin="ry:-20:340;rx:-12:12" maps scroll progress to rotation,
+  // data-idle="ry:8" adds slow drift in degrees per second, data-drag lets the pointer add rotation.
+  const spins = $$('[data-spin]').map((el) => {
+    const parse = (v) => Object.fromEntries((v || '').split(';').filter(Boolean).map((x) => { const [k, a, b] = x.split(':'); return [k.trim(), [+a, b === undefined ? +a : +b]]; }));
+    const o = { el, t: el.querySelector('.p3d') || el, map: parse(el.dataset.spin), idle: parse(el.dataset.idle), page: el.dataset.src === 'page', dx: 0, dy: 0, vis: true, ring: el.matches('.ring3d') ? $$('.p3d > a', el) : null };
+    if (el.hasAttribute('data-drag')) {
+      let on = false, lx = 0, ly = 0;
+      el.addEventListener('pointerdown', (e) => { on = true; lx = e.clientX; ly = e.clientY; el.setPointerCapture(e.pointerId); el.classList.add('grabbing'); });
+      el.addEventListener('pointermove', (e) => { if (!on) return; o.dy += (e.clientX - lx) * .4; o.dx = clamp(o.dx - (e.clientY - ly) * .4, -50, 50); lx = e.clientX; ly = e.clientY; });
+      const up = () => { on = false; el.classList.remove('grabbing'); };
+      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+    }
+    return o;
   });
+  const sio = new IntersectionObserver((es) => es.forEach((e) => { const o = spins.find((x) => x.el === e.target); if (o) o.vis = e.isIntersecting; }), { rootMargin: '100px' });
+  spins.forEach((o) => sio.observe(o.el));
+  const t0 = performance.now();
+  const spinLoop = (now) => {
+    const sec = (now - t0) / 1000;
+    spins.forEach((o) => {
+      if (!o.vis) return;
+      const p = o.page ? clamp(scrollY / (innerHeight * 1.4)) : prog(o.el);
+      const v = (k) => { const m = o.map[k]; return (m ? m[0] + (m[1] - m[0]) * p : 0) + (o.idle[k] ? o.idle[k][0] * sec : 0); };
+      const ry = v('ry') + o.dy;
+      o.t.style.transform = `rotateX(${(v('rx') + o.dx).toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${v('rz').toFixed(2)}deg)`;
+      // ring: only tiles facing the viewer stay visible, so side tiles never sit over front ones
+      if (o.ring) o.ring.forEach((a, k) => { const c = Math.cos((ry + k * 40) * Math.PI / 180), op = c > .62 ? 1 : 0; a.style.opacity = op.toFixed(2); a.style.pointerEvents = op > .5 ? '' : 'none'; a.tabIndex = op > .5 ? 0 : -1; });
+    });
+    requestAnimationFrame(spinLoop);
+  };
+  if (spins.length) requestAnimationFrame(spinLoop);
 
   // googly eyes follow the pointer (Growlio footer)
   const pupils = $$('.pupil');

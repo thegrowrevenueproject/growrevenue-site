@@ -16,6 +16,9 @@ const sameAs = [SITE.linkedin, SITE.upwork].filter(Boolean);
 const org = {
   '@type': 'Organization', '@id': SITE.url + '/#org', name: SITE.name, legalName: SITE.legalName, url: SITE.url,
   logo: SITE.url + '/logo.png', email: SITE.email,
+  description: 'A revenue-driven marketing company in London that grows revenue through paid ads, social media, content, lead generation, email marketing, funnels and AI automation, measured by revenue.',
+  slogan: 'Revenue-driven marketing', areaServed: ['US', 'GB', 'CA', 'EU'],
+  knowsAbout: ['Paid advertising', 'PPC management', 'Social media marketing', 'Content creation', 'Lead generation', 'Cold email', 'Email marketing', 'Conversion funnels', 'Marketing automation', 'AI automation', 'Email deliverability'],
   address: { '@type': 'PostalAddress', streetAddress: SITE.address.street, addressLocality: SITE.address.city, postalCode: SITE.address.postcode, addressCountry: SITE.address.country },
   founder: { '@id': SITE.url + '/kunal-arora/#person' },
   ...(sameAs.length ? { sameAs } : {}),
@@ -48,7 +51,7 @@ const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="alternate" type="application/rss+xml" title="The Grow Revenue Company blog" href="/rss.xml" />
-  <meta name="theme-color" content="#0B3D2E" />
+  <meta name="theme-color" content="#07110C" />
   <meta property="og:type" content={pageType === 'article' ? 'article' : 'website'} />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:title" content={title} />

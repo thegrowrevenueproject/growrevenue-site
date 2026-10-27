@@ -10,17 +10,18 @@ const { slug, title, description, h1, answer, cases, serviceType, faq = [] } = A
 const s = svc(slug);
 const path = '/' + slug + '/';
 const related = CASES.filter((c) => cases.includes(c.slug));
-const people: Record<string, [string, string]> = {
-  'paid-advertising': ['team-tablet', 'Marketing team reviewing ad performance together on a tablet'],
-  'social-media-marketing': ['creator-man', 'Creator filming a social video in front of a ring light'],
-  'content-creation': ['creator-woman', 'Creator setting up a camera and ring light for a shoot'],
-  'lead-generation': ['team-trio', 'Three colleagues reviewing outreach replies together on a laptop'],
-  'cold-email-infrastructure': ['team-desk', 'Marketer setting up an outreach campaign at an office desk'],
-  'funnel-audit': ['team-strategy', 'Team mapping funnel numbers around a meeting table'],
-  'email-marketing': ['team-laptop', 'Team planning an email campaign around a laptop'],
-  'ai-automation': ['team-late', 'Team reviewing automated reports together in the evening'],
-  'email-deliverability': ['team-planning', 'Team discussing inbox placement results in a bright office'],
+const people: Record<string, [string, string, string]> = {
+  'paid-advertising': ['adsdesk', 'Media buyer watching ad performance graphs climb on two monitors', '800" height="450'],
+  'social-media-marketing': ['streamer', 'Musician live streaming to followers from a home studio', '800" height="604'],
+  'content-creation': ['editor', 'Video editor cutting a short vertical ad in a dark suite', '800" height="450'],
+  'lead-generation': ['salescall', 'Saleswoman booking a sales meeting on a video call', '800" height="604'],
+  'cold-email-infrastructure': ['b2bwindow', 'Consultant on a call with a prospect by a city window', '800" height="604'],
+  'funnel-audit': ['strategists', 'Two strategists mapping funnel numbers late at night', '800" height="450'],
+  'email-marketing': ['emailmacro', 'Hands building an email automation flow on a laptop', '800" height="450'],
+  'ai-automation': ['aiwall', 'Man watching an AI workflow map light up on a wall', '800" height="450'],
+  'email-deliverability': ['wallchart', 'Team reading inbox placement results on a wall screen', '800" height="450'],
 };
+const casePic: Record<string, string> = { 'synaps-dx': 'ecom', 'scalability': 'b2bwindow', 'maestro': 'streamer', 'soulful-evolution': 'coach', 'dimov-associates': 'lawyer', 'austere': 'artist' };
 const [pic, picAlt] = people[slug] ?? people['email-marketing'];
 const schema: object[] = [{
   '@type': 'Service', '@id': SITE.url + path + '#service', name: s.nav, serviceType, description,
@@ -42,8 +43,8 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
         </div>
       </div>
       <div class="art">
-        <div class="p" data-parallax="0.05"><img src={`/img/people/${pic}-720.webp`} srcset={`/img/people/${pic}-720.webp 720w, /img/people/${pic}-1400.webp 1400w`} sizes="(max-width: 900px) 80vw, 400px" alt={picAlt} width="720" height="480" /></div>
-        <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our ${s.query} work`} width="480" height="480" fetchpriority="high" />
+        <div class="p" data-wave="12" data-wavevar="--ry"><img src={`/img/cine/${pic}-800.webp`} srcset={`/img/cine/${pic}-800.webp 800w, /img/cine/${pic}-1600.webp 1600w`} sizes="(max-width: 900px) 80vw, 400px" alt={picAlt} width="800" height="600" /></div>
+        <img class="ico" src={`/img/3d/${s.icon}.webp`} alt={`3D icon illustrating our ${s.query} work`} width="480" height="480" fetchpriority="high" data-wave="30" data-wavevar="--spin" />
       </div>
     </div>
   </section>
@@ -59,7 +60,7 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="grow" data-grow>
-          <img src={`/img/people/${pic}-1400.webp`} alt="" width="1400" height="933" loading="lazy" />
+          <img src={`/img/cine/${pic}-1600.webp`} alt="" width="1600" height="900" loading="lazy" />
           <p class="cap">Planned, built and run by one team. <em>Measured by revenue.</em></p>
         </div>
       </div>
@@ -108,9 +109,9 @@ if (faq.length) schema.push({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) =
               <div class="fcard" data-cursor="Flip">
                 <div class="fcard-inner">
                   <div class="fcard-front">
-                    <span class="av" aria-hidden="true">{c.client[0]}</span>
-                    <div><strong>{c.results[0].value}</strong><p style="margin:6px 0 0">{c.results[0].metric}</p></div>
-                    <div class="who">{c.client}<small>{c.industry}</small></div>
+                    <img src={`/img/cine/${casePic[c.slug]}-800.webp`} alt="" width="800" height="604" loading="lazy" />
+                    <span class="hint" aria-hidden="true">Turn over</span>
+                    <div><strong>{c.results[0].value}</strong><p class="what">{c.results[0].metric}</p><div class="who">{c.client}<small>{c.industry}</small></div></div>
                   </div>
                   <div class="fcard-back">
                     {c.quote ? <><p>"{c.quote.text}"</p><small>{c.quote.who}</small></> : <p>{c.headline}.</p>}
