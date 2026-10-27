@@ -1,9 +1,15 @@
 ---
 import Service from '../layouts/Service.astro';
+import Info from '../components/info/Info.astro';
+import Flow from '../components/info/Flow.astro';
+import Bars from '../components/info/Bars.astro';
+import Versus from '../components/info/Versus.astro';
 const faq: [string, string][] = [
   ['How much do email marketing services cost?', 'It depends on your platform, list size and how many flows already exist, so we scope it after a free review of your account. You get a fixed price before any work starts.'],
   ['Do I need a big list?', 'No. Flows earn from every new subscriber and every order, so they pay off on lists of a few thousand. A small, engaged list beats a large, cold one.'],
   ['Will you write the emails?', 'Yes. Copy, design in your brand template, segmentation, testing and reporting are all included.'],
+  ['Should I use Shopify Email or Klaviyo?', 'Shopify Email is fine for a store sending a simple monthly newsletter. Once you want behavior-based flows, deep segments by purchase history and revenue reporting per flow, a dedicated platform such as Klaviyo usually pays for itself. We help you decide based on your order volume, not on habit.'],
+  ['How soon do flows start earning?', 'A flow earns from the first person who triggers it, so revenue starts the day it goes live. We judge each flow after enough people have passed through it to compare against your baseline, then rewrite the weakest emails first.'],
   ['Can you fix deliverability at the same time?', 'Yes, and we usually should. A flow that lands in Promotions or spam earns little. Every email project starts with an authentication check.'],
 ];
 ---
@@ -17,6 +23,35 @@ const faq: [string, string][] = [
   <h2>What do our email marketing services include?</h2>
   <p>Everything needed to make email a revenue channel, run by one team: strategy and segmentation, the four core automated flows, two to five campaigns a month, copy and design in your brand template, sign-up forms that grow the list, A/B testing, deliverability checks, and a monthly revenue report. We work in Klaviyo, HubSpot, ActiveCampaign, Mailchimp and GoHighLevel.</p>
 
+
+  <h2>What is email automation, and how is it different from a newsletter?</h2>
+  <p>Email automation sends the right email because of something a person did, not because it is Tuesday. A newsletter goes to everyone at a time you choose. An automated flow waits for a trigger, such as a sign-up, a product view, an abandoned checkout or a first order, and then sends a planned sequence to that one person at the moment they care most.</p>
+  <p>Every flow is built from the same five parts. A trigger starts it. Filters decide who qualifies, for example only people who have not bought yet. Waits space the messages out. Conditional splits send different emails to different people, for example a discount to first-time visitors and a product guide to returning buyers. An exit rule removes people the moment they reach the goal, so a customer who just bought is never asked to buy the same thing again.</p>
+  <p>Because flows run every day without anyone pressing send, they keep earning while your team works on campaigns. That is why we build the flows before we increase campaign volume.</p>
+
+  <Info eyebrow="How a flow works" title="Five building blocks behind every automated email" sub="The same structure powers a welcome series, an abandoned cart reminder and a win-back sequence. Only the trigger and the words change." theme="dark">
+    <Flow steps={[
+      { tag: 'Start', t: 'Trigger', p: 'A sign-up, a viewed product, a started checkout or a placed order starts the flow for one person.' },
+      { tag: 'Qualify', t: 'Filter', p: 'Rules keep out people who already bought, opted out or are in another flow.' },
+      { tag: 'Pace', t: 'Wait', p: 'Hours or days between emails, timed to when interest is still high.' },
+      { tag: 'Tailor', t: 'Split', p: 'Different messages for new and returning buyers, or by product interest.' },
+      { tag: 'Stop', t: 'Exit on goal', p: 'The flow ends the moment the person buys, so nobody gets an outdated pitch.' },
+    ]} />
+  </Info>
+
+  <h2>Drip email or behavior-based flows: which one sells more?</h2>
+  <p>Behavior-based flows usually sell more, because they react to what a person does instead of following a calendar. A drip email sequence sends the same messages on a fixed schedule to everyone who joins a list: day 1, day 3, day 7. That works for teaching a topic or onboarding a new client. It works less well for selling, because it ignores whether someone just looked at a product, left a cart or already bought.</p>
+  <p>Most accounts need both. We use drip sequences for education, such as a course preview or a service explainer, and behavior flows for anything tied to a purchase decision.</p>
+  <Info eyebrow="Drip versus flows" title="A fixed schedule against a reaction to behavior" theme="mint">
+    <Versus a="Drip sequence" b="Behavior-based flow" caption="How the two approaches differ"
+      rows={[
+        ['What starts it?', 'Joining a list', 'An action: view, cart, order, inactivity'],
+        ['Timing', 'Fixed days after joining', 'Minutes or hours after the action'],
+        ['Personalization', 'Same emails for everyone', 'Branches by product, history and behavior'],
+        ['Best for', 'Teaching, onboarding, courses', 'Sales, recovery, repeat purchase'],
+        ['Stops when', 'The last email is sent', 'The person reaches the goal'],
+      ]} />
+  </Info>
 
   <h2>Which email flows make the most money?</h2>
   <p>The flows that make the most money are the ones triggered by what a person just did, because they arrive when interest is highest. These four are where we start on every account.</p>
@@ -47,6 +82,11 @@ const faq: [string, string][] = [
   </table></div>
   <p>Anyone who buys during the series leaves it and moves into the post-purchase flow, so nobody is sold a product they already own.</p>
 
+  <h2>How does ecommerce email marketing work on Shopify?</h2>
+  <p>Ecommerce email marketing on Shopify works by connecting your store to your email platform so every store event becomes a possible trigger. Once Klaviyo or a similar tool is connected, it receives events such as Viewed Product, Added to Cart, Started Checkout and Placed Order, along with the product, price and order history behind each one.</p>
+  <p>That data does three jobs. It triggers the right flow at the right moment. It fills emails with the exact product a person looked at, so a reminder shows the item they left behind rather than a generic banner. And it builds segments from real buying behavior: first-time buyers, repeat buyers, high spenders, people who buy only on discount, and customers who are due to reorder.</p>
+  <p>For stores, we add two flows beyond the core four once those are earning: browse abandonment, for people who viewed products without adding to cart, and a replenishment or cross-sell flow, timed to when a product usually runs out or pairs with another. Campaigns then go to segments, not to the whole list, which keeps unsubscribes and spam complaints down.</p>
+
   <h2>Klaviyo, HubSpot or ActiveCampaign: which fits your business?</h2>
   <p>The right platform depends on what you sell more than on features. All three can run every flow above.</p>
   <div class="table-wrap"><table>
@@ -62,6 +102,20 @@ const faq: [string, string][] = [
 
   <h2>How do you re-engage a dormant list without hurting deliverability?</h2>
   <p>You re-engage a dormant list slowly, starting with the most recently active people, and you remove anyone who does not respond. Sending a full blast to subscribers who have ignored you for a year produces complaints and bounces that damage your domain. Our order is: verify the addresses, send a short re-permission sequence in small daily batches, suppress non-responders after the last email, and keep a sunset rule running so the list stays clean. At Synaps Dx this re-engaged 25,000 dormant subscribers.</p>
+
+  <h2>What changed when Synaps Dx moved from blasts to flows?</h2>
+  <p>Synaps Dx sold online, but email was an afterthought: occasional promotions, no automation, and open rates below benchmark. We audited the account, built the welcome, abandoned cart, post-purchase and win-back flows, moved campaigns onto segments, rebuilt the sign-up forms and ran a reactivation sequence. The numbers below were measured over the first quarter and are published in full in the <a href="/case-studies/synaps-dx/">Synaps Dx case study</a>.</p>
+  <Info eyebrow="Synaps Dx, first quarter" title="Email went from an afterthought to the top revenue channel" sub="Before and after the flows and segmented campaigns went live." theme="dark" note="Source: Synaps Dx case study. Results depend on your offer, list and market.">
+    <Bars rows={[
+      { label: 'Open rate', before: 18, after: 35, unit: '%' },
+      { label: 'Click-through rate', before: 1.5, after: 3.2, unit: '%' },
+      { label: 'Email share of online revenue', before: 5, after: 38, showBefore: 'under 5%', showAfter: '38%+' },
+    ]} />
+  </Info>
+
+  <h2>How do you measure email revenue when open rates are inflated?</h2>
+  <p>You measure email revenue with clicks, orders and revenue per recipient, because opens stopped being reliable in 2021. That year Apple introduced Mail Privacy Protection, which loads email content in the background for people who turn it on. Their emails register as opened whether or not anyone read them, so open rates look higher than real attention.</p>
+  <p>We still watch opens for big swings, because a sudden drop often signals a deliverability problem. But decisions are made on numbers that need a real person: click-through rate, placed orders attributed to each email, revenue per recipient, and unsubscribe and complaint rates. For larger lists we also hold back a small control group from a flow and compare their purchases with the group that received it. The gap between the two is the revenue the flow actually caused, not the revenue it happened to be near.</p>
 
   <h2>Which numbers do we report?</h2>
   <p>We report the numbers that show money, not activity. Every month you get email's share of total revenue, revenue per recipient for each flow and campaign, list growth after unsubscribes and bounces, and spam complaint rate. Open rates are reported too, but treated with care: Apple Mail Privacy Protection inflates them, so they are no longer a reliable measure on their own. Clicks, orders and revenue per recipient are what we optimize, month after month.</p>
