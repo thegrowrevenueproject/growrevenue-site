@@ -1,0 +1,188 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Info from '../../../components/info/Info.astro';
+import Flow from '../../../components/info/Flow.astro';
+import Stats from '../../../components/info/Stats.astro';
+import { SITE } from '../../../data/site';
+
+// Live build document for proposals. Unlisted: noindex, kept out of the sitemap, not linked from navigation.
+const path = '/case-studies/scalability/outbound-system/';
+const updated = '2026-10-28';
+const title = 'Scalability Outbound System: Build and ROI | Grow Revenue';
+const description = 'How the Scalability outbound system was built: job signal sourcing, AI scoring, enrichment, Smartlead and LinkedIn, with the full 90 day cost and revenue math.';
+
+const tools: [string, string, number][] = [
+  ['Smartlead', 'Sending, mailbox warmup, threaded sequences, unified inbox', 282],
+  ['Google Workspace, 2 mailboxes', 'Dedicated sending mailboxes on separate domains', 43],
+  ['2 sending domains', 'Lookalike domains, so the main domain never sends cold email', 24],
+  ['Apollo', 'Decision maker search and company firmographics', 177],
+  ['Findymail', 'Work email finding from name and LinkedIn profile', 147],
+  ['MillionVerifier', 'Email verification before any send (10,000 credits)', 37],
+  ['Serper', 'Company domain and LinkedIn URL lookups', 50],
+  ['TheirStack', 'Job postings from ATS boards (Greenhouse, Ashby, Workable, Workday)', 0],
+  ['Residential proxies', 'LinkedIn and Indeed job collection', 45],
+  ['Claude API', 'Job scoring and first draft copy', 54],
+  ['VPS', 'Runs the pipeline, database and push service', 27],
+  ['Linked Helper', 'LinkedIn connection requests and follow ups', 45],
+  ['LinkedIn Sales Navigator', 'Profile research and LinkedIn targeting', 300],
+];
+const toolTotal = tools.reduce((a, t) => a + t[2], 0);
+const setup = 2400;
+const mgmt = 3600;
+const cost = toolTotal + setup + mgmt;
+
+const deals: [string, string, number][] = [
+  ['Real estate brokerage', 'Web development retainer, $4,200 a month, 6 month minimum', 25200],
+  ['Construction group', 'Web development retainer, $3,600 a month, 6 month minimum', 21600],
+  ['Logistics operator', 'AI automation build, fixed price', 12800],
+  ['Professional services firm', 'Rebrand and new website, fixed price', 5600],
+  ['PE backed services company', 'Technical audit, fixed price', 3200],
+];
+const revenue = deals.reduce((a, d) => a + d[2], 0);
+const consults = 41;
+const won = deals.length;
+const usd = (n: number) => '$' + n.toLocaleString('en-US');
+const multiple = (revenue / cost).toFixed(1);
+const roiPct = Math.round(((revenue - cost) / cost) * 100);
+const perConsult = Math.round(cost / consults);
+const perDeal = Math.round(cost / won);
+const toolsPerConsult = Math.round(toolTotal / consults);
+const closeRate = ((won / consults) * 100).toFixed(1);
+
+const schema: object[] = [{
+  '@type': 'Article', '@id': SITE.url + path + '#article', headline: 'Scalability outbound system: how it was built and what it returned', description,
+  datePublished: updated, dateModified: updated, author: { '@id': SITE.url + '/kunal-arora/#person' }, publisher: { '@id': SITE.url + '/#org' },
+  about: { '@type': 'Organization', name: 'Scalability' }, mainEntityOfPage: SITE.url + path, inLanguage: 'en-US', isAccessibleForFree: true,
+}];
+---
+<Base title={title} description={description} path={path} pageType="case" schema={schema} noindex
+  crumbs={[{ name: 'Case studies', path: '/case-studies/' }, { name: 'Scalability', path: '/case-studies/scalability/' }, { name: 'Outbound system build', path }]}>
+  <article class="section" style="padding-top:150px">
+    <div class="narrow prose">
+      <span class="eyebrow">Live build document &middot; B2B services &middot; Outbound</span>
+      <h1 data-split>Scalability outbound system: how it was built and what it returned</h1>
+      <p class="lead">I designed, built and ran this system for Scalability, a New York design and software firm that sells web development retainers, AI automation and custom software to established US businesses. It finds companies that are hiring for work Scalability can do faster, reaches the decision maker by email and LinkedIn, and books consultations. In its first 90 days it cost {usd(cost)} in total, booked {consults} outbound consultations and closed {usd(revenue)} in contracted revenue.</p>
+      <p class="byline">Built and operated by <a href="/kunal-arora/">Kunal Arora</a> &middot; Updated <time datetime={updated}>October 28, 2026</time></p>
+    </div>
+
+    <Info eyebrow="Results" title="The first 90 days in four numbers" sub="Outbound only. Google Ads results and spend are excluded." theme="mint">
+      <Stats items={[
+        { value: consults, label: 'outbound consultations', sub: 'First 90 days' },
+        { value: revenue, pre: '$', label: 'contracted revenue closed', sub: won + ' deals' },
+        { value: cost, pre: '$', label: 'total cost', sub: 'Tools, setup and management' },
+        { value: Number(multiple), suf: 'x', label: 'revenue to total cost' },
+      ]} />
+    </Info>
+
+    <div class="narrow prose">
+      <h2>What did the system need to do?</h2>
+      <p>Scalability wanted retainer relationships, not one-off builds. The best buyers for that are established businesses with an ongoing need for web or software work, and the clearest public signal of that need is a job posting. A company advertising for a full time web developer, an AI automation engineer or a backend developer has already decided the work matters and set aside a budget for it.</p>
+      <p>The pitch follows from the signal. A full time senior hire costs roughly $150,000 to $175,000 plus benefits and takes months to fill. Scalability can put a senior team on the work next week, as a project or a monthly retainer. The system's job was to find those companies every day, filter out the ones that were never going to buy, and start a relevant conversation with the person who owns the budget.</p>
+      <p>Four segments were targeted, each with its own message: web development retainers (real estate brokerages, construction, professional services, hospitality), AI automation (operations heavy businesses in logistics, legal, finance and healthcare administration), custom software and portals, and modernization projects for older businesses still on legacy systems.</p>
+    </div>
+
+    <Info eyebrow="Architecture" title="How the system is built, stage by stage" sub="Runs every morning on its own; a person approves every contact before anything is sent." theme="dark">
+      <Flow steps={[
+        { tag: 'Collect', t: 'Daily job signal scrape', p: 'LinkedIn and Indeed through residential proxies, plus Greenhouse, Ashby, Workable and Workday boards through TheirStack. US only, 12 role searches.' },
+        { tag: 'Score', t: 'AI fit scoring', p: 'Claude scores each posting against the ideal customer profile and assigns a segment. Staffing firms, competitors and companies over 500 staff are rejected.' },
+        { tag: 'Enrich', t: 'Find the budget owner', p: 'Domain from the posting, Serper or Apollo. Owner, CEO, President or CIO from Apollo. Email from Findymail, then verified by MillionVerifier.' },
+        { tag: 'Write', t: 'Segment and persona copy', p: 'First drafts written per segment and per persona: economic buyer, technical lead or HR. Plain text, no links, one clear ask.' },
+        { tag: 'Review', t: 'Human approval gate', p: 'Every contact lands in a Google Sheet. I edit the copy, then tick Push. Nothing is sent without that tick.' },
+        { tag: 'Send', t: 'Email and LinkedIn together', p: 'A push service loads approved contacts into Smartlead and exports the same people to Linked Helper for LinkedIn.' },
+      ]} />
+    </Info>
+
+    <div class="narrow prose">
+      <h2>Which tools does each stage use?</h2>
+      <p>Every tool has one job. The pipeline itself is Python on a small VPS with a SQLite database, a FastAPI push service, and Google Sheets as the control panel the client can see. The sheet shows every contact, why it was chosen, the draft copy and its current status.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Stage</th><th>Tools</th><th>Guardrail</th></tr></thead>
+        <tbody>
+          <tr><td>Collect</td><td>JobSpy (LinkedIn, Indeed), TheirStack</td><td>Per region watermarks so no posting is processed twice; monthly credit ceiling</td></tr>
+          <tr><td>Score</td><td>Claude (Haiku) with a keyword prefilter</td><td>Employer rule rejects staffing firms; revenue floor $1M; 500 staff ceiling</td></tr>
+          <tr><td>Enrich</td><td>Serper, Apollo, Findymail, MillionVerifier</td><td>Only verified addresses are kept; maximum 2 contacts per company</td></tr>
+          <tr><td>Write</td><td>Claude (Sonnet), segment and persona prompts</td><td>No links, no signature, no invented numbers; a posted salary is quoted as posted</td></tr>
+          <tr><td>Review</td><td>Google Sheets and Apps Script</td><td>Human tick required; edits in the sheet are what gets sent</td></tr>
+          <tr><td>Send</td><td>Smartlead, Google Workspace, Linked Helper</td><td>Separate domains, warmed mailboxes, Monday to Friday 9:00 to 17:00 Eastern, stop on reply</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>What keeps it accurate and safe to run?</h2>
+      <p>Most outbound systems fail on data quality and sending hygiene, not on copy. These rules were built in from the start.</p>
+      <ul>
+        <li><strong>Four layers of deduplication.</strong> Unique job URLs, per region watermarks, a 14 day repost window, and Smartlead's cross campaign duplicate block, so no one is emailed twice by mistake.</li>
+        <li><strong>Suppression after success.</strong> Once a company has a contact, its domain is suppressed for 90 days.</li>
+        <li><strong>Verification before sending.</strong> Every address goes through MillionVerifier; only valid and accept-all results are kept, and accept-all contacts are sent in smaller batches.</li>
+        <li><strong>Protected main domain.</strong> All cold email goes from two separate domains with one mailbox each, warmed before launch and capped at a conservative daily volume.</li>
+        <li><strong>Honest copy rules.</strong> If a posting lists a salary, the copy uses that number; the $150,000 to $175,000 anchor is only used when no salary is posted. No claim the data cannot back.</li>
+        <li><strong>A person in the loop.</strong> The machine finds, scores and drafts. A person decides who receives a message and what it says.</li>
+      </ul>
+
+      <h2>What did the 90 day funnel look like?</h2>
+      <p>These are the counts from the pipeline database and the Smartlead and Linked Helper reports for the first 90 days.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Stage</th><th>Count</th><th>Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Job postings collected</td><td>4,812</td><td>&nbsp;</td></tr>
+          <tr><td>Passed AI scoring</td><td>641</td><td>13.3% of postings</td></tr>
+          <tr><td>Companies with a verified decision maker</td><td>402</td><td>62.7% of scored</td></tr>
+          <tr><td>Contacts approved and pushed</td><td>688</td><td>Max 2 per company</td></tr>
+          <tr><td>Emails delivered (3 step threaded sequence)</td><td>1,846</td><td>1.4% bounce rate</td></tr>
+          <tr><td>Email replies</td><td>71</td><td>10.3% of contacts</td></tr>
+          <tr><td>Positive email replies</td><td>39</td><td>5.7% of contacts</td></tr>
+          <tr><td>LinkedIn connection requests</td><td>1,140</td><td>38% accepted</td></tr>
+          <tr><td>LinkedIn conversations</td><td>65</td><td>15% of accepted</td></tr>
+          <tr><td>Consultations booked from email</td><td>28</td><td>&nbsp;</td></tr>
+          <tr><td>Consultations booked from LinkedIn</td><td>13</td><td>&nbsp;</td></tr>
+          <tr><td><strong>Outbound consultations, total</strong></td><td><strong>{consults}</strong></td><td>&nbsp;</td></tr>
+          <tr><td>Proposals sent</td><td>14</td><td>34% of consultations</td></tr>
+          <tr><td><strong>Deals closed</strong></td><td><strong>{won}</strong></td><td>{closeRate}% of consultations</td></tr>
+        </tbody>
+      </table></div>
+      <p>Google Ads ran alongside the outbound system and booked a further 11 consultations, which is how the overall project passed 50 consultations in three months. Those 11, and the ad spend behind them, are left out of everything on this page.</p>
+
+      <h2>What did it cost, and what did it return?</h2>
+      <p>Costs are everything paid to run the outbound system for 90 days, including my own fees. Nothing is left out to make the ratio look better.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Cost item</th><th>What it covers</th><th>90 days</th></tr></thead>
+        <tbody>
+          {tools.map(([n, w, c]) => <tr><td>{n}</td><td>{w}</td><td>{c === 0 ? '$0 (free tier)' : usd(c)}</td></tr>)}
+          <tr><td><strong>Tools and infrastructure</strong></td><td>&nbsp;</td><td><strong>{usd(toolTotal)}</strong></td></tr>
+          <tr><td>System build (one-off)</td><td>Pipeline, scoring and copy prompts, push service, sheet, domains and mailbox setup</td><td>{usd(setup)}</td></tr>
+          <tr><td>Management, 3 months</td><td>Daily review, copy edits, reply handling setup, weekly tuning ($1,200 a month)</td><td>{usd(mgmt)}</td></tr>
+          <tr><td><strong>Total cost</strong></td><td>&nbsp;</td><td><strong>{usd(cost)}</strong></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>Deal closed</th><th>What was sold</th><th>Contracted value</th></tr></thead>
+        <tbody>
+          {deals.map(([c, w, v]) => <tr><td>{c}</td><td>{w}</td><td>{usd(v)}</td></tr>)}
+          <tr><td><strong>Total revenue closed</strong></td><td>&nbsp;</td><td><strong>{usd(revenue)}</strong></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>How is the ROI calculated?</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Measure</th><th>Calculation</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue to cost</td><td>{usd(revenue)} &divide; {usd(cost)}</td><td><strong>{multiple}x</strong></td></tr>
+          <tr><td>Net return</td><td>{usd(revenue)} minus {usd(cost)}</td><td><strong>{usd(revenue - cost)}</strong></td></tr>
+          <tr><td>ROI</td><td>Net return &divide; total cost</td><td><strong>{roiPct}%</strong></td></tr>
+          <tr><td>Cost per consultation</td><td>{usd(cost)} &divide; {consults}</td><td>{usd(perConsult)}</td></tr>
+          <tr><td>Tool cost per consultation</td><td>{usd(toolTotal)} &divide; {consults}</td><td>{usd(toolsPerConsult)}</td></tr>
+          <tr><td>Cost per closed deal</td><td>{usd(cost)} &divide; {won}</td><td>{usd(perDeal)}</td></tr>
+        </tbody>
+      </table></div>
+      <p>The rules behind these numbers are deliberately conservative. Retainers are counted at their 6 month minimum term only, with no renewals. Nine proposals that were still open at day 90 are not counted. Revenue is contracted value, not projected value. And the cost side includes my build and management fees, not just software.</p>
+
+      <h2>What would I change on the next build?</h2>
+      <ul>
+        <li><strong>Monitor every paid API's credit balance.</strong> At one point the domain lookup service ran out of credits and failed quietly, so contact yield dropped for several days before it showed in the numbers. A daily balance check now alerts before that happens, and Apollo was added as a fallback domain finder.</li>
+        <li><strong>Judge the employer, not just the job.</strong> Early runs let through staffing firms advertising on behalf of their clients. A dedicated employer check in scoring now rejects them before any enrichment credits are spent.</li>
+        <li><strong>Make the sheet the source of truth.</strong> The first version sent the copy stored in the database, so edits made in the sheet were lost. The push now sends exactly what was approved in the sheet.</li>
+      </ul>
+      <p>The same architecture works for any business that sells to companies with a visible buying signal, whether that is a job posting, a new funding round or a technology change. If you want it applied to your market, write to <a href="mailto:info@growrevenue.co">info@growrevenue.co</a>.</p>
+    </div>
+  </article>
+</Base>
